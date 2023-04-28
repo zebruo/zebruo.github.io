@@ -31,22 +31,23 @@ nav li {
 }
 
 nav a {
-  display: block;
-  padding: 10px;
-  color: #f8f1e9; /* beige clair */
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
+display: block;
+padding: 10px;
+color: #f8f1e9; /* beige clair */
+text-decoration: none;
+transition: all 0.2s ease-in-out;
 }
 
 nav a:hover {
-  color: #2d2d2d; /* noir */
-  background-color: #f8f1e9; /* beige clair */
+color: #2d2d2d; /* noir */
+background-color: #f8f1e9; /* beige clair */
+transform: scale(1.1); /* agrandissement au survol */
 }
 
 main {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   margin: 10px;
   padding: 10px;
@@ -57,6 +58,12 @@ main {
 main h2 {
   font-size: 24px;
   margin-top: 0;
+}
+
+main img {
+  width: 100%;
+  max-width: 400px; /* taille maximale de l'image */
+  margin-left: 20px;
 }
 
 footer {
