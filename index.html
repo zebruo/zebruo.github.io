@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Génération d'un fichier JSON</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 860px;
+    font-size: 0.9em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.column {
+    flex: 1;  /*permet aux colonnes de prendre une quantité égale d'espace disponible dans le conteneur parent, les étirant pour qu'elles occupent la totalité de l'espace disponible*/
+    padding: 20px;  /*espace à l'intérieur de chaque colonne*/
+}
+/* Séparateur entre les colonnes */
+.column:first-child {  /*sélecteur qui cible le premier élément enfant*/
+    border-right: 1px solid #DBDBDB;
+}
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+input, select {
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #4E4E4E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.radio-group {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: 10px; /* Espace entre les boutons radio et leurs libellés */
+}
+/* Espacement supplémentaire entre les boutons radio et les labels */
+.radio-group label {
+    margin-right: -45px;
+}
+.text-bold {
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="column">
+        <h1>Caractéristiques de l'outil</h1>
+        <form id="toolForm">
+            <fieldset>
+                <legend class="text-bold">&nbsp;Géométrie&nbsp;</legend>
+                <br>
+                <label for="toolMaterial"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
+                <br>
+                <select id="toolMaterial" name="toolMaterial">
+                    <option value="carbide">Carbure (Carbide)</option>
+                    <option value="hss">Acier rapide (HSS - High-Speed Steel)</option>
+                    <option value="ti coated">HSS revêtu de TiN, TiCN, TiAlN</option>
+                    <option value="ceramics">Céramique</option>
+                    <option value="3.175">Diamant</option>
+                </select>
+                <br>
+                <label for="toolDescription">Description de l'outil :</label>
+                <br>
+                <input type="text" id="toolDescription" name="toolDescription">
+                <br>
+                <label for="toolDiameter"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
+                <br>
+                <select id="toolDiameter" name="toolDiameter">
+                    <option value="1">1 mm</option>
+                    <option value="2">2 mm</option>
+                    <option value="2.5">2.5 mm</option>
+                    <option value="3">3 mm</option>
+                    <option value="3.175">3.175 mm</option>
+                    <option value="4">4 mm</option>
+                    <option value="5">5 mm</option>
+                    <option value="6">6 mm</option>
+                    <option value="8">8 mm</option>
+                </select>
+                <br>
+                <label for="shaftDiameter"><span class="text-bold">(SFDM)</span> Shaft Diameter, diamètre de la queue</label>
+                <br>
+                <select id="shaftDiameter" name="shaftDiameter">
+                    <option value="1">1 mm</option>
+                    <option value="2">2 mm</option>
+                    <option value="2.5">2.5 mm</option>
+                    <option value="3">3 mm</option>
+                    <option value="3.175">3.175 mm</option>
+                    <option value="4">4 mm</option>
+                    <option value="5">5 mm</option>
+                    <option value="6">6 mm</option>
+                    <option value="8">8 mm</option>
+                </select>
+                <br>
+                <label for="numberOfFlutes"><span class="text-bold">(NOF)</span> Number of Flutes, nombre de dents </label>
+                <br>
+                <select id="numberOfFlutes" name="numberOfFlutes">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <br>
+                <br>
+                <label for="overAllLength"><span class="text-bold">(OAL)</span> Overall Length, Longueur totale</label>
+                <br>
+                <input type="number" id="overAllLength" name="overAllLength">
+                <br>
+                <label for="lengthBelow"><span class="text-bold">(LB)</span> Length Below, longueur en dessous du porte outil</label>
+                <br>
+                <input type="number" id="lengthBelow" name="lengthBelow">
+                <br>
+                <label for="shoulderLength">Longueur de l'épaulement</label>
+                <br>
+                <input type="number" id="shoulderLength" name="shoulderLength">
+                <br>
+                <label for="lengthOfCut"><span class="text-bold">(LCF)</span> Lendth of Cut, longueur de coupe LU :</label>
+                <br>
+                <input type="number" id="lengthOfCut" name="lengthOfCut">
+                <br>
+                <label for="CSP"><span class="text-bold">(CSP)</span> Center Cutting, coupe au centre, indique si la fraise est capable de couper à partir du centre.</label>
+                <div class="radio-group">
+                    <input type="radio" id="CSPTrue" name="CSP" value="true">
+                    <label for="CSPTrue">Oui</label>
+                    <input type="radio" id="CSPFalse" name="CSP" value="false" checked>
+                    <label for="CSPFalse">Non</label>
+                </div>
+                <label for="HAND"><span class="text-bold">(Hand)</span> Hand of Cut,indique si la fraise est orientée de façon à favoriser une coupe à droite ou à gauche.</label>
+                <div class="radio-group">
+                    <input type="radio" id="HANDFalse" name="HAND" value="false">
+                    <label for="HANDFalse">Gauche</label>
+                    <input type="radio" id="HANDTrue" name="HAND" value="true" checked>
+                    <label for="HANDTrue">Droite</label>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <button id="generateJSON">Générer le fichier .JSON</button>
+    </div>
+    <div class="column">
+        <h1>Préréglages de l'outil</h1>
+        <form id="presetsForm">
+            <fieldset>
+                <legend class="text-bold">&nbsp;Presets&nbsp;</legend>
+                 <br>
+                <label for="typeMaterial"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
+                <br>
+                <select id="typeMaterial" name="typeMaterial">
+                    <option value="Bois_massif">Bois (massif)</option>
+                    <option value="CTP_bois tendres">CTP, bois tendres</option>
+                    <option value="MDF_Valcromat">MDF, Valcromat</option>
+                    <option value="PMMA_thermoplastiques">PMMA, thermoplastiques</option>
+                    <option value="PVC_expansés_Forex">PVC expansés, Forex, etc</option>
+                    <option value="Alu_2017A">Alu 2017A</option>
+                    <option value="Cuivre_Laiton">Cuivre, Laiton, etc</option>
+                </select>
+                <br>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    // Ajoute la fonction generateGUID pour créer un GUID aléatoire
+function generateGUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+// Attend que tout le contenu de la page soit chargé
+document.addEventListener('DOMContentLoaded', function() {
+    // Liste des champs à réinitialiser
+    const fieldsToReset = ['toolDiameter', 'shaftDiameter', 'numberOfFlutes','toolMaterial'];
+    // Pour chaque champ à réinitialiser
+    fieldsToReset.forEach(field => {
+        // Récupère l'élément de sélection par son identifiant
+        const selectElement = document.getElementById(field);
+        // Réinitialise la sélection du champ à aucune option choisie
+        selectElement.selectedIndex = -1;
+    });
+});
+    // Ajoute un écouteur d'événements sur le clic du bouton "generateJSON"
+document.getElementById('generateJSON').addEventListener('click', function() {
+    // La fonction sera déclenchée lorsque le bouton sera cliqué
+    // et exécutera les actions associées à la génération du fichier JSON.
+    // Récupérer les valeurs du formulaire
+    const toolDescription = document.getElementById('toolDescription').value;
+    const toolMaterial = document.getElementById('toolMaterial').value;
+    const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
+    const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
+    const numberOfFlutes = parseFloat(document.getElementById('numberOfFlutes').value);
+    const overAllLength = parseFloat(document.getElementById('overAllLength').value);
+    const lengthBelow = parseFloat(document.getElementById('lengthBelow').value);
+    const shoulderLength = parseFloat(document.getElementById('shoulderLength').value);
+    const lengthOfCut = parseFloat(document.getElementById('lengthOfCut').value);
+    const CSP = document.querySelector('input[name="CSP"]:checked').value === 'true';
+    const HAND = document.querySelector('input[name="HAND"]:checked').value === 'true';
+    const GUID = generateGUID();
+    // Créer un objet avec les valeurs du formulaire
+ const formData = {
+    // Section des détails de l'outil
+        "BMC": toolMaterial,
+        "description": toolDescription, // Description de l'outil
+    "geometry": {
+        "CSP": CSP, // coupe au centre (true/false)
+        "DC": parseFloat(toolDiameter), // Diamètre de l'outil de coupe
+        "HAND": HAND, // Orientation de la coupe (true/false)
+        "LB": parseFloat(lengthBelow), // Longueur en dessous du porte outil
+        "LCF": parseFloat(lengthOfCut), // Longueur de coupe LU
+        "NOF": parseFloat(numberOfFlutes), // Nombre de dents
+        "OAL": parseFloat(overAllLength), // Longueur totale
+        "SFDM": parseFloat(shaftDiameter), // Diamètre de la queue
+        "shoulder-length": parseFloat(shoulderLength), // Longueur de l'épaulement
+    },
+    "guid": generateGUID(), // Génération du GUID pour l'outil
+    "post-process": {
+        // Détails du post-traitement de l'outil
+        "break-control": false, // Contrôle de la pause
+        "comment": "", // Commentaire
+        "diameter-offset": 1, // Décalage du diamètre
+        "length-offset": 1, // Décalage de la longueur
+        "live": false, // Mode en direct
+        "manual-tool-change": true, // Changement d'outil manuel
+        "number": 1, // Numéro
+        "turret": 0 // Tourelle
+    },
+        "product-id": `${numberOfFlutes}F${toolDiameter}mm`,
+        "product-link": "",
+        "start-values": {
+        "presets": [
+          {
+            "f_n": null,
+            "f_z": null,
+            "guid": generateGUID(),
+            "n": 24000,
+            "n_ramp": 24000,
+            "name": "Default preset",
+            "tool-coolant": "disabled",
+            "use-stepdown": "true",
+            "use-stepover": false,
+            "v_c": null,
+            "v_f": 768,
+            "v_f_leadIn": 768,
+            "v_f_leadOut": 768,
+            "v_f_plunge": 768,
+            "v_f_ramp": 768,
+            "stepdown": 0.32
+          }
+        ]
+      },
+     "type": "flat end mill",
+      "unit": "millimeters",
+      "vendor": ""
+};
+    const data = [formData]; // Mettre les données dans un objet 'data'
+    const jsonData = {
+        "data": data,
+        "version": 15
+    };
+    // Convertir l'objet en chaîne JSON
+    const toolJSON = JSON.stringify(jsonData, null, 2);
+    // Créer un objet Blob avec la chaîne JSON
+    const blob = new Blob([toolJSON], { type: 'application/json' });
+    // Créer un élément <a> pour le téléchargement du fichier JSON
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'toolData.json';
+    link.click();
+});
+</script>
+</body>
+</html>
