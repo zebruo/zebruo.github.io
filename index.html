@@ -5,38 +5,41 @@
 <title>Génération d'un fichier JSON</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: 'Nunito', sans-serif;
-    margin: 0;
-    padding: 0;
     font-size: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
     height: 100vh;
     background-color: #f0f0f0;
 }
-.container {
+header {
+    width: 100%;
+    background-color: #4E4E4E;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+}
+nav {
     display: flex;
-    width: 90%;
-    max-width: 860px;
-    font-size: 0.9em;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    background-color: #333;
 }
-.column {
-    flex: 1;  /*permet aux colonnes de prendre une quantité égale d'espace disponible dans le conteneur parent, les étirant pour qu'elles occupent la totalité de l'espace disponible*/
-    padding: 20px;  /*espace à l'intérieur de chaque colonne*/
+nav a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
 }
-/* Séparateur entre les colonnes */
-.column:first-child {  /*sélecteur qui cible le premier élément enfant*/
-    border-right: 1px solid #DBDBDB;
+nav a:hover {
+    background-color: #ddd;
+    color: black;
 }
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
 }
 input, select {
     width: 60%;
@@ -56,6 +59,26 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
+footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+}
+.container {
+    display: flex;
+    font-size: 0.9em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.column {
+    flex: 1;  /*permet aux colonnes de prendre une quantité égale d'espace disponible dans le conteneur parent, les étirant pour qu'elles occupent la totalité de l'espace disponible*/
+    padding: 20px;  /*espace à l'intérieur de chaque colonne*/
+}
+/* Séparateur entre les colonnes */
+.column:first-child {  /*sélecteur qui cible le premier élément enfant*/
+    border-right: 1px solid #DBDBDB;
+}
 .radio-group {
     display: flex;
     flex-direction: row-reverse;
@@ -69,9 +92,19 @@ button {
 .text-bold {
     font-weight: bold;
 }
+
+@media screen and (max-width: 700px) {
+.container, nav {
+    flex-direction: column;
+}
+}
 </style>
 </head>
 <body>
+<header>
+    <h1>Menu</h1>
+    <nav> <a href="#">Accueil</a> <a href="#">À propos</a> <a href="#">Contact</a> </nav>
+</header>
 <div class="container">
     <div class="column">
         <h1>Caractéristiques de l'outil</h1>
@@ -163,15 +196,13 @@ button {
                 </div>
             </fieldset>
         </form>
-        <br>
-        <button id="generateJSON">Générer le fichier .JSON</button>
     </div>
     <div class="column">
         <h1>Préréglages de l'outil</h1>
         <form id="presetsForm">
             <fieldset>
                 <legend class="text-bold">&nbsp;Presets&nbsp;</legend>
-                 <br>
+                <br>
                 <label for="typeMaterial"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
                 <br>
                 <select id="typeMaterial" name="typeMaterial">
@@ -186,8 +217,15 @@ button {
                 <br>
             </fieldset>
         </form>
+        <br>
+        <button id="generateJSON">Générer le fichier .JSON</button>
     </div>
 </div>
+<footer>
+    <p>&copy; 2023 edurel. Tous droits réservés.</p>
+    <p>Fraises CNC - Version <span id="version"></span></p>
+    <div id="date"></div>
+</footer>
 <script>
     // Ajoute la fonction generateGUID pour créer un GUID aléatoire
 function generateGUID() {
@@ -197,8 +235,16 @@ function generateGUID() {
         return v.toString(16);
     });
 }
-// Attend que tout le contenu de la page soit chargé
-document.addEventListener('DOMContentLoaded', function() {
+    const version = "2.0.0"; // Version actuelle du script
+document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
+    // Mise à jour de la version dans le footer
+    document.getElementById('version').textContent = version;
+    // Ajout de la date dans le footer
+    const dateElement = document.getElementById('date');
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('fr-FR', options);
+    dateElement.textContent = `${formattedDate}`;
     // Liste des champs à réinitialiser
     const fieldsToReset = ['toolDiameter', 'shaftDiameter', 'numberOfFlutes','toolMaterial'];
     // Pour chaque champ à réinitialiser
