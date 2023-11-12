@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Génération d'un fichier JSON</title>
+<title>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 * {
@@ -39,7 +39,20 @@ nav a:hover {
 }
 h1 {
     text-align: center;
-    color: #333;
+    color: #D8D8D8;
+}
+fieldset {
+    display: flex;
+    flex-direction: column;
+    background-color: #F3F3F3;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-width: 1px;
+}
+label {
+    margin-bottom: 10px;
 }
 input, select {
     width: 60%;
@@ -48,6 +61,10 @@ input, select {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
+}
+input[type="range"] {
+    width: 100%;
+    color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
 }
 button {
     width: 100%;
@@ -58,22 +75,46 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    margin-bottom: 5px;
 }
 footer {
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     background: #ddd;
+}
+#rotationSpeedSlider {
+    margin-bottom: 10px;
+}
+#result {
+    text-align: left;
+}
+#sliderContainer {
+    position: relative;
+    width: 100%; /* Ajustez la largeur selon vos besoins */
+}
+#minRotationSpeed, #currentRotationSpeed, #maxRotationSpeed {
+    position: absolute;
+    bottom: 0;
+    font-weight: bold;
+}
+#minRotationSpeed {
+    left: 0;
+}
+#currentRotationSpeed {
+    left: 50%;
+    transform: translateX(-50%);
+}
+#maxRotationSpeed {
+    right: 0;
 }
 .container {
     display: flex;
     font-size: 0.9em;
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 .column {
     flex: 1;  /*permet aux colonnes de prendre une quantité égale d'espace disponible dans le conteneur parent, les étirant pour qu'elles occupent la totalité de l'espace disponible*/
-    padding: 20px;  /*espace à l'intérieur de chaque colonne*/
+    padding: 18px;  /*espace à l'intérieur de chaque colonne*/
 }
 /* Séparateur entre les colonnes */
 .column:first-child {  /*sélecteur qui cible le premier élément enfant*/
@@ -102,8 +143,8 @@ footer {
 </head>
 <body>
 <header>
-    <h1>Menu</h1>
-    <nav> <a href="#">Accueil</a> <a href="#">À propos</a> <a href="#">Contact</a> </nav>
+    <h1>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</h1>
+    <nav> <a href="GuideCalcFraise.html">Guide calcul fraisage</a> <a href="#">À propos</a> <a href="#">Contact</a> </nav>
 </header>
 <div class="container">
     <div class="column">
@@ -111,9 +152,7 @@ footer {
         <form id="toolForm">
             <fieldset>
                 <legend class="text-bold">&nbsp;Géométrie&nbsp;</legend>
-                <br>
-                <label for="toolMaterial"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
-                <br>
+                <label for="toolMaterial">Fraise au :</label>
                 <select id="toolMaterial" name="toolMaterial">
                     <option value="carbide">Carbure (Carbide)</option>
                     <option value="hss">Acier rapide (HSS - High-Speed Steel)</option>
@@ -121,13 +160,9 @@ footer {
                     <option value="ceramics">Céramique</option>
                     <option value="3.175">Diamant</option>
                 </select>
-                <br>
                 <label for="toolDescription">Description de l'outil :</label>
-                <br>
                 <input type="text" id="toolDescription" name="toolDescription">
-                <br>
-                <label for="toolDiameter"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
-                <br>
+                <label for="toolDiameter"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de la fraise</label>
                 <select id="toolDiameter" name="toolDiameter">
                     <option value="1">1 mm</option>
                     <option value="2">2 mm</option>
@@ -139,9 +174,7 @@ footer {
                     <option value="6">6 mm</option>
                     <option value="8">8 mm</option>
                 </select>
-                <br>
                 <label for="shaftDiameter"><span class="text-bold">(SFDM)</span> Shaft Diameter, diamètre de la queue</label>
-                <br>
                 <select id="shaftDiameter" name="shaftDiameter">
                     <option value="1">1 mm</option>
                     <option value="2">2 mm</option>
@@ -153,33 +186,21 @@ footer {
                     <option value="6">6 mm</option>
                     <option value="8">8 mm</option>
                 </select>
-                <br>
                 <label for="numberOfFlutes"><span class="text-bold">(NOF)</span> Number of Flutes, nombre de dents </label>
-                <br>
                 <select id="numberOfFlutes" name="numberOfFlutes">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <br>
-                <br>
                 <label for="overAllLength"><span class="text-bold">(OAL)</span> Overall Length, Longueur totale</label>
-                <br>
                 <input type="number" id="overAllLength" name="overAllLength">
-                <br>
                 <label for="lengthBelow"><span class="text-bold">(LB)</span> Length Below, longueur en dessous du porte outil</label>
-                <br>
                 <input type="number" id="lengthBelow" name="lengthBelow">
-                <br>
                 <label for="shoulderLength">Longueur de l'épaulement</label>
-                <br>
                 <input type="number" id="shoulderLength" name="shoulderLength">
-                <br>
                 <label for="lengthOfCut"><span class="text-bold">(LCF)</span> Lendth of Cut, longueur de coupe LU :</label>
-                <br>
                 <input type="number" id="lengthOfCut" name="lengthOfCut">
-                <br>
                 <label for="CSP"><span class="text-bold">(CSP)</span> Center Cutting, coupe au centre, indique si la fraise est capable de couper à partir du centre.</label>
                 <div class="radio-group">
                     <input type="radio" id="CSPTrue" name="CSP" value="true">
@@ -198,32 +219,44 @@ footer {
         </form>
     </div>
     <div class="column">
-        <h1>Préréglages de l'outil</h1>
+        <h1>Calcul vitesse de rotation et d'avance</h1>
         <form id="presetsForm">
             <fieldset>
                 <legend class="text-bold">&nbsp;Presets&nbsp;</legend>
-                <br>
-                <label for="typeMaterial"><span class="text-bold">(DC)</span> Diammeter of cut, diamètre de coupe</label>
-                <br>
-                <select id="typeMaterial" name="typeMaterial">
-                    <option value="Bois_massif">Bois (massif)</option>
-                    <option value="CTP_bois tendres">CTP, bois tendres</option>
-                    <option value="MDF_Valcromat">MDF, Valcromat</option>
-                    <option value="PMMA_thermoplastiques">PMMA, thermoplastiques</option>
-                    <option value="PVC_expansés_Forex">PVC expansés, Forex, etc</option>
-                    <option value="Alu_2017A">Alu 2017A</option>
-                    <option value="Cuivre_Laiton">Cuivre, Laiton, etc</option>
+                <label for="vc"><span class="text-bold">(Vc)</span> Vitesse de coupe (m/min)</label>
+                <select id="vc" name="vc">
+                    <option value="500">Bois (massif)</option>
+                    <option value="250">CTP, bois tendres</option>
+                    <option value="350">MDF, Valcromat</option>
+                    <option value="250">PMMA, thermoplastiques</option>
+                    <option value="300">PVC expansés, Forex, etc</option>
+                    <option value="100">Alu 2017A</option>
+                    <option value="200">Cuivre, Laiton, etc</option>
                 </select>
-                <br>
+                <label for="fz"><span class="text-bold">(Fz)</span> Avance par dent (mm/dent): </label>
+                <input type="number" id="fz" step="0.001" value="0.004" required>
+                <label for="ap"><span class="text-bold">(Ap)</span> Profondeur de coupe (mm): </label>
+                <input type="number" id="ap" step="0.1" value="1.5" required>
+                <label class="text-bold">Limites machine:</label>
+                <label for="maxFeed">Vitesse d’avance max de la machine (mm/min): </label>
+                <input type="number" id="maxFeed" value="2500" required>
+                <label for="rotationSpeedSlider">Vitesse de rotation max de la machine (tr/min): </label>
+                <div id="sliderContainer">
+                    <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="25000" oninput="updateRotationSpeed(this.value)">
+                    <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">25000</span><span id="maxRotationSpeed">30000</span> </div>
             </fieldset>
         </form>
-        <br>
+        <button type="button" onclick="calculate()">Calculer</button>
         <button id="generateJSON">Générer le fichier .JSON</button>
+    </div>
+    <div class="column">
+        <h1>Résultats</h1>
+        <p id="result"></p>
     </div>
 </div>
 <footer>
     <p>&copy; 2023 edurel. Tous droits réservés.</p>
-    <p>Fraises CNC - Version <span id="version"></span></p>
+    <p>Calculs Essentiels pour une Fraise - Version <span id="version"></span></p>
     <div id="date"></div>
 </footer>
 <script>
@@ -235,7 +268,7 @@ function generateGUID() {
         return v.toString(16);
     });
 }
-    const version = "2.0.0"; // Version actuelle du script
+    const version = "3.0.0"; // Version actuelle du script
 document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
     // Mise à jour de la version dans le footer
     document.getElementById('version').textContent = version;
@@ -264,7 +297,7 @@ document.getElementById('generateJSON').addEventListener('click', function() {
     const toolMaterial = document.getElementById('toolMaterial').value;
     const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
     const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
-    const numberOfFlutes = parseFloat(document.getElementById('numberOfFlutes').value);
+    const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
     const overAllLength = parseFloat(document.getElementById('overAllLength').value);
     const lengthBelow = parseFloat(document.getElementById('lengthBelow').value);
     const shoulderLength = parseFloat(document.getElementById('shoulderLength').value);
@@ -283,7 +316,7 @@ document.getElementById('generateJSON').addEventListener('click', function() {
         "HAND": HAND, // Orientation de la coupe (true/false)
         "LB": parseFloat(lengthBelow), // Longueur en dessous du porte outil
         "LCF": parseFloat(lengthOfCut), // Longueur de coupe LU
-        "NOF": parseFloat(numberOfFlutes), // Nombre de dents
+        "NOF": parseInt(numberOfFlutes), // Nombre de dents
         "OAL": parseFloat(overAllLength), // Longueur totale
         "SFDM": parseFloat(shaftDiameter), // Diamètre de la queue
         "shoulder-length": parseFloat(shoulderLength), // Longueur de l'épaulement
@@ -343,6 +376,105 @@ document.getElementById('generateJSON').addEventListener('click', function() {
     link.download = 'toolData.json';
     link.click();
 });
+</script> 
+<script>
+    function updateRotationSpeed(value) {
+            // Mettre à jour la valeur courante affichée
+            document.getElementById('currentRotationSpeed').innerText = value;
+        }
+        function calculate() {
+            // Récupérer les valeurs du formulaire
+            const vc = parseFloat(document.getElementById('vc').value);
+            const fz = parseFloat(document.getElementById('fz').value);
+            const ap = parseFloat(document.getElementById('ap').value);
+            const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
+            const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
+            const maxSpeed = parseInt(document.getElementById('rotationSpeedSlider').max);
+            const maxFeed = parseFloat(document.getElementById('maxFeed').value);
+            const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
+
+            // Calculer la vitesse de rotation
+            let n = (1000 * vc) / (Math.PI * toolDiameter);
+            
+            // Utiliser currentRotationSpeed si n dépasse sa valeur
+            n = Math.min(n, currentRotationSpeed);
+
+            // Calculer la vitesse d’avance
+            let vf = n * fz * numberOfFlutes;
+            vf = Math.min(vf, maxFeed);
+            
+            // Afficher les résultats avant l'ajustement
+    console.log("Résultats avant ajustement :");
+    console.log("Vitesse de rotation (n):", n.toFixed(0), "tr/min");
+    console.log("Vitesse d’avance (vf):", (n * fz * numberOfFlutes), "mm/min");
+
+            // Calculer le ratio de réduction
+            const ratio = maxFeed / (n * fz * numberOfFlutes);
+            console.log("Ratio:", ratio.toFixed(2));
+            
+            // Adapter la vitesse de rotation
+            //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
+            if (ratio < 1) {
+            n = n * ratio;
+           }
+        // Afficher les résultats finaux
+        console.log("Résultats après ajustement :");
+        console.log("Vitesse de rotation (n):", n.toFixed(0), "tr/min");
+        console.log("Vitesse d’avance (vf):", vf, "mm/min");
+
+        // Afficher les résultats
+        const resultTable = `
+    <table id="resultTable">
+        <tr>
+            <td>&nbsp;</td>
+            <td>Retenu</td>
+        </tr>
+        <tr>
+            <td>Vitesse de rotation (n)</td>
+            <td>${n.toFixed(0)} tr/min</td>
+        </tr>
+        <tr>
+            <td>Vitesse d’avance en X et Y (vf)</td>
+            <td>${vf.toFixed(2)} mm/min</td>
+        </tr>
+        <tr>
+            <td>Vitesse d’avance en Z</td>
+            <td>${(vf / 2).toFixed(2)} mm/min</td>
+        </tr>
+        <tr>
+            <td>Profondeur de coupe (ap)</td>
+            <td>${ap.toFixed(2)} mm</td>
+        </tr>
+        <tr>
+        <td>% de la vitesse max de rotation</td>
+        <td>${ratio >= 1 ? '100' : (ratio*100).toFixed(2)}%</td>
+        </tr>
+    </table>
+`;
+        document.getElementById('result').innerHTML = resultTable;
+                
+            const style = `
+    #resultTable {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #resultTable td, #resultTable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #resultTable th {
+        background-color: #f2f2f2;
+    }
+`;
+
+const styleElement = document.createElement('style');
+styleElement.innerHTML = style;
+document.head.appendChild(styleElement);
+        }
 </script>
 </body>
 </html>
