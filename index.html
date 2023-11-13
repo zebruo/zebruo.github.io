@@ -95,7 +95,6 @@ footer {
 #minRotationSpeed, #currentRotationSpeed, #maxRotationSpeed {
     position: absolute;
     bottom: 0;
-    font-weight: bold;
 }
 #minRotationSpeed {
     left: 0;
@@ -103,6 +102,7 @@ footer {
 #currentRotationSpeed {
     left: 50%;
     transform: translateX(-50%);
+    font-weight: bold;
 }
 #maxRotationSpeed {
     right: 0;
@@ -144,7 +144,7 @@ footer {
 <body>
 <header>
     <h1>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</h1>
-    <nav> <a href="GuideCalcFraise.html">Guide calcul fraisage</a> <a href="#">À propos</a> <a href="#">Contact</a> </nav>
+    <nav> <a href="#">Guide calcul fraisage</a> <a href="abaque.html">Abaque</a> <a href="#">Contact</a> </nav>
 </header>
 <div class="container">
     <div class="column">
@@ -222,7 +222,7 @@ footer {
         <h1>Calcul vitesse de rotation et d'avance</h1>
         <form id="presetsForm">
             <fieldset>
-                <legend class="text-bold">&nbsp;Presets&nbsp;</legend>
+                <legend class="text-bold">&nbsp;Données de coupe&nbsp;</legend>
                 <label for="vc"><span class="text-bold">(Vc)</span> Vitesse de coupe (m/min)</label>
                 <select id="vc" name="vc">
                     <option value="500">Bois (massif)</option>
@@ -240,10 +240,10 @@ footer {
                 <label class="text-bold">Limites machine:</label>
                 <label for="maxFeed">Vitesse d’avance max de la machine (mm/min): </label>
                 <input type="number" id="maxFeed" value="2500" required>
-                <label for="rotationSpeedSlider">Vitesse de rotation max de la machine (tr/min): </label>
+                <label for="rotationSpeedSlider">Vitesse max de la broche (tr/min): </label>
                 <div id="sliderContainer">
-                    <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="25000" oninput="updateRotationSpeed(this.value)">
-                    <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">25000</span><span id="maxRotationSpeed">30000</span> </div>
+                    <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="24000" oninput="updateRotationSpeed(this.value)">
+                    <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed">30000</span> </div>
             </fieldset>
         </form>
         <button type="button" onclick="calculate()">Calculer</button>
@@ -261,15 +261,15 @@ footer {
 </footer>
 <script>
     // Ajoute la fonction generateGUID pour créer un GUID aléatoire
-function generateGUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-    const version = "3.0.0"; // Version actuelle du script
-document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
+    function generateGUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    const version = "4.0.0"; // Version actuelle du script
+    document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
     // Mise à jour de la version dans le footer
     document.getElementById('version').textContent = version;
     // Ajout de la date dans le footer
@@ -289,137 +289,163 @@ document.addEventListener('DOMContentLoaded', function() { // Attend que tout le
     });
 });
     // Ajoute un écouteur d'événements sur le clic du bouton "generateJSON"
-document.getElementById('generateJSON').addEventListener('click', function() {
-    // La fonction sera déclenchée lorsque le bouton sera cliqué
-    // et exécutera les actions associées à la génération du fichier JSON.
-    // Récupérer les valeurs du formulaire
-    const toolDescription = document.getElementById('toolDescription').value;
-    const toolMaterial = document.getElementById('toolMaterial').value;
-    const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
-    const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
-    const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
-    const overAllLength = parseFloat(document.getElementById('overAllLength').value);
-    const lengthBelow = parseFloat(document.getElementById('lengthBelow').value);
-    const shoulderLength = parseFloat(document.getElementById('shoulderLength').value);
-    const lengthOfCut = parseFloat(document.getElementById('lengthOfCut').value);
-    const CSP = document.querySelector('input[name="CSP"]:checked').value === 'true';
-    const HAND = document.querySelector('input[name="HAND"]:checked').value === 'true';
-    const GUID = generateGUID();
-    // Créer un objet avec les valeurs du formulaire
- const formData = {
-    // Section des détails de l'outil
-        "BMC": toolMaterial,
-        "description": toolDescription, // Description de l'outil
-    "geometry": {
-        "CSP": CSP, // coupe au centre (true/false)
-        "DC": parseFloat(toolDiameter), // Diamètre de l'outil de coupe
-        "HAND": HAND, // Orientation de la coupe (true/false)
-        "LB": parseFloat(lengthBelow), // Longueur en dessous du porte outil
-        "LCF": parseFloat(lengthOfCut), // Longueur de coupe LU
-        "NOF": parseInt(numberOfFlutes), // Nombre de dents
-        "OAL": parseFloat(overAllLength), // Longueur totale
-        "SFDM": parseFloat(shaftDiameter), // Diamètre de la queue
-        "shoulder-length": parseFloat(shoulderLength), // Longueur de l'épaulement
-    },
-    "guid": generateGUID(), // Génération du GUID pour l'outil
-    "post-process": {
-        // Détails du post-traitement de l'outil
-        "break-control": false, // Contrôle de la pause
-        "comment": "", // Commentaire
-        "diameter-offset": 1, // Décalage du diamètre
-        "length-offset": 1, // Décalage de la longueur
-        "live": false, // Mode en direct
-        "manual-tool-change": true, // Changement d'outil manuel
-        "number": 1, // Numéro
-        "turret": 0 // Tourelle
-    },
-        "product-id": `${numberOfFlutes}F${toolDiameter}mm`,
-        "product-link": "",
-        "start-values": {
-        "presets": [
-          {
-            "f_n": null,
-            "f_z": null,
-            "guid": generateGUID(),
-            "n": 24000,
-            "n_ramp": 24000,
-            "name": "Default preset",
-            "tool-coolant": "disabled",
-            "use-stepdown": "true",
-            "use-stepover": false,
-            "v_c": null,
-            "v_f": 768,
-            "v_f_leadIn": 768,
-            "v_f_leadOut": 768,
-            "v_f_plunge": 768,
-            "v_f_ramp": 768,
-            "stepdown": 0.32
-          }
-        ]
-      },
-     "type": "flat end mill",
-      "unit": "millimeters",
-      "vendor": ""
-};
-    const data = [formData]; // Mettre les données dans un objet 'data'
-    const jsonData = {
-        "data": data,
-        "version": 15
-    };
-    // Convertir l'objet en chaîne JSON
-    const toolJSON = JSON.stringify(jsonData, null, 2);
-    // Créer un objet Blob avec la chaîne JSON
-    const blob = new Blob([toolJSON], { type: 'application/json' });
-    // Créer un élément <a> pour le téléchargement du fichier JSON
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'toolData.json';
-    link.click();
-});
-</script> 
-<script>
-    function updateRotationSpeed(value) {
-            // Mettre à jour la valeur courante affichée
-            document.getElementById('currentRotationSpeed').innerText = value;
-        }
-        function calculate() {
-            // Récupérer les valeurs du formulaire
-            const vc = parseFloat(document.getElementById('vc').value);
-            const fz = parseFloat(document.getElementById('fz').value);
-            const ap = parseFloat(document.getElementById('ap').value);
-            const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
-            const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
-            const maxSpeed = parseInt(document.getElementById('rotationSpeedSlider').max);
-            const maxFeed = parseFloat(document.getElementById('maxFeed').value);
-            const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
+    document.getElementById('generateJSON').addEventListener('click', function() {
+        // La fonction sera déclenchée lorsque le bouton sera cliqué
+        // et exécutera les actions associées à la génération du fichier JSON.
+        // Récupérer les valeurs du formulaire
+        const toolDescription = document.getElementById('toolDescription').value;
+        const toolMaterial = document.getElementById('toolMaterial').value;
+        const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
+        const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
+        const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
+        const vc = parseFloat(document.getElementById('vc').value);
+        const ap = parseFloat(document.getElementById('ap').value);
+        const fz = parseFloat(document.getElementById('fz').value);
+        const maxFeed = parseFloat(document.getElementById('maxFeed').value);
+        const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
+        const overAllLength = parseFloat(document.getElementById('overAllLength').value);
+        const lengthBelow = parseFloat(document.getElementById('lengthBelow').value);
+        const shoulderLength = parseFloat(document.getElementById('shoulderLength').value);
+        const lengthOfCut = parseFloat(document.getElementById('lengthOfCut').value);
+        const CSP = document.querySelector('input[name="CSP"]:checked').value === 'true';
+        const HAND = document.querySelector('input[name="HAND"]:checked').value === 'true';
+        const GUID = generateGUID();
+        
+        
+        // Calculer la vitesse de rotation
+        let n = (1000 * vc) / (Math.PI * toolDiameter);
 
-            // Calculer la vitesse de rotation
-            let n = (1000 * vc) / (Math.PI * toolDiameter);
-            
-            // Utiliser currentRotationSpeed si n dépasse sa valeur
-            n = Math.min(n, currentRotationSpeed);
+        // Utiliser currentRotationSpeed si n dépasse sa valeur
+        n = Math.min(n, currentRotationSpeed);
+        
+        // Calculer la vitesse d’avance
+        let vf = n * fz * numberOfFlutes;
+        vf = Math.min(vf, maxFeed);
+        
+        // Calculer le ratio de réduction
+        const ratio = maxFeed / (n * fz * numberOfFlutes);
 
-            // Calculer la vitesse d’avance
-            let vf = n * fz * numberOfFlutes;
-            vf = Math.min(vf, maxFeed);
-            
-            // Afficher les résultats avant l'ajustement
-    console.log("Résultats avant ajustement :");
-    console.log("Vitesse de rotation (n):", n.toFixed(0), "tr/min");
-    console.log("Vitesse d’avance (vf):", (n * fz * numberOfFlutes), "mm/min");
-
-            // Calculer le ratio de réduction
-            const ratio = maxFeed / (n * fz * numberOfFlutes);
-            console.log("Ratio:", ratio.toFixed(2));
-            
-            // Adapter la vitesse de rotation
-            //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
-            if (ratio < 1) {
+        // Adapter la vitesse de rotation
+        //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
+        if (ratio < 1) {
             n = n * ratio;
-           }
+        }
+        
+        // Créer un objet avec les valeurs du formulaire
+        const formData = {
+            // Section des détails de l'outil
+            "BMC": toolMaterial,
+            "description": toolDescription, // Description de l'outil
+            "geometry": {
+                "CSP": CSP, // coupe au centre (true/false)
+                "DC": parseFloat(toolDiameter), // Diamètre de l'outil de coupe
+                "HAND": HAND, // Orientation de la coupe (true/false)
+                "LB": parseFloat(lengthBelow), // Longueur en dessous du porte outil
+                "LCF": parseFloat(lengthOfCut), // Longueur de coupe LU
+                "NOF": parseInt(numberOfFlutes), // Nombre de dents
+                "OAL": parseFloat(overAllLength), // Longueur totale
+                "SFDM": parseFloat(shaftDiameter), // Diamètre de la queue
+                "shoulder-length": parseFloat(shoulderLength), // Longueur de l'épaulement
+            },
+            "guid": generateGUID(), // Génération du GUID pour l'outil
+            "post-process": {
+                // Détails du post-traitement de l'outil
+                "break-control": false, // Contrôle de la pause
+                "comment": "", // Commentaire
+                "diameter-offset": 1, // Décalage du diamètre
+                "length-offset": 1, // Décalage de la longueur
+                "live": false, // Mode en direct
+                "manual-tool-change": true, // Changement d'outil manuel
+                "number": 1, // Numéro
+                "turret": 0 // Tourelle
+            },
+            "product-id": `${numberOfFlutes}F${toolDiameter}mm`,
+            "product-link": "",
+            "start-values": {
+                "presets": [
+                    {
+                        "f_n": null,
+                        "f_z": null,
+                        "guid": generateGUID(),
+                        "n": n,
+                        "n_ramp": 5000,
+                        "name": "Default preset",
+                        "tool-coolant": "disabled",
+                        "use-stepdown": "true",
+                        "use-stepover": false,
+                        "v_c": null,
+                        "v_f": vf,
+                        "v_f_leadIn": (vf*0.75),
+                        "v_f_leadOut":(vf*0.75),
+                        "v_f_plunge": "333",
+                        "v_f_ramp": (vf*0.75),
+                        "stepdown": parseFloat(ap)
+                    }
+                ]
+            },
+            "type": "flat end mill",
+            "unit": "millimeters",
+            "vendor": ""
+        };
+        const data = [formData]; // Mettre les données dans un objet 'data'
+        const jsonData = {
+            "data": data,
+            "version": 15
+        };
+        // Convertir l'objet en chaîne JSON
+        const toolJSON = JSON.stringify(jsonData, null, 2);
+        // Créer un objet Blob avec la chaîne JSON
+        const blob = new Blob([toolJSON], { type: 'application/json' });
+        // Créer un élément <a> pour le téléchargement du fichier JSON
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'toolData.json';
+        link.click();
+    });
+
+    function updateRotationSpeed(value) {
+        // Mettre à jour la valeur courante affichée
+        document.getElementById('currentRotationSpeed').innerText = value;
+    }
+
+    function calculate() {
+        // Récupérer les valeurs du formulaire
+        const vc = parseFloat(document.getElementById('vc').value);
+        const fz = parseFloat(document.getElementById('fz').value);
+        const ap = parseFloat(document.getElementById('ap').value);
+        const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
+        const numberOfFlutes = parseInt(document.getElementById('numberOfFlutes').value);
+        const maxSpeed = parseInt(document.getElementById('rotationSpeedSlider').max);
+        const maxFeed = parseFloat(document.getElementById('maxFeed').value);
+        const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
+
+        // Calculer la vitesse de rotation
+        let n = (1000 * vc) / (Math.PI * toolDiameter);
+
+        // Utiliser currentRotationSpeed si n dépasse sa valeur
+        n = Math.min(n, currentRotationSpeed);
+
+        // Calculer la vitesse d’avance
+        let vf = n * fz * numberOfFlutes;
+        vf = Math.min(vf, maxFeed);
+
+        // Afficher les résultats avant l'ajustement
+        console.log("Résultats avant ajustement :");
+        console.log("Vitesse de rotation (n):", n.toFixed(0), "tr/min");
+        console.log("Vitesse d’avance (vf):", (n * fz * numberOfFlutes), "mm/min");
+
+        // Calculer le ratio de réduction
+        const ratio = maxFeed / (n * fz * numberOfFlutes);
+        console.log("Ratio:", ratio);
+
+        // Adapter la vitesse de rotation
+        //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
+        if (ratio < 1) {
+            n = n * ratio;
+        }
         // Afficher les résultats finaux
         console.log("Résultats après ajustement :");
-        console.log("Vitesse de rotation (n):", n.toFixed(0), "tr/min");
+        console.log("Vitesse de rotation (n):", n.toFixed(2), "tr/min");
         console.log("Vitesse d’avance (vf):", vf, "mm/min");
 
         // Afficher les résultats
@@ -430,30 +456,30 @@ document.getElementById('generateJSON').addEventListener('click', function() {
             <td>Retenu</td>
         </tr>
         <tr>
-            <td>Vitesse de rotation (n)</td>
+            <td>Vitesse de rotation (n) :</td>
             <td>${n.toFixed(0)} tr/min</td>
         </tr>
         <tr>
-            <td>Vitesse d’avance en X et Y (vf)</td>
+            <td>Vitesse d’avance en X et Y (vf) :</td>
             <td>${vf.toFixed(2)} mm/min</td>
         </tr>
         <tr>
-            <td>Vitesse d’avance en Z</td>
+            <td>Vitesse d’avance en Z :</td>
             <td>${(vf / 2).toFixed(2)} mm/min</td>
         </tr>
         <tr>
-            <td>Profondeur de coupe (ap)</td>
+            <td>Profondeur de coupe (ap) :</td>
             <td>${ap.toFixed(2)} mm</td>
         </tr>
         <tr>
-        <td>% de la vitesse max de rotation</td>
-        <td>${ratio >= 1 ? '100' : (ratio*100).toFixed(2)}%</td>
+            <td>Réduire la vitesse de la broche de :</td>
+            <td>${ratio >= 1 ? 'Aucune réduction' : (100-(ratio * 100)).toFixed(2)+'%'}</td>
         </tr>
     </table>
 `;
         document.getElementById('result').innerHTML = resultTable;
-                
-            const style = `
+
+        const style = `
     #resultTable {
         border-collapse: collapse;
         width: 100%;
@@ -461,7 +487,7 @@ document.getElementById('generateJSON').addEventListener('click', function() {
     }
 
     #resultTable td, #resultTable th {
-        border: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
         padding: 8px;
         text-align: left;
     }
@@ -471,10 +497,10 @@ document.getElementById('generateJSON').addEventListener('click', function() {
     }
 `;
 
-const styleElement = document.createElement('style');
-styleElement.innerHTML = style;
-document.head.appendChild(styleElement);
-        }
+        const styleElement = document.createElement('style');
+        styleElement.innerHTML = style;
+        document.head.appendChild(styleElement);
+    }
 </script>
 </body>
 </html>
