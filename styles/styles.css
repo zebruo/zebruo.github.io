@@ -1,0 +1,156 @@
+@charset "utf-8";
+/* CSS Document */
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+header {
+    width: 100%;
+    background-color: #4E4E4E;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+}
+nav a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+h1 {
+    text-align: center;
+    color: #D8D8D8;
+}
+fieldset {
+    display: flex;
+    flex-direction: column;
+    background-color: #F3F3F3;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-width: 1px;
+}
+label {
+    margin-bottom: 10px;
+}
+input, select {
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+input[type="range"] {
+    width: 100%;
+    color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+}
+button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #4E4E4E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+footer {
+    padding: 10px;
+    text-align: center;
+    background: #ddd;
+    font-size: 0.85em;
+}
+#result {
+    text-align: left;
+}
+#sliderContainer {
+    position: relative;
+    width: 100%;
+}
+#rotationSpeedSlider {
+    margin-bottom: 10px;
+}
+#minRotationSpeed, #currentRotationSpeed, #maxRotationSpeed {
+    position: absolute;
+    bottom: 0px;
+}
+#minMaxFeed, #currentMaxFeed, #maxMaxFeed {
+    position: absolute;
+    bottom: 60px; /* Ajustez la distance verticale en fonction de vos besoins */
+}
+#minRotationSpeed, #minMaxFeed {
+    left: 0;
+}
+#currentRotationSpeed, #currentMaxFeed {
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+}
+#maxRotationSpeed, #maxMaxFeed {
+    right: 0;
+}
+.container {
+    display: flex;
+    font-size: 0.9em;
+    background-color: #ffffff;
+}
+.column {
+    flex: 1;  /*permet aux colonnes de prendre une quantité égale d'espace disponible dans le conteneur parent, les étirant pour qu'elles occupent la totalité de l'espace disponible*/
+    padding: 18px;  /*espace à l'intérieur de chaque colonne*/
+}
+.inline {
+    display: inline;
+}
+.radio {
+    display: none;
+}
+.radio-group label {
+    border: 1px solid #555555;
+    height: 16px;
+    width: 16px;
+    margin-top: 4px;
+    margin-right: 5px;
+    margin-left: 18px;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.radio-group label div {
+    width: 8px;
+    height: 8px;
+    background-color: #FFF;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+.radio:checked+label div {
+    background-color: #636363;
+}
+.text-bold {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 760px) {
+.container, nav {
+    flex-direction: column;
+}
+}
