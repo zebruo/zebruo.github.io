@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <title>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles/styles.css?t=<?php echo time()?>">
+<link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 <header>
     <h1>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</h1>
-    <nav> <a href="#">Calcul fraisage</a> <a href="abaque.html">Abaque</a> <a href="credits.html">Crédits</a> <a href="#">Contact</a> </nav>
+    <nav> <a href="#">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="#">Contact</a> </nav>
 </header>
 <div class="container">
     <div class="column">
@@ -50,58 +50,61 @@
                     <div></div>
                     </label>
                     4 </div>
-                <label for="shaftDiameter">Diamètre de la queue, shaft Diameter (SFDM)</label>
-                <select id="shaftDiameter" name="shaftDiameter">
-                    <option value="1">1 mm</option>
-                    <option value="2">2 mm</option>
-                    <option value="2.5">2.5 mm</option>
-                    <option value="3">3 mm</option>
-                    <option value="3.175">3.175 mm</option>
-                    <option value="4">4 mm</option>
-                    <option value="5">5 mm</option>
-                    <option value="6">6 mm</option>
-                    <option value="8">8 mm</option>
-                </select>
-                <label for="toolMaterial">Fraise au :</label>
-                <select id="toolMaterial" name="toolMaterial">
-                    <option value="carbide">Carbure (Carbide)</option>
-                    <option value="hss">Acier rapide (HSS - High-Speed Steel)</option>
-                    <option value="ti coated">HSS revêtu de TiN, TiCN, TiAlN</option>
-                    <option value="ceramics">Céramique</option>
-                    <option value="Diamant">Diamant</option>
-                </select>
-                <label for="overAllLength">Longueur totale, overall length (OAL)</label>
-                <input type="number" id="overAllLength" name="overAllLength">
-                <label for="lengthBelow">Longueur en dessous du porte outil, length below (LB)</label>
-                <input type="number" id="lengthBelow" name="lengthBelow">
-                <label for="shoulderLength">Longueur de l'épaulement</label>
-                <input type="number" id="shoulderLength" name="shoulderLength">
-                <label for="lengthOfCut">longueur de coupe LU, lendth of cut (LCF)</label>
-                <input type="number" id="lengthOfCut" name="lengthOfCut">
-                <label for="CSP">Coupe au centre, center cutting (CSP)</label>
-                <div class="radio-group">
-                    <input type="radio" id="CSPTrue" class="radio" name="CSP" value="true">
-                    <label for="CSPTrue">
-                    <div></div>
-                    </label>
-                    Oui
-                    <input type="radio" id="CSPFalse" class="radio" name="CSP" value="false" checked>
-                    <label for="CSPFalse">
-                    <div></div>
-                    </label>
-                    Non </div>
-                <label for="HAND">Droite pour horaire, gauche anti-horaire. Hand of cut (Hand)</label>
-                <div class="radio-group">
-                    <input type="radio" id="HANDTrue" class="radio" name="HAND" value="true" checked>
-                    <label for="HANDTrue">
-                    <div></div>
-                    </label>
-                    Droite
-                    <input type="radio" id="HANDFalse" class="radio" name="HAND" value="false">
-                    <label for="HANDFalse">
-                    <div></div>
-                    </label>
-                    Gauche </div>
+                <fieldset>
+                    <legend>&nbsp;Facultatif, sert pour la constitution du JSON&nbsp;</legend>
+                    <label for="shaftDiameter">Diamètre de la queue, shaft Diameter (SFDM)</label>
+                    <select id="shaftDiameter" name="shaftDiameter">
+                        <option value="1">1 mm</option>
+                        <option value="2">2 mm</option>
+                        <option value="2.5">2.5 mm</option>
+                        <option value="3">3 mm</option>
+                        <option value="3.175">3.175 mm</option>
+                        <option value="4">4 mm</option>
+                        <option value="5">5 mm</option>
+                        <option value="6">6 mm</option>
+                        <option value="8">8 mm</option>
+                    </select>
+                    <label for="toolMaterial">Fraise au :</label>
+                    <select id="toolMaterial" name="toolMaterial">
+                        <option value="carbide">Carbure (Carbide)</option>
+                        <option value="hss">Acier rapide (HSS - High-Speed Steel)</option>
+                        <option value="ti coated">HSS revêtu de TiN, TiCN, TiAlN</option>
+                        <option value="ceramics">Céramique</option>
+                        <option value="Diamant">Diamant</option>
+                    </select>
+                    <label for="overAllLength">Longueur totale, overall length (OAL)</label>
+                    <input type="number" id="overAllLength" name="overAllLength">
+                    <label for="lengthBelow">Longueur en dessous du porte outil, length below (LB)</label>
+                    <input type="number" id="lengthBelow" name="lengthBelow">
+                    <label for="shoulderLength">Longueur de l'épaulement</label>
+                    <input type="number" id="shoulderLength" name="shoulderLength">
+                    <label for="lengthOfCut">longueur de coupe LU, lendth of cut (LCF)</label>
+                    <input type="number" id="lengthOfCut" name="lengthOfCut">
+                    <label for="CSP">Coupe au centre, center cutting (CSP)</label>
+                    <div class="radio-group">
+                        <input type="radio" id="CSPTrue" class="radio" name="CSP" value="true">
+                        <label for="CSPTrue">
+                        <div></div>
+                        </label>
+                        Oui
+                        <input type="radio" id="CSPFalse" class="radio" name="CSP" value="false" checked>
+                        <label for="CSPFalse">
+                        <div></div>
+                        </label>
+                        Non </div>
+                    <label for="HAND">Droite pour horaire, gauche anti-horaire, hand of cut (Hand)</label>
+                    <div class="radio-group">
+                        <input type="radio" id="HANDTrue" class="radio" name="HAND" value="true" checked>
+                        <label for="HANDTrue">
+                        <div></div>
+                        </label>
+                        Droite
+                        <input type="radio" id="HANDFalse" class="radio" name="HAND" value="false">
+                        <label for="HANDFalse">
+                        <div></div>
+                        </label>
+                        Gauche </div>
+                </fieldset>
             </fieldset>
         </form>
     </div>
@@ -111,13 +114,13 @@
                 <legend class="text-bold">&nbsp;Données de coupe, d'avance&nbsp;</legend>
                 <label for="vc"><span class="text-bold">Vitesse de coupe</span> Vc faible approche prudente (m/min) </label>
                 <select id="vc" name="vc">
-                    <option value="200">Bois (massif) / 200</option>
-                    <option value="250">CTP, bois tendres / 250</option>
-                    <option value="350">MDF, Valcromat / 350</option>
-                    <option value="200">PMMA, thermoplastiques / 200</option>
-                    <option value="300">PVC expansés, Forex, komacel / 300</option>
-                    <option value="120">Alu 2017A / 120</option>
-                    <option value="120">Cuivre, Laiton, Bronze / 120</option>
+                    <option value="250">Bois dur → 250</option>
+                    <option value="300">Bois tendre, contre-plaqué → 300</option>
+                    <option value="500">MDF, Valcromat → 500</option>
+                    <option value="200">Plexiglass, Polyacétal, Polycarbonate → 200</option>
+                    <option value="300">PVC expansé (Forex, Komacel...) → 300</option>
+                    <option value="100">Aluminium 2017 A → 100</option>
+                    <option value="120">Cuivre, Laiton, Bronze → 120</option>
                 </select>
                 <label for="fz"><span class="text-bold">(Fz)</span> Avance par dent (mm/dent): </label>
                 <input type="number" id="fz" step="0.001" value="0.004" required>
@@ -126,8 +129,8 @@
                 <label class="text-bold">Limites machine:</label>
                 <div id="sliderContainer">
                     <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min): </label>
-                    <input type="range" id="maxFeed" min="500" max="4000" step="100" value="2500" oninput="updateMaxFeed(this.value)">
-                    <span id="minMaxFeed">500</span><span id="currentMaxFeed">2500</span><span id="maxMaxFeed">4000</span>
+                    <input type="range" id="maxFeed" min="500" max="2500" step="100" value="1000" oninput="updateMaxFeed(this.value)">
+                    <span id="minMaxFeed">500</span><span id="currentMaxFeed">1000</span><span id="maxMaxFeed">2500</span>
                     <label for="rotationSpeedSlider">Vitesse max de votre broche (tr/min): </label>
                     <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="24000" oninput="updateRotationSpeed(this.value)">
                     <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed">30000</span> </div>
@@ -162,7 +165,7 @@
             return v.toString(16);
         });
     }
-    const version = "6.0.0"; // Version actuelle du script
+    const version = "7.0.0"; // Version actuelle du script
     document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
     // Mise à jour de la version dans le footer
     document.getElementById('version').textContent = version;
@@ -338,52 +341,62 @@
 const resultTable = `
     <table id="resultTable">
         <thead>
-        <tr>
-            <th>&nbsp;</th>
-            <th>Théorique</th>
-            <th>Retenu</th>
-        </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Théorique</th>
+                <th>Retenu</th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td class="size">Vitesse</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>Vitesse de broche (n) :</td>
-            <td>${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} tr/min</td>
-            <td class="highlighted">${n.toFixed(0)} tr/min</td>
-        </tr>
-        <tr>
-            <td>Vitesse de coupe Vc :</td>
-            <td>${vc.toFixed(0)} m/min</td>
-            <td class="highlighted">${newVc.toFixed(0)} m/min</td>
-        </tr>
-        <tr>
-            <td class="size">Avance</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>Avance en matière X et Y (vf) :</td>
-            <td>${(n/(ratio <= 1 ? ratio : 1) * fz * numberOfFlutes).toFixed(0)} mm/min</td>
-            <td class="highlighted">${vf.toFixed(0)} mm/min</td>
-        </tr>
-        <tr>
-            <td>Avance en matière Z :</td>
-            <td>-</td>
-            <td class="highlighted">${(vf / 2).toFixed(0)} mm/min</td>
-        </tr>
-        <tr>
-            <td>Profondeur de passe (ap) :</td>
-            <td>${ap.toFixed(2)} mm</td>
-            <td class="highlighted">${ap.toFixed(2)} mm</td>
-        </tr>
-        <tr>
-            <td>Réduire la vitesse de broche :</td>
-            <td colspan="2" class="highlighted" style="text-align: center;">${ratio >= 1 ? 'Aucune réduction' : (100 - (ratio * 100)).toFixed(0) + '%'}</td>
-        </tr>
+            <tr>
+                <td class="size">Vitesse</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Vitesse de broche (n) :</td>
+                <td>${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} tr/min</td>
+                <td class="highlighted">${n.toFixed(0)} tr/min</td>
+            </tr>
+            <tr>
+                <td>Vitesse de coupe Vc :</td>
+                <td>${vc.toFixed(0)} m/min</td>
+                <td class="highlighted">${newVc.toFixed(0)} m/min</td>
+            </tr>
+            <tr>
+                <td class="size">Avance</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Avance en matière X et Y (vf) :</td>
+                <td>${(n/(ratio <= 1 ? ratio : 1) * fz * numberOfFlutes).toFixed(0)} mm/min</td>
+                <td class="highlighted">${vf.toFixed(0)} mm/min</td>
+            </tr>
+            <tr>
+                <td class="size">Avance verticale</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Avance en matière Z :</td>
+                <td>${((n / (ratio <= 1 ? ratio : 1) * fz * numberOfFlutes) / 2).toFixed(0)} mm/min</td>
+                <td class="highlighted">${(vf / 2).toFixed(0)} mm/min</td>
+            </tr>
+            <tr>
+                <td class="size">Profondeur</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Profondeur de passe (ap) :</td>
+                <td>${ap.toFixed(2)} mm</td>
+                <td class="highlighted">${ap.toFixed(2)} mm</td>
+            </tr>
+            <tr>
+                <td>Réduire la vitesse de broche :</td>
+                <td colspan="2" class="highlighted center">${ratio >= 1 ? 'Aucune réduction' : (100 - (ratio * 100)).toFixed(0) + '%'}</td>
+            </tr>
         </tbody>
     </table>
 `;
@@ -392,24 +405,42 @@ document.getElementById('result').innerHTML = resultTable;
 
 const style = `
     #resultTable {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 20px;
-        font-size: 0.8rem;
-    }
-    #resultTable td, #resultTable th {
-        padding: 8px;
-    }
-    .highlighted {
-        color: green;
-        font-weight: bold;
-        font-size: 0.85rem;
-    }
-    .size {
-        color: rgba(67,67,67,1.00);
-        font-weight: bold;
-        font-size: 1rem;
-          }
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        #resultTable th, #resultTable td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #resultTable th {
+            background-color: #4E4E4E;
+            color: #fff;
+        }
+
+        .highlighted {
+            color: green;
+            font-weight: bold;
+        }
+
+        .size {
+            color: #434343;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        #resultTable td.size {
+            background-color: #eee;
+        }
+
+        .center {
+            text-align: center;
+        }
 `;
 
         const styleElement = document.createElement('style');
