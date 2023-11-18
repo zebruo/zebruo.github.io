@@ -51,7 +51,7 @@
                     </label>
                     4 </div>
                 <fieldset>
-                    <legend>&nbsp;Facultatif, sert pour la constitution du JSON&nbsp;</legend>
+                    <legend class="legendsize">&nbsp;Facultatif, sert pour la constitution du JSON&nbsp;</legend>
                     <label for="shaftDiameter">Diamètre de la queue, shaft Diameter (SFDM)</label>
                     <select id="shaftDiameter" name="shaftDiameter">
                         <option value="1">1 mm</option>
@@ -114,18 +114,17 @@
                 <legend class="text-bold">&nbsp;Données de coupe, d'avance&nbsp;</legend>
                 <label for="vc"><span class="text-bold">Vitesse de coupe</span> Vc faible approche prudente (m/min) </label>
                 <select id="vc" name="vc">
-                    <option value="250">Bois dur → 250</option>
-                    <option value="300">Bois tendre, contre-plaqué → 300</option>
-                    <option value="500">MDF, Valcromat → 500</option>
-                    <option value="200">Plexiglass, Polyacétal, Polycarbonate → 200</option>
+                    <option value="201">Bois dur → 200</option>
+                    <option value="250">Bois tendre, contre-plaqué → 250</option>
+                    <option value="350">MDF, Valcromat → 350</option>
                     <option value="300">PVC expansé (Forex, Komacel...) → 300</option>
-                    <option value="100">Aluminium 2017 A → 100</option>
-                    <option value="120">Cuivre, Laiton, Bronze → 120</option>
+                    <option value="200">Plexiglass, Polyacétal, Polycarbonate → 200</option>
+                    <option value="120">Aluminium 2017 A → 120</option>
+                    <option value="100">Cuivre, Laiton, Bronze → 100</option>
                 </select>
-                <label for="fz"><span class="text-bold">(Fz)</span> Avance par dent (mm/dent): </label>
-                <input type="number" id="fz" step="0.001" value="0.004" required>
                 <label for="ap"><span class="text-bold">(Ap)</span> Profondeur de coupe (mm): </label>
                 <input type="number" id="ap" step="0.1" value="1.5" required>
+                <label><span class="text-bold" id="fz"></span>&nbsp;&nbsp;avance par dent (mm/dent):</label>
                 <label class="text-bold">Limites machine:</label>
                 <div id="sliderContainer">
                     <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min): </label>
@@ -136,11 +135,14 @@
                     <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed">30000</span> </div>
             </fieldset>
         </form>
-        <button type="button" onclick="calculate()">Calculer</button>
-        <button id="generateJSON">Générer le fichier JSON</button>
+        <div align="center">
+            <button type="button" onclick="calculate()">Calculer</button>
+        </div>
+        <div align="center">
+            <button id="generateJSON">Générer le fichier JSON</button>
+        </div>
     </div>
     <div class="column">
-        <h1>Résultats</h1>
         <p id="result"></p>
     </div>
 </div>
@@ -165,7 +167,7 @@
             return v.toString(16);
         });
     }
-    const version = "7.0.0"; // Version actuelle du script
+    const version = "8.0.0"; // Version actuelle du script
     document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
     // Mise à jour de la version dans le footer
     document.getElementById('version').textContent = version;
@@ -185,7 +187,40 @@
         // Réinitialise la sélection du champ à aucune option choisie
         selectElement.selectedIndex = -1;
     });
-});
+});  
+  // Tableau associatif pour stocker les valeurs de fz
+    const FzValues = {
+    "1": { "201": 0.001, "250": 0.005, "350": 0.006, "300": 0.008, "200": 0.008, "120": 0.004, "100": 0.003 },
+    "2": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
+    "2.5": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
+    "3": { "201": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "200": 0.038, "120": 0.013, "100": 0.008 },
+    "3.175": { "201": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "200": 0.038, "120": 0.013, "100": 0.008 },
+    "4": { "201": 0.018, "250": 0.02, "350": 0.02, "300": 0.048, "200": 0.048, "120": 0.018, "100": 0.013 },
+    "5": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
+    "6": { "201": 0.022, "250": 0.024, "350": 0.027, "300": 0.078, "200": 0.078, "120": 0.023, "100": 0.018 },
+    "8": { "201": 0.031, "250": 0.033, "350": 0.04, "300": 0.088, "200": 0.088, "120": 0.028, "100": 0.023 }
+    // Ajoutez d'autres valeurs en conséquence
+};
+// Fonction pour mettre à jour la valeur de fz
+function updatefz() {
+    // Récupérer les valeurs sélectionnées
+    const selectedDiameter = document.getElementById("toolDiameter").value;
+    const selectedVc = document.getElementById("vc").value;
+
+    // Accéder à la valeur correspondante dans le tableau
+    fz = FzValues[selectedDiameter][selectedVc];
+
+    // Mettre à jour l'affichage
+    document.getElementById("fz").textContent = `fz: ${fz}`;
+}
+
+// Appeler manuellement updatefz pour initialiser fz
+updatefz();
+
+// Écouteurs d'événements pour détecter les changements dans les sélections
+document.getElementById("toolDiameter").addEventListener("change", updatefz);
+document.getElementById("vc").addEventListener("change", updatefz);
+  
     // Ajoute un écouteur d'événements sur le clic du bouton "generateJSON"
     document.getElementById('generateJSON').addEventListener('click', function() {
         // La fonction sera déclenchée lorsque le bouton sera cliqué
@@ -197,7 +232,6 @@
         const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
         const vc = parseFloat(document.getElementById('vc').value);
         const ap = parseFloat(document.getElementById('ap').value);
-        const fz = parseFloat(document.getElementById('fz').value);
         const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
         const currentMaxFeed = parseInt(document.getElementById('currentMaxFeed').innerText);
         const overAllLength = parseFloat(document.getElementById('overAllLength').value);
@@ -267,7 +301,7 @@
                 "presets": [
                     {
                         "f_n": null,
-                        "f_z": null,
+                        "f_z": fz,
                         "guid": generateGUID(),
                         "n": n,
                         "n_ramp": 5000,
@@ -308,7 +342,6 @@
     function calculate() {
         // Récupérer les valeurs du formulaire
         const vc = parseFloat(document.getElementById('vc').value);
-        const fz = parseFloat(document.getElementById('fz').value);
         const ap = parseFloat(document.getElementById('ap').value);
         const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
         const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
@@ -342,7 +375,7 @@ const resultTable = `
     <table id="resultTable">
         <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th>RÉSULTATS</th>
                 <th>Théorique</th>
                 <th>Retenu</th>
             </tr>
@@ -414,7 +447,6 @@ const style = `
 
         #resultTable th, #resultTable td {
             padding: 12px;
-            text-align: left;
             border-bottom: 1px solid #ddd;
         }
 

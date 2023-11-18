@@ -69,9 +69,9 @@ input[type="range"] {
     color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
 }
 button {
-    width: 100%;
+    width: 40%;
     padding: 10px 20px;
-    background-color: #4E4E4E;
+    background-color: #405B75;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -114,6 +114,13 @@ footer {
 #maxRotationSpeed, #maxMaxFeed {
     right: 0;
 }
+#fz {
+    border: 1px solid #ccc; /* Bordure grise de 1 pixel */
+    padding: 5px; /* Ajout de marge interne pour un meilleur espacement */
+    display: inline-block; /* Pour que la bordure s'ajuste à la largeur du texte */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #E3FAE3;
+}
 .container {
     display: flex;
     font-size: 0.9em;
@@ -125,6 +132,9 @@ footer {
     padding-right: 18px;
     padding-left: 18px;
     padding-bottom: 18px; /*espace à l'intérieur de chaque colonne*/
+}
+.legendsize {
+    font-size: 0.85em;
 }
 .inline {
     display: inline;
