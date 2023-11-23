@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <title>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="CNC, Fraisage, Vf, Vc, Fz, Vitesse de coupe, Vitesse d'avance, Fraise carbure, Paramètres d'usinage, Calculs de coupe, Fichier JSON, Profondeur de passe, Diamètre de l'outil, Nombre de dents">
 <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 <header>
-    <h1>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</h1>
+    <h1>Maîtriser l'Usinage CNC<br>
+        Calculs Essentiels pour une Fraise</h1>
     <nav> <a href="#">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="#">Contact</a> </nav>
 </header>
 <div class="container">
@@ -455,7 +457,6 @@ const resultTable = `
                 <td>Vitesse de coupe (Vc) :</td>
                 <td>${vc.toFixed(0)} m/min</td>
                 <td class="highlighted">${newVc.toFixed(0)} m/min</td>
-                <!--<td>${((currentRotationSpeed*Math.PI*toolDiameter)/1000).toFixed(0)}</td>-->
             </tr>
             <tr>
                 <td class="size">Avance</td>
@@ -464,12 +465,8 @@ const resultTable = `
             </tr>
             <tr>
                 <td>Avance en matière X et Y (vf) :</td>
-                <td>${(n/(ratio <= 1 ? ratio : 1) * fz * numberOfFlutes).toFixed(0)} mm/min</td>
-                <!--<td>${Math.round((1000 * vc) / (Math.PI * toolDiameter) * fz * numberOfFlutes)} mm/min</td>-->
-                <!--<td class="highlighted">${vf.toFixed(0)} mm/min</td>-->
-                <td class="highlighted">${(ratio >= 1) ? Math.round((1000 * vc) / (Math.PI * toolDiameter) * fz * numberOfFlutes) + " mm/min" : currentMaxFeed + " mm/min"}</td>
-                <!--<td>${currentRotationSpeed*fz*numberOfFlutes}</td>-->
-
+                <td>${Math.round(currentRotationSpeed * fz * numberOfFlutes)} mm/min</td>
+                <td class="highlighted">${Math.round((ratio >= 1) ? vf : currentMaxFeed)} mm/min</td>
             </tr>
             <tr>
                 <td class="size">Avance verticale</td>
@@ -478,7 +475,7 @@ const resultTable = `
             </tr>
             <tr>
                 <td>Avance en matière Z :</td>
-                <td>${((n / (ratio <= 1 ? ratio : 1) * fz * numberOfFlutes) / 2).toFixed(0)} mm/min</td>
+                <td>&nbsp;</td>
                 <td class="highlighted">${(vf / 2).toFixed(0)} mm/min</td>
             </tr>
             <tr>
