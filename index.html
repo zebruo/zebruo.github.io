@@ -112,19 +112,19 @@
         <form id="presetsForm">
             <fieldset>
                 <legend class="text-bold">&nbsp;Données de coupe, d'avance&nbsp;</legend>
-                <label for="vc"><span class="text-bold">Vitesse de coupe</span> Vc faible approche prudente (m/min) </label>
+                <label for="vc"><span class="text-bold">Vitesse de coupe</span> Vc m/min</label>
                 <select id="vc" name="vc">
-                    <option value="201">Bois dur → 200</option>
-                    <option value="250">Bois tendre, contre-plaqué → 250</option>
+                    <option value="200">Bois (massif) → 200</option>
+                    <option value="250">CTP, Bois tendre → 250</option>
                     <option value="350">MDF, Valcromat → 350</option>
-                    <option value="300">PVC expansé (Forex, Komacel...) → 300</option>
-                    <option value="200">Plexiglass, Polyacétal, Polycarbonate → 200</option>
-                    <option value="120">Aluminium 2017 A → 120</option>
-                    <option value="100">Cuivre, Laiton, Bronze → 100</option>
+                    <option value="300">PVC expansé, Forex, Komacel, etc. → 300</option>
+                    <option value="201">PMMA, thermeplastiques → 201</option>
+                    <option value="120">Aluminium 2017 A, 5083 → 120</option>
+                    <option value="121">Cuivre, Laiton, Bronze → 121</option>
                 </select>
-                <label for="ap"><span class="text-bold">(Ap)</span> Profondeur de coupe (mm): </label>
-                <input type="number" id="ap" step="0.1" value="1.5" required>
-                <label><span class="text-bold" id="fz"></span>&nbsp;&nbsp;avance par dent (mm/dent):</label>
+                <label><span id="fz"></span>&nbsp;&nbsp;avance par dent</label>
+                <input type="number" id="manualFz" step="0.001" placeholder="Ou saisir fz manuellement">
+                <label><span type="text" id="ap" name="ap"></span>&nbsp;&nbsp;profondeur de passe</label>
                 <label class="text-bold">Limites machine:</label>
                 <div id="sliderContainer">
                     <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min): </label>
@@ -167,7 +167,7 @@
             return v.toString(16);
         });
     }
-    const version = "8.0.0"; // Version actuelle du script
+    const version = "10.0.0"; // Version actuelle du script
     document.addEventListener('DOMContentLoaded', function() { // Attend que tout le contenu de la page soit chargé
     // Mise à jour de la version dans le footer
     document.getElementById('version').textContent = version;
@@ -178,7 +178,7 @@
     const formattedDate = currentDate.toLocaleDateString('fr-FR', options);
     dateElement.textContent = `${formattedDate}`;
     // Liste des champs à réinitialiser
-        const fieldsToReset = ['toolDiameter', 'shaftDiameter', 'toolMaterial'];
+        const fieldsToReset = ['toolDiameter', 'shaftDiameter', 'toolMaterial', 'vc'];
         
     // Pour chaque champ à réinitialiser
     fieldsToReset.forEach(field => {
@@ -188,39 +188,105 @@
         selectElement.selectedIndex = -1;
     });
 });  
-  // Tableau associatif pour stocker les valeurs de fz
-    const FzValues = {
-    "1": { "201": 0.001, "250": 0.005, "350": 0.006, "300": 0.008, "200": 0.008, "120": 0.004, "100": 0.003 },
-    "2": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
-    "2.5": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
-    "3": { "201": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "200": 0.038, "120": 0.013, "100": 0.008 },
-    "3.175": { "201": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "200": 0.038, "120": 0.013, "100": 0.008 },
-    "4": { "201": 0.018, "250": 0.02, "350": 0.02, "300": 0.048, "200": 0.048, "120": 0.018, "100": 0.013 },
-    "5": { "201": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "200": 0.028, "120": 0.008, "100": 0.006 },
-    "6": { "201": 0.022, "250": 0.024, "350": 0.027, "300": 0.078, "200": 0.078, "120": 0.023, "100": 0.018 },
-    "8": { "201": 0.031, "250": 0.033, "350": 0.04, "300": 0.088, "200": 0.088, "120": 0.028, "100": 0.023 }
+
+  const FzValues = {
+    "1": { "200": 0.004, "250": 0.005, "350": 0.006, "300": 0.008, "201": 0.008, "120": 0.004, "121": 0.003 },
+    "2": { "200": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "201": 0.028, "120": 0.008, "121": 0.006 },
+    "2.5": { "200": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "201": 0.028, "120": 0.008, "121": 0.006 },
+    "3": { "200": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "201": 0.038, "120": 0.013, "121": 0.008 },
+    "3.175": { "200": 0.016, "250": 0.016, "350": 0.018, "300": 0.038, "201": 0.038, "120": 0.013, "121": 0.008 },
+    "4": { "200": 0.018, "250": 0.02, "350": 0.02, "300": 0.048, "201": 0.048, "120": 0.018, "121": 0.013 },
+    "5": { "200": 0.012, "250": 0.012, "350": 0.013, "300": 0.028, "201": 0.028, "120": 0.008, "121": 0.006 },
+    "6": { "150": 0.022, "250": 0.024, "350": 0.027, "300": 0.078, "201": 0.078, "120": 0.023, "121": 0.018 },
+    "8": { "200": 0.031, "250": 0.033, "350": 0.04, "300": 0.088, "201": 0.088, "120": 0.028, "121": 0.023 }
     // Ajoutez d'autres valeurs en conséquence
-};
-// Fonction pour mettre à jour la valeur de fz
+  };
+
+  const materialCoefficients = {
+    "1": { "200": 0.2, "250": 0.5, "350": 0.5, "300": 0.5, "201": 0.5, "120": 0.2, "121": 0.1 },
+    "2": { "200": 0.2, "250": 0.5, "350": 0.5, "300": 0.5, "201": 0.5, "120": 0.2, "121": 0.1 },
+    "2.5": { "200": 0.2, "250": 0.5, "350": 0.5, "300": 0.5, "201": 0.5, "120": 0.2, "121": 0.1 },
+    "3": { "200": 0.4, "250": 0.5, "350": 0.5, "300": 0.5, "201": 0.5, "120": 0.4, "121": 0.1 },
+    "3.175": { "200": 0.4, "250": 0.5, "350": 0.5, "300": 0.5, "201": 0.5, "120": 0.4, "121": 0.1 },
+    "4": { "200": 0.5, "250": 0.8, "350": 0.8, "300": 0.8, "201": 0.8, "120": 0.5, "121": 0.2 },
+    "5": { "200": 0.5, "250": 1, "350": 1, "300": 1, "201": 1, "120": 0.5, "121": 0.25 },
+    "6": { "200": 1, "250": 1, "350": 1, "300": 1, "201": 1, "120": 1, "121": 0.35 },
+    "8": { "200": 1, "250": 1, "350": 1, "300": 1, "201": 1, "120": 1, "121": 0.35 }
+    // Ajoutez d'autres valeurs en conséquence
+  };
+
+  let fz = null;
+
+function getElementValueById(elementId) {
+  return parseFloat(document.getElementById(elementId).value);
+}
+
 function updatefz() {
-    // Récupérer les valeurs sélectionnées
+  const selectedDiameter = getElementValueById("toolDiameter");
+  const selectedVc = getElementValueById("vc");
+
+  if (!isNaN(parseFloat(document.getElementById("manualFz").value))) {
+    fz = parseFloat(document.getElementById("manualFz").value);
+  } else if (FzValues[selectedDiameter] && FzValues[selectedDiameter][selectedVc] !== undefined) {
+    fz = FzValues[selectedDiameter][selectedVc];
+  }
+
+  const fzDisplay = fz !== null ? fz.toFixed(3) : "Indisponible";
+  document.getElementById("fz").textContent = `fz: ${fzDisplay} mm/dent`;
+}
+
+updatefz();
+
+const elementsToWatch = ["toolDiameter", "vc"];
+elementsToWatch.forEach(elementId => {
+  document.getElementById(elementId).addEventListener("change", updatefz);
+});
+
+document.getElementById("manualFz").addEventListener("input", function () {
+  const inputValue = parseFloat(this.value);
+
+  if (!isNaN(inputValue) && inputValue >= 0) {
+    fz = inputValue;
+  } else {
+    fz = null;
+    this.value = "";
+  }
+
+  updatefz();
+});
+    
+    // Déclarer la variable ap avec une portée globale
+let ap;
+
+function updateAp() {
     const selectedDiameter = document.getElementById("toolDiameter").value;
     const selectedVc = document.getElementById("vc").value;
 
-    // Accéder à la valeur correspondante dans le tableau
-    fz = FzValues[selectedDiameter][selectedVc];
+    // Vérifier si les valeurs sélectionnées existent dans le tableau
+    if (materialCoefficients[selectedDiameter] && materialCoefficients[selectedDiameter][selectedVc] !== undefined) {
+        const coefficient = materialCoefficients[selectedDiameter][selectedVc];
+        ap = (coefficient * selectedDiameter).toFixed(2); // Assigner la valeur à la variable ap
 
-    // Mettre à jour l'affichage
-    document.getElementById("fz").textContent = `fz: ${fz}`;
+        // Mettre à jour l'élément HTML avec la nouvelle valeur d'ap
+        document.getElementById("ap").textContent = `ap: ${ap} mm`;
+    } else {
+        // Si les valeurs ne sont pas trouvées, afficher un message d'indisponibilité
+        document.getElementById("ap").textContent = "Profondeur de coupe: Indisponible";
+        ap = undefined; // Réinitialiser la variable si la valeur n'est pas disponible
+    }
 }
 
-// Appeler manuellement updatefz pour initialiser fz
-updatefz();
+// Appeler manuellement updateAp pour l'initialisation
+updateAp();
 
-// Écouteurs d'événements pour détecter les changements dans les sélections
-document.getElementById("toolDiameter").addEventListener("change", updatefz);
-document.getElementById("vc").addEventListener("change", updatefz);
-  
+// À ce stade, la variable ap contient la dernière valeur mise à jour par updateAp
+// Vous pouvez l'utiliser dans d'autres parties de votre code.
+
+
+// Ajouter des écouteurs d'événements pour détecter les changements dans les sélections
+document.getElementById("toolDiameter").addEventListener("change", updateAp);
+document.getElementById("vc").addEventListener("change", updateAp);
+
     // Ajoute un écouteur d'événements sur le clic du bouton "generateJSON"
     document.getElementById('generateJSON').addEventListener('click', function() {
         // La fonction sera déclenchée lorsque le bouton sera cliqué
@@ -231,7 +297,6 @@ document.getElementById("vc").addEventListener("change", updatefz);
         const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
         const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
         const vc = parseFloat(document.getElementById('vc').value);
-        const ap = parseFloat(document.getElementById('ap').value);
         const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
         const currentMaxFeed = parseInt(document.getElementById('currentMaxFeed').innerText);
         const overAllLength = parseFloat(document.getElementById('overAllLength').value);
@@ -251,15 +316,6 @@ document.getElementById("vc").addEventListener("change", updatefz);
         // Calculer la vitesse d’avance
         let vf = n * fz * numberOfFlutes;
         vf = Math.min(vf, currentMaxFeed);
-        
-        // Calculer le ratio de réduction
-        const ratio = currentMaxFeed / (n * fz * numberOfFlutes);
-
-        // Adapter la vitesse de rotation
-        //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
-        if (ratio < 1) {
-            n = n * ratio;
-        }
         
         // Calculer la nouvelle vitesse de coupe (vc)
         const newVc = (Math.PI * toolDiameter * n) / 1000;
@@ -301,7 +357,7 @@ document.getElementById("vc").addEventListener("change", updatefz);
                 "presets": [
                     {
                         "f_n": null,
-                        "f_z": fz,
+                        "f_z": null,
                         "guid": generateGUID(),
                         "n": n,
                         "n_ramp": 5000,
@@ -315,7 +371,7 @@ document.getElementById("vc").addEventListener("change", updatefz);
                         "v_f_leadOut":(vf*0.75),
                         "v_f_plunge": "333",
                         "v_f_ramp": (vf*0.75),
-                        "stepdown": parseFloat(ap)
+                        "stepdown": ap
                     }
                 ]
             },
@@ -342,13 +398,12 @@ document.getElementById("vc").addEventListener("change", updatefz);
     function calculate() {
         // Récupérer les valeurs du formulaire
         const vc = parseFloat(document.getElementById('vc').value);
-        const ap = parseFloat(document.getElementById('ap').value);
         const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
         const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
         const maxSpeed = parseInt(document.getElementById('rotationSpeedSlider').max);
         const currentMaxFeed = parseInt(document.getElementById('currentMaxFeed').innerText);
         const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').innerText);
-
+        
         // Calculer la vitesse de rotation
         let n = (1000 * vc) / (Math.PI * toolDiameter);
 
@@ -361,6 +416,10 @@ document.getElementById("vc").addEventListener("change", updatefz);
 
         // Calculer le ratio de réduction
         const ratio = currentMaxFeed / (n * fz * numberOfFlutes);
+        //const ratio = currentMaxFeed / ((1000 * vc) / (Math.PI * toolDiameter) * fz * numberOfFlutes);
+        
+        // Afficher le ratio dans la console
+console.log("Ratio de réduction :", ratio);
 
         // Adapter la vitesse de rotation
         //Si le ratio est inférieur à 1, le bloc if est exécuté et la vitesse de rotation est ajustée. Si le ratio est égal ou supérieur à 1, le bloc if n'est pas exécuté, et la vitesse de rotation reste inchangée
@@ -372,10 +431,11 @@ document.getElementById("vc").addEventListener("change", updatefz);
         
        // Afficher les résultats
 const resultTable = `
+<h1 class="h1Size">Résultats</h1>
     <table id="resultTable">
         <thead>
             <tr>
-                <th>RÉSULTATS</th>
+                <th>&nbsp;</th>
                 <th>Théorique</th>
                 <th>Retenu</th>
             </tr>
@@ -383,8 +443,8 @@ const resultTable = `
         <tbody>
             <tr>
                 <td class="size">Vitesse</td>
-                <td></td>
-                <td></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Vitesse de broche (n) :</td>
@@ -392,24 +452,29 @@ const resultTable = `
                 <td class="highlighted">${n.toFixed(0)} tr/min</td>
             </tr>
             <tr>
-                <td>Vitesse de coupe Vc :</td>
+                <td>Vitesse de coupe (Vc) :</td>
                 <td>${vc.toFixed(0)} m/min</td>
                 <td class="highlighted">${newVc.toFixed(0)} m/min</td>
+                <!--<td>${((currentRotationSpeed*Math.PI*toolDiameter)/1000).toFixed(0)}</td>-->
             </tr>
             <tr>
                 <td class="size">Avance</td>
-                <td></td>
-                <td></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Avance en matière X et Y (vf) :</td>
                 <td>${(n/(ratio <= 1 ? ratio : 1) * fz * numberOfFlutes).toFixed(0)} mm/min</td>
-                <td class="highlighted">${vf.toFixed(0)} mm/min</td>
+                <!--<td>${Math.round((1000 * vc) / (Math.PI * toolDiameter) * fz * numberOfFlutes)} mm/min</td>-->
+                <!--<td class="highlighted">${vf.toFixed(0)} mm/min</td>-->
+                <td class="highlighted">${(ratio >= 1) ? Math.round((1000 * vc) / (Math.PI * toolDiameter) * fz * numberOfFlutes) + " mm/min" : currentMaxFeed + " mm/min"}</td>
+                <!--<td>${currentRotationSpeed*fz*numberOfFlutes}</td>-->
+
             </tr>
             <tr>
                 <td class="size">Avance verticale</td>
-                <td></td>
-                <td></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Avance en matière Z :</td>
@@ -418,13 +483,13 @@ const resultTable = `
             </tr>
             <tr>
                 <td class="size">Profondeur</td>
-                <td></td>
-                <td></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Profondeur de passe (ap) :</td>
-                <td>${ap.toFixed(2)} mm</td>
-                <td class="highlighted">${ap.toFixed(2)} mm</td>
+                <td>${ap} mm</td>
+                <td class="highlighted">${ap} mm</td>
             </tr>
             <tr>
                 <td>Réduire la vitesse de broche :</td>
@@ -438,7 +503,7 @@ document.getElementById('result').innerHTML = resultTable;
 
 const style = `
     #resultTable {
-            width: 80%;
+            width: 100%;
             margin: 20px auto;
             border-collapse: collapse;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

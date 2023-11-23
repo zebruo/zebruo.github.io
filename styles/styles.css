@@ -69,7 +69,7 @@ input[type="range"] {
     color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
 }
 button {
-    width: 40%;
+    width: 55%;
     padding: 10px 20px;
     background-color: #405B75;
     color: #fff;
@@ -116,10 +116,19 @@ footer {
 }
 #fz {
     border: 1px solid #ccc; /* Bordure grise de 1 pixel */
+    margin-top: 30px;
     padding: 5px; /* Ajout de marge interne pour un meilleur espacement */
     display: inline-block; /* Pour que la bordure s'ajuste à la largeur du texte */
     border-radius: 5px; /* Coins arrondis */
-    background-color: #E3FAE3;
+    background-color: #E0F8E0;
+}
+#ap {
+    border: 1px solid #ccc; /* Bordure grise de 1 pixel */
+    margin-top: 10px;
+    padding: 5px; /* Ajout de marge interne pour un meilleur espacement */
+    display: inline-block; /* Pour que la bordure s'ajuste à la largeur du texte */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #E0F8E0;
 }
 .container {
     display: flex;
@@ -167,6 +176,9 @@ footer {
 }
 .text-bold {
     font-weight: bold;
+}
+.h1Size{
+    margin-top: 0px;
 }
 @media screen and (max-width: 760px) {
     .container, nav {
