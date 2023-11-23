@@ -10,7 +10,7 @@
 <header>
     <h1>Maîtriser l'Usinage CNC<br>
         Calculs Essentiels pour une Fraise</h1>
-    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="#">Contact</a> </nav>
+    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> </nav>
 </header>
 <div class="container">
     <div class="column aideSize">
@@ -99,7 +99,8 @@
         <p>Ces formules vous permettent de déterminer les paramètres d’usinage appropriés pour votre application spécifique. Cependant, il est recommandé de commencer avec des valeurs inférieures à celles obtenues et d’augmenter progressivement jusqu’à trouver les bonnes valeurs d’usinage. Cela est dû au fait que la rigidité de la machine, la qualité de la fraise et la densité du bois (qui peut varier) peuvent affecter les résultats.</p>
     </div>
     <div class="column aideSize">
-        <h2>Exemples avec D=3mm, Z=2, Max machine : n=12000 tr/min et Vf=800 mm/min</h2>
+        <h2>Quelques exemples avec D = 3mm, Z = 2
+        <br>Max machine : n = 12000 tr/min et Vf = 800 mm/min</h2>
         <p><span class="text-bold">Ex 1</span> Supposons que vous ayez une fraise tournant à une vitesse de 12000 tr/min (n) et que le diamètre de l’outil (D) soit de 3 mm. Vous pouvez utiliser la formule suivante pour calculer la vitesse de coupe (Vc) : </p>
         <p>En insérant vos valeurs dans cette formule, nous obtenons :</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -152,8 +153,7 @@
                 <annotation encoding="application/x-tex">n = \frac{{1000 \times 350}}{{\pi \times 3}} ≈ 37249 \text{ tr/min} </annotation>
             </semantics>
         </math>
-        <p> Cela signifie que pour obtenir une vitesse de coupe de 350 m/min avec une fraise de 3 mm, vous auriez besoin d’une vitesse de rotation d’environ 37249 tr/min. </p>
-        <p>Cependant, votre machine a une vitesse de rotation maximale de 12000 tr/min, ce qui est inférieur à la vitesse de rotation nécessaire de 37249 tr/min. Par conséquent, avec votre machine actuelle et une fraise de 3 mm, il ne serait pas possible d’atteindre une vitesse de coupe de 350 m/min. Vous pourriez avoir besoin d’une machine capable de vitesses de rotation plus élevées, ou vous pourriez envisager d’utiliser un outil de diamètre différent pour atteindre la vitesse de coupe souhaitée. </p>
+        <p> Cela signifie que pour obtenir une vitesse de coupe de 350 m/min avec une fraise de 3 mm, vous auriez besoin d’une vitesse de rotation d’environ 37249 tr/min.<br> Cependant, votre machine a une vitesse de rotation maximale de 12000 tr/min, ce qui est inférieur à la vitesse de rotation nécessaire de 37249 tr/min. Par conséquent, avec votre machine actuelle et une fraise de 3 mm, il ne serait pas possible d’atteindre une vitesse de coupe de 350 m/min. Vous pourriez avoir besoin d’une machine capable de vitesses de rotation plus élevées, ou vous pourriez envisager d’utiliser un outil de diamètre différent pour atteindre la vitesse de coupe souhaitée. </p>
         <p><span class="text-bold">Ex 3</span> Pour calculer la vitesse d’avance (Vf) avec une vitesse de rotation (n) de 12000 tr/min, une avance par dent (Fz) de 0.05 mm/dent et un nombre de dents (Z) de 2, vous pouvez utiliser la formule suivante :</p>
         <p>En insérant vos valeurs dans cette formule, nous obtenons :</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">

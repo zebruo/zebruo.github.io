@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles/styles.css">
+<title>Formulaire de Contact</title>
+</head>
+<body>
+<header>
+    <h1>Maîtriser l'Usinage CNC<br>
+        Calculs Essentiels pour une Fraise</h1>
+    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> </nav>
+</header>
+<div class="container">
+    <div class="column aideSize">
+        <p>Ce script est conçu pour faciliter le processus de calcul des paramètres d'usinage CNC pour une fraise. Voici un résumé de ses principales fonctionnalités :</p>
+        <p>Interface Utilisateur : Le script crée une interface utilisateur avec des champs de formulaire pour saisir les détails de l'outil de coupe, tels que le diamètre de la fraise, le matériau, le nombre de dents, etc. </p>
+        <p>Calcul Automatique : Il effectue automatiquement des calculs en fonction des paramètres saisis, notamment la vitesse de coupe (Vc), l'avance par dent (fz), la profondeur de passe (ap), etc. </p>
+        <p>Réglages Personnalisés : L'utilisateur peut spécifier des paramètres personnalisés tels que la vitesse de coupe, le diamètre de l'outil, etc. De plus, il peut définir des options facultatives telles que la coupe au centre, l'orientation de la coupe, etc. </p>
+        <p>Génération de Fichier JSON : Le script génère un fichier JSON structuré avec toutes les données de l'outil de coupe. Ce fichier peut être utilisé pour stocker et échanger des configurations d'outils. </p>
+        <p>Réactivité : L'interface utilisateur est réactive, fournissant des suggestions en temps réel et permettant à l'utilisateur de générer rapidement des données utiles pour l'usinage CNC. </p>
+        <p>Affichage des Résultats : Les résultats des calculs, y compris la vitesse de broche, la vitesse de coupe, l'avance, etc., sont affichés de manière claire dans un tableau. </p>
+        <p>Réduction Automatique de la Vitesse de Broche : Si les paramètres spécifiés dépassent les capacités de la machine, le script ajuste automatiquement la vitesse de broche pour rester dans les limites de la machine. </p>
+        <p>Résumé des Performances : Le script produit un résumé des performances, indiquant les ajustements effectués et fournissant des recommandations, le cas échéant. </p>
+        <p>En résumé, ce script offre une solution complète pour le calcul des paramètres d'usinage CNC, simplifiant le processus pour les utilisateurs travaillant avec des fraises de différentes tailles et dans divers matériaux. </p>
+    </div>
+    <div class="column aideSize">
+        <h1>Contactez-moi</h1>
+        <form action="https://formspree.io/f/xayggyew" method="post">
+            <input type="text" id="name" name="name" placeholder="Nom" autocomplete="off" required>
+            <input type="email" id="email" name="email" placeholder="Adresse Email" autocomplete="off" required>
+            <textarea id="message" name="message" rows="4" placeholder="Message (maximum 500 caractères) :" maxlength="500" required></textarea>
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+</div>
+<footer>
+    <p class="inline">&copy; 2023 edurel. Tous droits réservés.<br>
+        Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
+    <p id="date" class="inline"></p>
+</footer>
+<script src="script/cnc.js"></script>
+</body>
+</html>

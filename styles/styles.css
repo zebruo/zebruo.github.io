@@ -64,7 +64,7 @@ fieldset {
 label {
     margin-bottom: 10px;
 }
-input, select {
+input, textarea, select {
     width: 60%;
     padding: 5px;
     margin-bottom: 15px;
@@ -75,6 +75,21 @@ input, select {
 input[type="range"] {
     width: 100%;
     color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+}
+input[type="submit"] {
+    background-color: #405B75;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+input[type="submit"]:hover {
+    background-color: #4F7091;
 }
 button {
     width: 55%;
@@ -190,7 +205,7 @@ footer {
 }
 .aideSize {
     font-size: 1.1em;
-    background-color: rgba(248,248,248,1.00);
+    background-color: rgba(248, 248, 248, 1.00);
     margin-right: 0.1%;
     margin-left: 0.1%;
 }
