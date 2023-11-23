@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles/styles.css">
+<title>Formules d'Usinage</title>
+</head>
+<body>
+<header>
+    <h1>Maîtriser l'Usinage CNC<br>
+        Calculs Essentiels pour une Fraise</h1>
+    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="#">Contact</a> </nav>
+</header>
+<div class="container">
+    <div class="column aideSize">
+        <h2>Formules détaillées pour n, Vc, Vf, Fz et ap</h2>
+        <h2><br>
+        </h2>
+        <p><span class="text-bold">n (Vitesse de rotation)</span> : La vitesse de rotation de l’outil est calculée en utilisant la formule suivante :</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mn>1000</mn>
+                            <mo>×</mo>
+                            <mi>V</mi>
+                            <mi>c</mi>
+                        </mrow>
+                        <mrow>
+                            <mi>π</mi>
+                            <mo>×</mo>
+                            <mi>D</mi>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+                <annotation encoding="application/x-tex">n = \frac{{1000 \times Vc}}{{\pi \times D}} </annotation>
+            </semantics>
+        </math>
+        <ul>
+            <li>Où :</li>
+            <li>n est la vitesse de rotation en tours par minute (tr/min)</li>
+            <li>Vc est la vitesse de coupe en mètres par minute (m/min)</li>
+            <li>D est le diamètre de l’outil en millimètres (mm)</li>
+        </ul>
+        <br>
+        <p><span class="text-bold">Vc (Vitesse de coupe)</span> : La vitesse de coupe est une valeur donnée en fonction du matériau à usiner et du type d’outil utilisé. Elle est généralement fournie par le fabricant de l’outil ou déterminée par des tests. C'est généralement exprimé en millimètres par dent (m/min). </p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>V</mi>
+                    <mi>c</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>n</mi>
+                            <mo>×</mo>
+                            <mi>π</mi>
+                            <mo>×</mo>
+                            <mi>D</mi>
+                        </mrow>
+                        <mn>1000</mn>
+                    </mfrac>
+                </mrow>
+                <annotation encoding="application/x-tex">Vc = \frac{{n \times \pi \times D}}{1000} </annotation>
+            </semantics>
+        </math>
+        <br>
+        <p><span class="text-bold">Vf (Vitesse d’avance)</span> : La vitesse d’avance est calculée en utilisant la formule suivante :</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>V</mi>
+                    <mi>f</mi>
+                    <mo>=</mo>
+                    <mi>n</mi>
+                    <mo>×</mo>
+                    <mi>F</mi>
+                    <mi>z</mi>
+                    <mo>×</mo>
+                    <mi>Z</mi>
+                </mrow>
+                <annotation encoding="application/x-tex">Vf = n \times Fz \times Z </annotation>
+            </semantics>
+        </math>
+        <ul>
+            <li>Où :</li>
+            <li>Vf est la vitesse d’avance en millimètres par minute (mm/min)</li>
+            <li>n est la vitesse de rotation en tours par minute (tr/min)</li>
+            <li>Fz est l’avance par dent en millimètres par dent (mm/dent)</li>
+            <li>Z est le nombre de dents de l’outil</li>
+        </ul>
+        <p><br>
+            <span class="text-bold">Fz (avance par dent)</span> : Représente la distance d'avance le long de la pièce à usiner pour chaque tour de l’outil et pour chaque dent de l’outil. C’est généralement exprimé en millimètres par dent (mm/dent). Un Fz élevé signifie que chaque dent enlève plus de matériau, ce qui peut permettre d’usiner plus rapidement, mais cela peut aussi augmenter la charge sur l’outil et la machine.</p>
+        <p><span class="text-bold">ap (Profondeur de passe)</span> : La profondeur de passe est une valeur donnée en fonction de la capacité de la machine et du type d’outil utilisé. Elle représente la quantité de matériau enlevée à chaque passage de l’outil.</p>
+        <p>Ces formules vous permettent de déterminer les paramètres d’usinage appropriés pour votre application spécifique. Cependant, il est recommandé de commencer avec des valeurs inférieures à celles obtenues et d’augmenter progressivement jusqu’à trouver les bonnes valeurs d’usinage. Cela est dû au fait que la rigidité de la machine, la qualité de la fraise et la densité du bois (qui peut varier) peuvent affecter les résultats.</p>
+    </div>
+    <div class="column aideSize">
+        <h2>Exemples avec D=3mm, Z=2, Max machine : n=12000 tr/min et Vf=800 mm/min</h2>
+        <p><span class="text-bold">Ex 1</span> Supposons que vous ayez une fraise tournant à une vitesse de 12000 tr/min (n) et que le diamètre de l’outil (D) soit de 3 mm. Vous pouvez utiliser la formule suivante pour calculer la vitesse de coupe (Vc) : </p>
+        <p>En insérant vos valeurs dans cette formule, nous obtenons :</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>V</mi>
+                    <mi>c</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mn>12000</mn>
+                            <mo>×</mo>
+                            <mi>π</mi>
+                            <mo>×</mo>
+                            <mn>3</mn>
+                        </mrow>
+                        <mn>1000</mn>
+                    </mfrac>
+                    <mo>≈</mo>
+                    <mn>113.1</mn>
+                    <mtext>&nbsp;m/min</mtext>
+                </mrow>
+                <annotation encoding="application/x-tex">Vc = \frac{{12000 \times \pi \times 3}}{1000} ≈ 113.1 \text{ m/min} </annotation>
+            </semantics>
+        </math>
+        <p>Cela signifie que si vous pouviez suivre le chemin exact que l’outil de coupe prend à travers le matériau et l’étirer en une ligne droite, cette ligne mesurerait environ 113 mètres de long après une minute d’usinage. C’est la vitesse à laquelle le matériau est enlevé par l’outil. </p>
+        <p><span class="text-bold">Ex 2</span> Pour obtenir une vitesse de coupe (Vc) de 350 m/min avec une fraise de 3 mm tournant à 12000 tr/min, vous pouvez utiliser la formule suivante pour calculer la vitesse de rotation nécessaire (n) : </p>
+        <p>En insérant vos valeurs dans cette formule, nous obtenons : </p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mn>1000</mn>
+                            <mo>×</mo>
+                            <mn>350</mn>
+                        </mrow>
+                        <mrow>
+                            <mi>π</mi>
+                            <mo>×</mo>
+                            <mn>3</mn>
+                        </mrow>
+                    </mfrac>
+                    <mo>≈</mo>
+                    <mn>37249</mn>
+                    <mtext>&nbsp;tr/min</mtext>
+                </mrow>
+                <annotation encoding="application/x-tex">n = \frac{{1000 \times 350}}{{\pi \times 3}} ≈ 37249 \text{ tr/min} </annotation>
+            </semantics>
+        </math>
+        <p> Cela signifie que pour obtenir une vitesse de coupe de 350 m/min avec une fraise de 3 mm, vous auriez besoin d’une vitesse de rotation d’environ 37249 tr/min. </p>
+        <p>Cependant, votre machine a une vitesse de rotation maximale de 12000 tr/min, ce qui est inférieur à la vitesse de rotation nécessaire de 37249 tr/min. Par conséquent, avec votre machine actuelle et une fraise de 3 mm, il ne serait pas possible d’atteindre une vitesse de coupe de 350 m/min. Vous pourriez avoir besoin d’une machine capable de vitesses de rotation plus élevées, ou vous pourriez envisager d’utiliser un outil de diamètre différent pour atteindre la vitesse de coupe souhaitée. </p>
+        <p><span class="text-bold">Ex 3</span> Pour calculer la vitesse d’avance (Vf) avec une vitesse de rotation (n) de 12000 tr/min, une avance par dent (Fz) de 0.05 mm/dent et un nombre de dents (Z) de 2, vous pouvez utiliser la formule suivante :</p>
+        <p>En insérant vos valeurs dans cette formule, nous obtenons :</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>V</mi>
+                    <mi>f</mi>
+                    <mo>=</mo>
+                    <mn>12000</mn>
+                    <mo>×</mo>
+                    <mn>0.05</mn>
+                    <mo>×</mo>
+                    <mn>2</mn>
+                    <mo>=</mo>
+                    <mn>1200</mn>
+                    <mtext>&nbsp;mm/min</mtext>
+                </mrow>
+                <annotation encoding="application/x-tex">Vf = 12000 \times 0.05 \times 2 = 1200 \text{ mm/min} </annotation>
+            </semantics>
+        </math>
+        <p> Cela signifie que pour une vitesse de rotation de 12000 tr/min, une avance par dent de 0.05 mm/dent et un nombre de dents de 2, la vitesse d’avance serait de 1200 mm/min. C’est la vitesse à laquelle l’outil se déplace le long de la pièce à usiner. Cependant, si la vitesse d’avance calculée dépasse la vitesse d’avance maximale de votre machine (800 mm/min dans votre cas), vous devrez utiliser cette vitesse maximale pour vos calculs. Donc, dans votre cas, la vitesse d’avance devrait être limitée à 800 mm/min.</p>
+        <p><span class="text-bold">Ex 4</span> Pour déterminer la vitesse de rotation (n) nécessaire pour obtenir une vitesse d’avance (Vf) de 800 mm/min avec une avance par dent (Fz) de 0.05 mm/dent et un nombre de dents (Z) de 2, vous pouvez réarranger la formule de Vf comme suit : </p>
+        <p>En insérant vos valeurs dans cette formule, nous obtenons : </p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <semantics>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mn>800</mn>
+                        <mrow>
+                            <mn>0.05</mn>
+                            <mo>×</mo>
+                            <mn>2</mn>
+                        </mrow>
+                    </mfrac>
+                    <mo>=</mo>
+                    <mn>8000</mn>
+                    <mtext>&nbsp;tr/min</mtext>
+                </mrow>
+                <annotation encoding="application/x-tex">n = \frac{{800}}{{0.05 \times 2}} = 8000 \text{ tr/min} </annotation>
+            </semantics>
+        </math>
+        <p>Cela signifie que pour obtenir une vitesse d’avance de 800 mm/min avec une avance par dent de 0.05 mm/dent avec un (Z) de 2, vous devriez régler la vitesse de rotation de votre machine à 8000 tr/min. Cependant, veuillez noter que ces calculs sont basés sur des valeurs idéales et que les conditions réelles d’usinage peuvent nécessiter des ajustements. </p>
+    </div>
+</div>
+<footer>
+    <p class="inline">&copy; 2023 edurel. Tous droits réservés.<br>
+        Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
+    <p id="date" class="inline"></p>
+</footer>
+<script src="script/cnc.js"></script>
+</body>
+</html>

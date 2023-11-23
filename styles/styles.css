@@ -1,5 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 * {
     box-sizing: border-box;
 }
@@ -42,6 +43,13 @@ nav a:hover {
 h1 {
     text-align: center;
     color: #D8D8D8;
+}
+ul {
+    list-style-type: none;
+}
+semantics {
+    font-size: 1.5em;
+    margin-left: 80px;
 }
 fieldset {
     display: flex;
@@ -177,8 +185,14 @@ footer {
 .text-bold {
     font-weight: bold;
 }
-.h1Size{
+.margSize {
     margin-top: 0px;
+}
+.aideSize {
+    font-size: 1.1em;
+    background-color: rgba(248,248,248,1.00);
+    margin-right: 0.1%;
+    margin-left: 0.1%;
 }
 @media screen and (max-width: 760px) {
     .container, nav {
