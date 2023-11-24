@@ -25,7 +25,7 @@
     const formattedDate = currentDate.toLocaleDateString('fr-FR', options);
     dateElement.textContent = `${formattedDate}`;
     // Liste des champs à réinitialiser
-        const fieldsToReset = ['toolDiameter', 'shaftDiameter', 'toolMaterial', 'vc'];
+        const fieldsToReset = ['shaftDiameter', 'toolMaterial'];
         
     // Pour chaque champ à réinitialiser
     fieldsToReset.forEach(field => {
@@ -292,23 +292,22 @@ const resultTable = `
             </tr>
             <tr>
                 <td>Vitesse de broche (n) :</td>
-                <td>${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} tr/min</td>
-                <td class="highlighted">${n.toFixed(0)} tr/min</td>
+                <td>${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} <span class="unit">tr/min</span></td>
+                <td class="highlighted">${n.toFixed(0)} <span class="unit">tr/min</span></td>
             </tr>
             <tr>
                 <td>Vitesse de coupe (Vc) :</td>
-                <td>${vc.toFixed(0)} m/min</td>
-                <td class="highlighted">${newVc.toFixed(0)} m/min</td>
+                <td>${vc.toFixed(0)} <span class="unit">m/min</span></td>
+                <td class="highlighted">${newVc.toFixed(0)} <span class="unit">m/min</span></td>
             </tr>
             <tr>
                 <td class="size">Avance</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
-            <tr>
                 <td>Avance en matière X et Y (vf) :</td>
-                <td>${Math.round(currentRotationSpeed * fz * numberOfFlutes)} mm/min</td>
-                <td class="highlighted">${Math.round((ratio >= 1) ? vf : currentMaxFeed)} mm/min</td>
+                <td>${Math.round(currentRotationSpeed * fz * numberOfFlutes)} <span class="unit">mm/min</span></td>
+                <td class="highlighted">${Math.round((ratio >= 1) ? vf : currentMaxFeed)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
                 <td class="size">Avance verticale</td>
@@ -318,7 +317,7 @@ const resultTable = `
             <tr>
                 <td>Avance en matière Z :</td>
                 <td>&nbsp;</td>
-                <td class="highlighted">${(vf / 2).toFixed(0)} mm/min</td>
+                <td class="highlighted">${(vf / 2).toFixed(0)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
                 <td class="size">Profondeur</td>
@@ -327,12 +326,12 @@ const resultTable = `
             </tr>
             <tr>
                 <td>Profondeur de passe (ap) :</td>
-                <td>${ap} mm</td>
-                <td class="highlighted">${ap} mm</td>
+                <td>${ap} <span class="unit">mm</span></td>
+                <td class="highlighted">${ap} <span class="unit">mm</span></td>
             </tr>
             <tr>
                 <td>Réduire la vitesse de broche :</td>
-                <td colspan="2" class="highlighted center">${ratio >= 1 ? 'Aucune réduction' : (100 - (ratio * 100)).toFixed(0) + '%'}</td>
+                <td colspan="2" class="highlighted center">${ratio >= 1 ? 'Aucune réduction' : (100 - (ratio * 100)).toFixed(1) + '%'}</td>
             </tr>
         </tbody>
     </table>
@@ -377,6 +376,9 @@ const style = `
         .center {
             text-align: center;
         }
+        .unit {
+        font-size: 0.8em; /* Réduire la taille des unités à 80% */
+}
 `;
 
         const styleElement = document.createElement('style');
