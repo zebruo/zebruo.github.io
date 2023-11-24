@@ -40,6 +40,25 @@ blockquote a {
 blockquote a:hover {
     color: #90C7EC; /* Couleur d'arrière-plan lors du survol */
 }
+    @media screen and (max-width: 768px) {
+    /* On force le tableau à ne pas dépasser la largeur de l'écran */
+    table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+    /* On ajoute des bordures pour distinguer les cellules */
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    /* On met en évidence les en-têtes de tableau */
+    th {
+        background-color: #f2f2f2;
+        color: black;
+    }
+}
+
 </style>
 <title>Abaque d'usinage pour une CNC type amateur</title>
 </head>
