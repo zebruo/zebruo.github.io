@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles/styles.css">
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #405B75;
+    color: white;
+    text-align: center;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #ddd;
+}
+blockquote {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-left: 10px solid #ccc;
+}
+blockquote a {
+    color: #3498db; /* Couleur du texte */
+    text-decoration: none; /* Supprime le soulignement */
+}
+blockquote a:hover {
+    color: #90C7EC; /* Couleur d'arrière-plan lors du survol */
+}
+</style>
+<title>Abaque d'usinage pour une CNC type amateur</title>
+</head>
+<body>
+<header>
+    <h1>Maîtriser l'Usinage CNC<br>
+        Calculs Essentiels pour une Fraise</h1>
+    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> </nav>
+</header>
+<div class="container">
+    <div class="colum">
+        <h1>Abaque d'usinage pour une CNC type amateur </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Matière</th>
+                    <th>Vitesse de coupe (vc m/min)</th>
+                    <th colspan="6">Diamètre de coupe de l'outil (d en mm)</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>≥ 1mm</th>
+                    <th>≥ 2mm</th>
+                    <th>≥ 3mm</th>
+                    <th>≥ 4mm</th>
+                    <th>≥ 6mm</th>
+                    <th>≥ 8mm</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th colspan="6">Avance par dent (fz mm/dent)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Bois (Massif)</td>
+                    <td>200</td>
+                    <td>0.004</td>
+                    <td>0.012</td>
+                    <td>0.016</td>
+                    <td>0.018</td>
+                    <td>0.022</td>
+                    <td>0.031</td>
+                </tr>
+                <tr>
+                    <td>CTP, bois tendres</td>
+                    <td>250</td>
+                    <td>0.005</td>
+                    <td>0.012</td>
+                    <td>0.016</td>
+                    <td>0.02</td>
+                    <td>0.024</td>
+                    <td>0.033</td>
+                </tr>
+                <tr>
+                    <td>MDF, Valcromat.</td>
+                    <td>350</td>
+                    <td>0.006</td>
+                    <td>0.013</td>
+                    <td>0.018</td>
+                    <td>0.02</td>
+                    <td>0.027</td>
+                    <td>0.04</td>
+                </tr>
+                <tr>
+                    <td>Pvc expansés, Forex, Komacel, etc.</td>
+                    <td>300</td>
+                    <td>0.008</td>
+                    <td>0.028</td>
+                    <td>0.038</td>
+                    <td>0.048</td>
+                    <td>0.078</td>
+                    <td>0.088</td>
+                </tr>
+                <tr>
+                    <td>PMMA, thermoplastiques</td>
+                    <td>200</td>
+                    <td>0.008</td>
+                    <td>0.028</td>
+                    <td>0.038</td>
+                    <td>0.048</td>
+                    <td>0.078</td>
+                    <td>0.088</td>
+                </tr>
+                <tr>
+                    <td>Aluminium (2017A, 5083)</td>
+                    <td>120</td>
+                    <td>0.004</td>
+                    <td>0.008</td>
+                    <td>0.013</td>
+                    <td>0.018</td>
+                    <td>0.023</td>
+                    <td>0.028</td>
+                </tr>
+                <tr>
+                    <td>Bronze, cuivre, laiton</td>
+                    <td>120</td>
+                    <td>0.003</td>
+                    <td>0.006</td>
+                    <td>0.008</td>
+                    <td>0.013</td>
+                    <td>0.018</td>
+                    <td>0.023</td>
+                </tr>
+            </tbody>
+        </table>
+        <blockquote cite="https://www.example.com">
+            <p>Ces données sont issues de la base de données paramCoupe du site <a href="https://www.cncfraises.fr/" target="_blank">www.cncfraises.fr</a> avec une VC faible et une avance par dent faible (approche prudente). </p>
+        </blockquote>
+    </div>
+</div>
+<footer>
+    <p class="inline">&copy; 2023 edurel. Tous droits réservés.<br>
+        Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
+    <p id="date" class="inline"></p>
+</footer>
+<script src="script/cnc.js"></script>
+</body>
+</html>
