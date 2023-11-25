@@ -428,7 +428,7 @@ function calculate() {
     <table id="resultTable">
         <thead>
             <tr>
-                <th colspan="3" align="center">n, vc, vf, vp et fz retenus sont des paramètres de départ.<br>N’oubliez pas de toujours vérifier les spécifications de votre machine et de votre outil pour vous assurer que vous travaillez dans leurs limites de capacité. De plus, il est recommandé de faire des tests sur un petit échantillon de matériau avant de procéder à l’usinage complet de la pièce.</th>
+                <th colspan="3" align="center">n, vc, vf, ap et fz retenus sont des paramètres de départ.<br>N’oubliez pas de toujours vérifier les spécifications de votre machine et de votre outil pour vous assurer que vous travaillez dans leurs limites de capacité. De plus, il est recommandé de faire des tests sur un petit échantillon de matériau avant de procéder à l’usinage complet de la pièce.</th>
             </tr>
         </thead>
         <tbody>
@@ -467,7 +467,7 @@ function calculate() {
                 <td class="highlighted">${(vf / 2).toFixed(0)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
-                <td class="data">Ralentir la broche de : ${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(1) + '%'}</td>
+                <td class="data">↘ la broche de : ${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(0) + '%'}</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>

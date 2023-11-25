@@ -235,14 +235,14 @@ footer {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: green;
+    background-color: rgba(75,173,75,1.00);
     cursor: pointer;
 }
 .slider::-moz-range-thumb {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: green;
+    background-color: rgba(75,173,75,1.00);
     cursor: pointer;
 }
 @media screen and (max-width: 760px) {
