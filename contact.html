@@ -14,29 +14,25 @@
 </header>
 <div class="container">
     <div class="column aideSize">
-        <p>Ce script est conçu pour faciliter le processus de calcul des paramètres d'usinage CNC pour une fraise. Voici un résumé de ses principales fonctionnalités :</p>
-        <p>Interface Utilisateur : Le script crée une interface utilisateur avec des champs de formulaire pour saisir les détails de l'outil de coupe, tels que le diamètre de la fraise, le matériau, le nombre de dents, etc. </p>
-        <p>Calcul Automatique : Il effectue automatiquement des calculs en fonction des paramètres saisis, notamment la vitesse de coupe (Vc), l'avance par dent (fz), la profondeur de passe (ap), etc. </p>
-        <p>Réglages Personnalisés : L'utilisateur peut spécifier des paramètres personnalisés tels que la vitesse de coupe, le diamètre de l'outil, etc. De plus, il peut définir des options facultatives telles que la coupe au centre, l'orientation de la coupe, etc. </p>
-        <p>Génération de Fichier JSON : Le script génère un fichier JSON structuré avec toutes les données de l'outil de coupe. Ce fichier peut être utilisé pour stocker et échanger des configurations d'outils. </p>
-        <p>Réactivité : L'interface utilisateur est réactive, fournissant des suggestions en temps réel et permettant à l'utilisateur de générer rapidement des données utiles pour l'usinage CNC. </p>
-        <p>Affichage des Résultats : Les résultats des calculs, y compris la vitesse de broche, la vitesse de coupe, l'avance, etc., sont affichés de manière claire dans un tableau. </p>
-        <p>Réduction Automatique de la Vitesse de Broche : Si les paramètres spécifiés dépassent les capacités de la machine, le script ajuste automatiquement la vitesse de broche pour rester dans les limites de la machine. </p>
-        <p>Résumé des Performances : Le script produit un résumé des performances, indiquant les ajustements effectués et fournissant des recommandations, le cas échéant. </p>
-        <p>En résumé, ce script offre une solution complète pour le calcul des paramètres d'usinage CNC, simplifiant le processus pour les utilisateurs travaillant avec des fraises de différentes tailles et dans divers matériaux. </p>
+        <p>Ce script est un outil pour l'usinage CNC type "machine amateur", simplifiant le processus de calcul des paramètres pour une fraise. Il offre des fonctionnalités telles que le <span class="text-bold">calcul automatique</span> des paramètres d'usinage, la possibilité de spécifier des <span class="text-bold">réglages personnalisés</span>, et la <span class="text-bold">génération de fichiers JSON</span> pour le stockage et l'échange de configurations d'outils.</p>
+        <p>En pratique, il est important de noter que les paramètres calculés par le script doivent être utilisés comme point de départ. Les conditions réelles d'usinage, telles que l'état de l'outil et la machine, peuvent nécessiter des ajustements. Par exemple, si la machine ne peut pas atteindre la vitesse de broche calculée, le script ajustera automatiquement cette vitesse pour rester dans les limites de la machine.</p>
+        <p>De plus, le script offre une interface utilisateur réactive, fournissant des suggestions en temps réel et permettant à l'utilisateur de générer rapidement des données utiles pour l'usinage CNC. Les résultats des calculs sont affichés de manière claire dans un tableau, ce qui facilite leur interprétation.</p>
+        <p>Enfin, le script produit un <span class="text-bold">résumé des performances</span>, indiquant les ajustements effectués et fournissant des recommandations. Cela peut aider à optimiser davantage le processus d'usinage.</p>
+        <p>En résumé, ce script est un outil complet pour le calcul des paramètres d'usinage CNC, rendant le processus plus facile et plus efficace pour les utilisateurs travaillant avec des fraises de différentes tailles et dans divers matériaux.</p>
     </div>
-    <div class="column aideSize">
+    <div class="column">
         <h1>Contactez-moi</h1>
-        <form action="https://formspree.io/f/xayggyew" method="post">
+        <form class="form" action="https://formspree.io/f/xayggyew" method="post">
             <input type="text" id="name" name="name" placeholder="Nom" autocomplete="off" required>
             <input type="email" id="email" name="email" placeholder="Adresse Email" autocomplete="off" required>
             <textarea id="message" name="message" rows="4" placeholder="Message (maximum 500 caractères) :" maxlength="500" required></textarea>
             <input type="submit" value="Envoyer">
+            <p style="font-style:italic; font-size:0.95em; color:#405B75;">Veuillez noter que ce formulaire sera traité par le site <a href="https://formspree.io" target="_blank" style="color:#151E27; text-decoration: none;">www.formspree.io</a> pour être envoyé.</p>
         </form>
     </div>
 </div>
 <footer>
-    <p class="inline">&copy; 2023 edurel. Tous droits réservés.<br>
+    <p class="inline">&copy; 2023 edurel - Tous droits réservés.<br>
         Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
     <p id="date" class="inline"></p>
 </footer>

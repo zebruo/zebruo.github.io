@@ -132,7 +132,7 @@ footer {
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
-    color: #219421;
+    color: green;
 }
 #maxRotationSpeed, #maxMaxFeed {
     right: 0;
@@ -209,6 +209,12 @@ footer {
     margin-right: 0.1%;
     margin-left: 0.1%;
 }
+.form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+    }
 .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -226,17 +232,17 @@ footer {
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background-color: #243342;
+    background-color: green;
     cursor: pointer;
 }
 .slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background: #243342;
+    background-color: green;
     cursor: pointer;
 }
 @media screen and (max-width: 760px) {

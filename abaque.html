@@ -40,25 +40,25 @@ blockquote a {
 blockquote a:hover {
     color: #90C7EC; /* Couleur d'arrière-plan lors du survol */
 }
-    @media screen and (max-width: 768px) {
-    /* On force le tableau à ne pas dépasser la largeur de l'écran */
-    table {
-        width: 100%;
-        overflow-x: auto;
-        display: block;
-    }
-    /* On ajoute des bordures pour distinguer les cellules */
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    /* On met en évidence les en-têtes de tableau */
-    th {
-        background-color: #f2f2f2;
-        color: black;
-    }
-}
 
+@media screen and (max-width: 768px) {
+/* On force le tableau à ne pas dépasser la largeur de l'écran */
+table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    font-size: 0.8em;
+}
+/* On ajoute des bordures pour distinguer les cellules */
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+/* On met en évidence les en-têtes de tableau */
+th {
+    background-color: #405B75;
+}
+}
 </style>
 <title>Abaque d'usinage pour une CNC type amateur</title>
 </head>
@@ -69,13 +69,13 @@ blockquote a:hover {
     <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> </nav>
 </header>
 <div class="container">
-    <div class="colum">
-        <h1>Abaque d'usinage pour une CNC type amateur </h1>
+    <div class="column">
+        <h1>Avance par dent - fz</h1>
         <table>
             <thead>
                 <tr>
                     <th>Matière</th>
-                    <th>Vitesse de coupe (vc m/min)</th>
+                    <th>vc m/min</th>
                     <th colspan="6">Diamètre de coupe de l'outil (d en mm)</th>
                 </tr>
                 <tr>
@@ -116,7 +116,7 @@ blockquote a:hover {
                     <td>0.033</td>
                 </tr>
                 <tr>
-                    <td>MDF, Valcromat.</td>
+                    <td>MDF, Valcromat</td>
                     <td>350</td>
                     <td>0.006</td>
                     <td>0.013</td>
@@ -168,12 +168,122 @@ blockquote a:hover {
             </tbody>
         </table>
         <blockquote cite="https://www.example.com">
-            <p>Ces données sont issues de la base de données paramCoupe du site <a href="https://www.cncfraises.fr/" target="_blank">www.cncfraises.fr</a> avec une VC faible et une avance par dent faible (approche prudente). </p>
+            <p>Ces informations proviennent de la base de données paramCoupe du site <a href="https://www.cncfraises.fr/" target="_blank">www.cncfraises.fr</a>. Elles sont basées sur une vitesse de coupe (VC) et une avance par dent réduites, pour une approche plus prudente.</p>
         </blockquote>
+    </div>
+    <div class="column">
+        <h1>Coefficients k → ap = k x D</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ø en mm</th>
+                    <th>Bois (Massif)</th>
+                    <th>CTP, bois tendres</th>
+                    <th>MDF, Valcromat</th>
+                    <th>Pvc expansés, Forex, Komacel, etc.</th>
+                    <th>PMMA, thermoplastiques</th>
+                    <th>Aluminium (2017A, 5083)</th>
+                    <th>Bronze, cuivre, laiton</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>0.2</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>0.2</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>2.5</td>
+                    <td>0.2</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.4</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>3.175</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.4</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>0.5</td>
+                    <td>0.8</td>
+                    <td>0.8</td>
+                    <td>0.8</td>
+                    <td>0.8</td>
+                    <td>0.5</td>
+                    <td>0.2</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>0.5</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0.5</td>
+                    <td>0.25</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0.35</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0.35</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>ex. MDF avec une fraise de 3mm, k = 0.5 → ap = 3 x 0.5 = 1.5 mm (approche prudente)</p>
     </div>
 </div>
 <footer>
-    <p class="inline">&copy; 2023 edurel. Tous droits réservés.<br>
+    <p class="inline">&copy; 2023 edurel - Tous droits réservés.<br>
         Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
     <p id="date" class="inline"></p>
 </footer>
