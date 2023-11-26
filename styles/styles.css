@@ -132,7 +132,7 @@ footer {
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
-    color: green;
+    color: #444C7C;
 }
 #maxRotationSpeed, #maxMaxFeed {
     right: 0;
@@ -143,7 +143,7 @@ footer {
     padding: 5px; /* Ajout de marge interne pour un meilleur espacement */
     display: inline-block; /* Pour que la bordure s'ajuste à la largeur du texte */
     border-radius: 5px; /* Coins arrondis */
-    background-color: #E0F8E0;
+    background-color: #DDE4EB;
 }
 #ap {
     border: 1px solid #ccc; /* Bordure grise de 1 pixel */
@@ -151,7 +151,7 @@ footer {
     padding: 5px; /* Ajout de marge interne pour un meilleur espacement */
     display: inline-block; /* Pour que la bordure s'ajuste à la largeur du texte */
     border-radius: 5px; /* Coins arrondis */
-    background-color: #E0F8E0;
+    background-color: #DDE4EB;
 }
 .container {
     display: flex;
@@ -209,12 +209,48 @@ footer {
     margin-right: 0.1%;
     margin-left: 0.1%;
 }
+.unit {
+    font-size: 0.9em; /* Réduire la taille des unités à 80% */
+}
+#resultTable {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+#resultTable th, #resultTable td {
+    padding: 8px;
+    border-bottom: 1px solid #EBEBEB;
+}
+.colData {
+    color: rgba(255, 255, 255, 1.00);
+}
+#resultTable th, .data {
+    background-color: #405B75;
+    color: #D3D3D3;
+}
+.highlighted {
+    color: #444C7C;
+    font-weight: bold;
+}
+.size {
+    color: #434343;
+    font-weight: bold;
+    font-size: 1rem;
+}
+#resultTable td.size {
+    background-color: #eee;
+}
+.center {
+    text-align: center;
+}
 .form {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        height: 100%;
-    }
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
 .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -235,14 +271,14 @@ footer {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: rgba(75,173,75,1.00);
+    background-color: #405B75;
     cursor: pointer;
 }
 .slider::-moz-range-thumb {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: rgba(75,173,75,1.00);
+    background-color: #405B75;
     cursor: pointer;
 }
 @media screen and (max-width: 760px) {

@@ -444,12 +444,12 @@ function calculate() {
             </tr>
             <tr>
                 <td>Vitesse de broche (n) :</td>
-                <td>${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} <span class="unit">tr/min</span></td>
+                <td><span class="unit">${((1000 * vc) / (Math.PI * toolDiameter)).toFixed(0)} tr/min</span></td>
                 <td class="highlighted">${n.toFixed(0)} <span class="unit">tr/min</span></td>
             </tr>
             <tr>
                 <td>Vitesse de coupe (Vc) :</td>
-                <td>${vc.toFixed(0)} <span class="unit">m/min</span></td>
+                <td><span class="unit">${vc.toFixed(0)} m/min</span></td>
                 <td class="highlighted">${newVc.toFixed(0)} <span class="unit">m/min</span></td>
             </tr>
             <tr>
@@ -458,7 +458,7 @@ function calculate() {
                 <td>&nbsp;</td>
             </tr>
                 <td>Vitesse d'avance en X et Y (vf)</td>
-                <td>${Math.round(currentRotationSpeed * fz * numberOfFlutes)} <span class="unit">mm/min</span></td>
+                <td><span class="unit">${Math.round(currentRotationSpeed * fz * numberOfFlutes)} mm/min</span></td>
                 <td class="highlighted">${Math.round((ratio >= 1) ? vf : currentMaxFeed)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
@@ -467,27 +467,27 @@ function calculate() {
                 <td class="highlighted">${(vf / 2).toFixed(0)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
-                <td class="data">↘ la broche de : ${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(0) + '%'}</td>
+                <td class="data">Réduire la vitesse de la broche de : <span class="text-bold colData">${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(0) + '%'}</span></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="data">Profondeur de passe ap : ${ap} <span class="unit">mm</span></td>
+                <td class="data">Profondeur de passe ap : <span class="text-bold colData">${ap}</span> <span class="unit text-bold colData">mm</span></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="data">Ø = ${toolDiameter} <span class="unit">mm</span></td>
+                <td class="data">Ø = <span class="text-bold colData">${toolDiameter}</span> <span class="unit text-bold colData">mm</span></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="data">fz = ${fz} <span class="unit">mm/dent</span></td>
+                <td class="data">fz = <span class="text-bold colData">${fz} <span class="unit text-bold colData">mm/dent</span></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="data">Z = ${numberOfFlutes}</td>
+                <td class="data">Z = <span class="text-bold colData">${numberOfFlutes}</span></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -496,48 +496,6 @@ function calculate() {
 `;
 
     document.getElementById('result').innerHTML = resultTable;
-
-    const style = `
-    #resultTable {
-            width: 100%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
-
-        #resultTable th, #resultTable td {
-            padding: 8px;
-            border-bottom: 1px solid #DDDDDD;
-        }
-
-        #resultTable th, .data {
-            background-color: #405B75;
-            color: #fff;
-        }
-
-        .highlighted {
-            color: green;
-            font-weight: bold;
-        }
-
-        .size {
-            color: #434343;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        #resultTable td.size {
-            background-color: #eee;
-        }
-
-        .center {
-            text-align: center;
-        }
-        .unit {
-        font-size: 0.8em; /* Réduire la taille des unités à 80% */
-}
-`;
 
     const styleElement = document.createElement('style');
     styleElement.innerHTML = style;

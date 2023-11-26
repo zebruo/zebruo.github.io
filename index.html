@@ -131,10 +131,10 @@
                 <div id="sliderContainer">
                     <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min)</label>
                     <input type="range" id="maxFeed" min="500" max="2500" step="100" value="1000" oninput="updateMaxFeed(this.value)" class="slider">
-                    <span id="minMaxFeed">500</span><span id="currentMaxFeed">1000</span><span id="maxMaxFeed">2500</span>
+                    <span id="minMaxFeed" class="unit">500</span><span id="currentMaxFeed">1000</span><span id="maxMaxFeed" class="unit">2500</span>
                     <label for="rotationSpeedSlider">Vitesse max de votre broche (tr/min)</label>
                     <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="24000" oninput="updateRotationSpeed(this.value)" class="slider">
-                    <span id="minRotationSpeed">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed">30000</span></div>
+                    <span id="minRotationSpeed" class="unit">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed" class="unit">30000</span></div>
             </fieldset>
         </form>
         <div align="center">
