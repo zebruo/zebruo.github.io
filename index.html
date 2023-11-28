@@ -18,7 +18,7 @@
         <form id="toolForm">
             <fieldset>
                 <legend class="text-bold">&nbsp;Géométrie&nbsp;</legend>
-                <label for="toolDiameter"><span class="text-bold">Diamètre de la fraise</span>, diammeter of cut (DC) </label>
+                <label for="toolDiameter"><span class="text-bold">Ø de coupe</span>, cutting diameter (CD) </label>
                 <select id="toolDiameter" name="toolDiameter">
                     <option value="1">1 mm</option>
                     <option value="2">2 mm</option>
@@ -54,7 +54,7 @@
                     4 </div>
                 <fieldset>
                     <legend class="legendsize">&nbsp;Facultatif, sert pour la constitution du JSON&nbsp;</legend>
-                    <label for="shaftDiameter">Diamètre de la queue, shaft Diameter (SFDM)</label>
+                    <label for="shaftDiameter">Ø de la partie insérée dans le porte-outil, shaft diameter (SD)</label>
                     <select id="shaftDiameter" name="shaftDiameter">
                         <option value="1">1 mm</option>
                         <option value="2">2 mm</option>
@@ -124,9 +124,9 @@
                     <option value="120">Aluminium 2017 A, 5083 → 120</option>
                     <option value="120.01">Cuivre, Laiton, Bronze → 120</option>
                 </select>
-                <label><span id="fz"></span>&nbsp;&nbsp;avance par dent</label>
+                <label><span id="fz"></span>&nbsp;&nbsp;Avance par dent</label>
                 <input type="number" id="manualFz" step="0.001" placeholder="Ou saisir fz manuellement">
-                <label><span type="text" id="ap" name="ap"></span>&nbsp;&nbsp;profondeur de passe</label>
+                <label><span type="text" id="ap" name="ap"></span>&nbsp;&nbsp;Profondeur de passe</label>
                 <label class="text-bold">Limites machine :</label>
                 <div id="sliderContainer">
                     <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min)</label>
@@ -153,6 +153,7 @@
         Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
     <p id="date" class="inline"></p>
 </footer>
+<script src="script/paramGnral.js"></script>
 <script src="script/cnc.js"></script>
 </body>
 </html>

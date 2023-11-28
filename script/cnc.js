@@ -1,4 +1,3 @@
-// JavaScript Document
 // Mettre à jour la valeur courante affichée
 function updateRotationSpeed(value) {
     document.getElementById('currentRotationSpeed').innerText = value;
@@ -7,6 +6,7 @@ function updateRotationSpeed(value) {
 function updateMaxFeed(value) {
     document.getElementById('currentMaxFeed').textContent = value;
 }
+
 // Ajoute la fonction generateGUID pour créer un GUID aléatoire
 function generateGUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -15,31 +15,6 @@ function generateGUID() {
         return v.toString(16);
     });
 }
-const version = "10.0.0"; // Version actuelle du script
-document.addEventListener('DOMContentLoaded', function () { // Attend que tout le contenu de la page soit chargé
-    // Mise à jour de la version dans le footer
-    document.getElementById('version').textContent = version;
-    // Ajout de la date dans le footer
-    const dateElement = document.getElementById('date');
-    const currentDate = new Date();
-    const options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric'
-    };
-    const formattedDate = currentDate.toLocaleDateString('fr-FR', options);
-    dateElement.textContent = `${formattedDate}`;
-    // Liste des champs à réinitialiser
-    const fieldsToReset = ['shaftDiameter', 'toolMaterial'];
-
-    // Pour chaque champ à réinitialiser
-    fieldsToReset.forEach(field => {
-        // Récupère l'élément de sélection par son identifiant
-        const selectElement = document.getElementById(field);
-        // Réinitialise la sélection du champ à aucune option choisie
-        selectElement.selectedIndex = -1;
-    });
-});
 
 const FzValues = {
     "1": {
@@ -496,8 +471,4 @@ function calculate() {
 `;
 
     document.getElementById('result').innerHTML = resultTable;
-
-    const styleElement = document.createElement('style');
-    styleElement.innerHTML = style;
-    document.head.appendChild(styleElement);
 }
