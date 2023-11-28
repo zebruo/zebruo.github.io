@@ -403,7 +403,7 @@ function calculate() {
     <table id="resultTable">
         <thead>
             <tr>
-                <th colspan="3" align="center">n, vc, vf, ap et fz retenus sont des paramètres de départ.<br>N’oubliez pas de toujours vérifier les spécifications de votre machine et de votre outil pour vous assurer que vous travaillez dans leurs limites de capacité. De plus, il est recommandé de faire des tests sur un petit échantillon de matériau avant de procéder à l’usinage complet de la pièce.</th>
+                <th colspan="3" align="center">n, vc, vf, ap et fz retenus sont des paramètres de départ.<br>N’oubliez pas de toujours vérifier les spécifications de votre machine et de votre outil pour vous assurer que vous travaillez dans leurs limites de capacité.</th>
             </tr>
         </thead>
         <tbody>
@@ -423,7 +423,7 @@ function calculate() {
                 <td class="highlighted">${n.toFixed(0)} <span class="unit">tr/min</span></td>
             </tr>
             <tr>
-                <td>Vitesse de coupe (Vc) :</td>
+                <td>Vitesse de coupe (vc) :</td>
                 <td><span class="unit">${vc.toFixed(0)} m/min</span></td>
                 <td class="highlighted">${newVc.toFixed(0)} <span class="unit">m/min</span></td>
             </tr>
@@ -442,29 +442,19 @@ function calculate() {
                 <td class="highlighted">${(vf / 2).toFixed(0)} <span class="unit">mm/min</span></td>
             </tr>
             <tr>
-                <td class="data">Réduire la vitesse de la broche de : <span class="text-bold colData">${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(0) + '%'}</span></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="3" class="data">Réduire la vitesse de la broche de : <span class="text-bold colData">${ratio >= 1 ? '0 %' : (100 - (ratio * 100)).toFixed(0) + '%'}</span></td>
             </tr>
             <tr>
-                <td class="data">Profondeur de passe ap : <span class="text-bold colData">${ap}</span> <span class="unit text-bold colData">mm</span></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="3" class="data">Profondeur de passe ap : <span class="text-bold colData">${ap}</span> <span class="unit text-bold colData">mm</span></td>
             </tr>
             <tr>
-                <td class="data">Ø = <span class="text-bold colData">${toolDiameter}</span> <span class="unit text-bold colData">mm</span></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="3" class="data">Ø = <span class="text-bold colData">${toolDiameter}</span> <span class="unit text-bold colData">mm</span></td>
             </tr>
             <tr>
-                <td class="data">fz = <span class="text-bold colData">${fz} <span class="unit text-bold colData">mm/dent</span></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="3" class="data">fz = <span class="text-bold colData">${fz} <span class="unit text-bold colData">mm/dent</span></td>
             </tr>
             <tr>
-                <td class="data">Z = <span class="text-bold colData">${numberOfFlutes}</span></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="3" class="data">Z = <span class="text-bold colData">${numberOfFlutes}</span></td>
             </tr>
         </tbody>
     </table>
