@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur Flexbox Dynamique Avancé</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#controlPanel, #itemControls {
+  margin-bottom: 20px;
+}
+
+label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+input, select {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+#flexContainer {
+  border: 2px solid #333;
+  padding: 10px;
+  margin-bottom: 20px;
+  min-height: 200px;
+}
+
+.flex-item {
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  min-width: 100px;
+  min-height: 50px;
+  background-color: #555; /* Ajout d'une couleur de fond */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.sub-container {
+  border: 2px dashed #666;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px; /* Coins plus arrondis */
+}
+
+pre {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-control {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.sub-container-controls {
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 2px solid #ccc;
+}
+
+.flex-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px; /* Coins arrondis pour les images */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  </style>
+</head>
+<body>
+<h1>Générateur Flexbox Dynamique Avancé avec Sous-Conteneurs</h1>
+
+<div id="controlPanel">
+  <h2>Contrôles du Conteneur Principal</h2>
+  <label for="containerDirection">Direction:</label>
+  <select id="containerDirection">
+    <option value="row">row</option>
+    <option value="row-reverse">row-reverse</option>
+    <option value="column">column</option>
+    <option value="column-reverse">column-reverse</option>
+  </select>
+
+  <label for="containerWrap">Wrap:</label>
+  <select id="containerWrap">
+    <option value="nowrap">nowrap</option>
+    <option value="wrap">wrap</option>
+    <option value="wrap-reverse">wrap-reverse</option>
+  </select>
+
+  <label for="containerJustify">Justify Content:</label>
+  <select id="containerJustify">
+    <option value="flex-start">flex-start</option>
+    <option value="flex-end">flex-end</option>
+    <option value="center">center</option>
+    <option value="space-between">space-between</option>
+    <option value="space-around">space-around</option>
+    <option value="space-evenly">space-evenly</option>
+  </select>
+
+  <label for="containerAlign">Align Items:</label>
+  <select id="containerAlign">
+    <option value="stretch">stretch</option>
+    <option value="flex-start">flex-start</option>
+    <option value="flex-end">flex-end</option>
+    <option value="center">center</option>
+    <option value="baseline">baseline</option>
+  </select>
+
+  <label for="containerAlignContent">Align Content:</label>
+  <select id="containerAlignContent">
+    <option value="stretch">stretch</option>
+    <option value="flex-start">flex-start</option>
+    <option value="flex-end">flex-end</option>
+    <option value="center">center</option>
+    <option value="space-between">space-between</option>
+    <option value="space-around">space-around</option>
+  </select>
+
+  <h2>Contrôles des Éléments</h2>
+  <label for="itemCount">Nombre d'éléments:</label>
+  <input type="number" id="itemCount" min="1" max="10" value="3">
+  
+  <button id="generateItems">Générer les éléments</button>
+
+  <h2>Contrôles Media Query</h2>
+  <label for="mediaQueryWidth">Largeur maximale pour petit écran (px):</label>
+  <input type="number" id="mediaQueryWidth" min="200" max="1200" value="600">
+  <label for="smallScreenDirection">Direction pour petit écran:</label>
+  <select id="smallScreenDirection">
+    <option value="row">row</option>
+    <option value="row-reverse">row-reverse</option>
+    <option value="column">column</option>
+    <option value="column-reverse">column-reverse</option>
+  </select>
+</div>
+
+<div id="itemControls"></div>
+
+<h2>Résultat Visuel</h2>
+<div id="flexContainer"></div>
+
+<h2>CSS Généré</h2>
+<pre id="cssOutput"></pre>
+
+<h2>HTML Généré</h2>
+<pre id="htmlOutput"></pre>
+
+<script>
+// Références aux éléments HTML nécessaires
+const containerDirection = document.getElementById('containerDirection');
+const containerWrap = document.getElementById('containerWrap');
+const containerJustify = document.getElementById('containerJustify');
+const containerAlign = document.getElementById('containerAlign');
+const containerAlignContent = document.getElementById('containerAlignContent');
+const itemCount = document.getElementById('itemCount');
+const generateItemsBtn = document.getElementById('generateItems');
+const itemControls = document.getElementById('itemControls');
+const flexContainer = document.getElementById('flexContainer');
+const cssOutput = document.getElementById('cssOutput');
+const htmlOutput = document.getElementById('htmlOutput');
+const mediaQueryWidth = document.getElementById('mediaQueryWidth');
+const smallScreenDirection = document.getElementById('smallScreenDirection');
+
+const colors = [
+  '#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', 
+  '#1abc9c', '#d35400', '#34495e', '#16a085', '#c0392b'
+];
+
+// Ajouter un écouteur d'événement au bouton de génération d'éléments
+generateItemsBtn.addEventListener('click', generateItems);
+
+// Ajouter des écouteurs d'événement pour chaque contrôle de conteneur flex
+[containerDirection, containerWrap, containerJustify, containerAlign, containerAlignContent, mediaQueryWidth, smallScreenDirection].forEach(el => {
+  el.addEventListener('change', updateFlexbox);
+});
+
+// Fonction pour générer un texte aléatoire avec un nombre de mots spécifié
+function generateRandomText(wordCount) {
+  const words = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'Ut', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo', 'consequat'];
+  let text = '';
+  for (let i = 0; i < wordCount; i++) {
+    text += words[Math.floor(Math.random() * words.length)] + ' ';
+  }
+  return text.trim();
+}
+
+// Fonction pour générer les éléments flexibles
+function generateItems() {
+  const count = parseInt(itemCount.value);
+  itemControls.innerHTML = '';
+  flexContainer.innerHTML = '';
+  
+  for (let i = 1; i <= count; i++) {
+    // Créer les contrôles pour chaque élément
+    const itemControl = document.createElement('div');
+    itemControl.className = 'item-control';
+    itemControl.innerHTML = `
+      <h3>Élément ${i}</h3>
+      <label for="order${i}">Ordre:</label>
+      <input type="number" id="order${i}" value="0" min="0">
+      <label for="grow${i}">Flex Grow:</label>
+      <input type="number" id="grow${i}" min="0" value="0" step="1">
+      <label for="shrink${i}">Flex Shrink:</label>
+      <input type="number" id="shrink${i}" min="0" value="1" step="1">
+      <label for="basis${i}">Flex Basis:</label>
+      <input type="text" id="basis${i}" value="auto">
+      <label for="align${i}">Align Self:</label>
+      <select id="align${i}">
+        <option value="auto">auto</option>
+        <option value="flex-start">flex-start</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="baseline">baseline</option>
+        <option value="stretch">stretch</option>
+      </select>
+      <label for="content${i}">Contenu:</label>
+      <select id="content${i}">
+        <option value="text">Texte</option>
+        <option value="image">Image</option>
+      </select>
+      <label for="subContainer${i}">Sous-conteneur:</label>
+      <input type="checkbox" id="subContainer${i}">
+      <div id="subContainerControls${i}" class="sub-container-controls" style="display: none;">
+        <label for="subContainerItems${i}">Nombre d'éléments:</label>
+        <input type="number" id="subContainerItems${i}" min="1" max="5" value="2">
+        <label for="subContainerDirection${i}">Direction:</label>
+        <select id="subContainerDirection${i}">
+          <option value="row">row</option>
+          <option value="row-reverse">row-reverse</option>
+          <option value="column">column</option>
+          <option value="column-reverse">column-reverse</option>
+        </select>
+        <label for="subContainerJustify${i}">Justify Content:</label>
+        <select id="subContainerJustify${i}">
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="space-evenly">space-evenly</option>
+        </select>
+        <label for="subContainerAlign${i}">Align Items:</label>
+        <select id="subContainerAlign${i}">
+          <option value="stretch">stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="baseline">baseline</option>
+        </select>
+        <label for="subContent${i}">Contenu des sous-éléments:</label>
+        <select id="subContent${i}">
+          <option value="text">Texte</option>
+          <option value="image">Image</option>
+        </select>
+      </div>
+    `;
+    itemControls.appendChild(itemControl);
+    
+    // Créer les éléments flexibles
+    const flexItem = document.createElement('div');
+    flexItem.className = 'flex-item';
+    flexItem.textContent = `Élément ${i}`;
+    flexItem.style.backgroundColor = colors[(i - 1) % colors.length];
+    flexContainer.appendChild(flexItem);
+    
+    // Ajouter des écouteurs d'événements pour les contrôles des éléments
+    ['order', 'grow', 'shrink', 'basis', 'align', 'content', 'subContainer', 'subContainerItems', 'subContainerDirection', 'subContainerJustify', 'subContainerAlign', 'subContent'].forEach(prop => {
+      const element = document.getElementById(`${prop}${i}`);
+      if (element) {
+        element.addEventListener('change', updateFlexbox);
+      }
+    });
+
+    // Afficher/masquer les contrôles du sous-conteneur
+    document.getElementById(`subContainer${i}`).addEventListener('change', function() {
+      document.getElementById(`subContainerControls${i}`).style.display = this.checked ? 'block' : 'none';
+      updateFlexbox();
+    });
+  }
+  
+  // Mettre à jour le conteneur flex
+  updateFlexbox();
+}
+
+// Fonction pour mettre à jour le style du conteneur flex et des éléments flexibles
+function updateFlexbox() {
+  const count = parseInt(itemCount.value);
+  let containerStyle = `
+  display: flex;
+  flex-direction: ${containerDirection.value};
+  flex-wrap: ${containerWrap.value};
+  justify-content: ${containerJustify.value};
+  align-items: ${containerAlign.value};
+  align-content: ${containerAlignContent.value};
+`;
+  let itemStyles = '';
+  let htmlContent = '';
+  
+  flexContainer.style.display = 'flex';
+  flexContainer.style.flexDirection = containerDirection.value;
+  flexContainer.style.flexWrap = containerWrap.value;
+  flexContainer.style.justifyContent = containerJustify.value;
+  flexContainer.style.alignItems = containerAlign.value;
+  flexContainer.style.alignContent = containerAlignContent.value;
+
+  for (let i = 1; i <= count; i++) {
+    const order = document.getElementById(`order${i}`).value;
+    const grow = document.getElementById(`grow${i}`).value;
+    const shrink = document.getElementById(`shrink${i}`).value;
+    const basis = document.getElementById(`basis${i}`).value;
+    const align = document.getElementById(`align${i}`).value;
+    const content = document.getElementById(`content${i}`).value;
+    const isSubContainer = document.getElementById(`subContainer${i}`).checked;
+    
+    let flexItem;
+    if (isSubContainer) {
+      // Création et style des sous-conteneurs flexibles
+      const subContainerItems = document.getElementById(`subContainerItems${i}`).value;
+      const subContainerDirection = document.getElementById(`subContainerDirection${i}`).value;
+      const subContainerJustify = document.getElementById(`subContainerJustify${i}`).value;
+      const subContainerAlign = document.getElementById(`subContainerAlign${i}`).value;
+      const subContent = document.getElementById(`subContent${i}`).value;
+      
+      flexItem = document.createElement('div');
+      flexItem.className = 'sub-container';
+      flexItem.style.display = 'flex';
+      flexItem.style.flexDirection = subContainerDirection;
+      flexItem.style.justifyContent = subContainerJustify;
+      flexItem.style.alignItems = subContainerAlign;
+      
+      for (let j = 1; j <= subContainerItems; j++) {
+        const subItem = document.createElement('div');
+        subItem.className = 'flex-item';
+        if (subContent === 'text') {
+          subItem.textContent = `Sous-élément ${j} - ${generateRandomText(20)}`;
+        } else if (subContent === 'image') {
+          const img = document.createElement('img');
+          img.src = 'https://placehold.co/400';
+          img.alt = `Image pour sous-élément ${j}`;
+          img.style.maxWidth = '100%';
+          subItem.appendChild(img);
+        }
+        subItem.style.backgroundColor = colors[(i + j - 1) % colors.length];
+        flexItem.appendChild(subItem);
+      }
+      
+      itemStyles += `
+.sub-container:nth-child(${i}) {
+  display: flex;
+  flex-direction: ${subContainerDirection};
+  justify-content: ${subContainerJustify};
+  align-items: ${subContainerAlign};
+  order: ${order};
+  flex-grow: ${grow};
+  flex-shrink: ${shrink};
+  flex-basis: ${basis};
+  align-self: ${align};
+}
+`;
+      
+      htmlContent += `  <div class="sub-container">\n`;
+      for (let j = 1; j <= subContainerItems; j++) {
+        htmlContent += `    <div class="flex-item">${subContent === 'text' ? `Sous-élément ${j} - ${generateRandomText(20)}` : `<img src="https://placehold.co/400" alt="Image pour sous-élément ${j}" style="max-width:100%;">`}</div>\n`;
+      }
+      htmlContent += `  </div>\n`;
+    } else {
+      // Création et style des éléments flexibles simples
+      flexItem = document.createElement('div');
+      flexItem.className = 'flex-item';
+      if (content === 'text') {
+        flexItem.textContent = `Élément ${i} - ${generateRandomText(50)}`;
+      } else if (content === 'image') {
+        const img = document.createElement('img');
+        img.src = 'https://placehold.co/400';
+        img.alt = `Image pour élément ${i}`;
+        img.style.maxWidth = '100%';
+        flexItem.appendChild(img);
+      }
+      flexItem.style.backgroundColor = colors[(i - 1) % colors.length];
+      
+      itemStyles += `
+.flex-item:nth-child(${i}) {
+  background-color: ${colors[(i - 1) % colors.length]};
+  order: ${order};
+  flex-grow: ${grow};
+  flex-shrink: ${shrink};
+  flex-basis: ${basis};
+  align-self: ${align};
+}
+`;
+      
+      htmlContent += `  <div class="flex-item">${content === 'text' ? `Élément ${i} - ${generateRandomText(50)}` : `<img src="https://placehold.co/400" alt="Image pour élément ${i}" style="max-width:100%;">`}</div>\n`;
+    }
+    
+    flexItem.style.order = order;
+    flexItem.style.flexGrow = grow;
+    flexItem.style.flexShrink = shrink;
+    flexItem.style.flexBasis = basis;
+    flexItem.style.alignSelf = align;
+    
+    if (flexContainer.children[i-1]) {
+      flexContainer.replaceChild(flexItem, flexContainer.children[i-1]);
+    } else {
+      flexContainer.appendChild(flexItem);
+    }
+  }
+  
+  // Générer et ajouter les styles CSS pour les media queries
+  const mediaQueryStyle = `
+@media (max-width: ${mediaQueryWidth.value}px) {
+  .flex-container {
+    flex-direction: ${smallScreenDirection.value};
+  }
+}
+`;
+
+  // Mettre à jour les zones de sortie de CSS et HTML
+  cssOutput.textContent = `.flex-container {${containerStyle}}\n${itemStyles}\n${mediaQueryStyle}`;
+  htmlOutput.textContent = `<div class="flex-container">\n${htmlContent}</div>`;
+}
+
+// Générer les éléments flexibles au chargement initial de la page
+generateItems();
+updateFlexbox();
+
+</script>
+</body>
+</html>
