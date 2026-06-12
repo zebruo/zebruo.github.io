@@ -222,49 +222,57 @@
     <details class="json-details">
         <summary>Générer un fichier JSON pour Fusion 360 / CAM</summary>
         <div class="json-form">
-            <label for="shaftDiameter">Ø queue (SD)</label>
-            <select id="shaftDiameter" name="shaftDiameter">
-                <option value="1">1 mm</option>
-                <option value="2">2 mm</option>
-                <option value="2.5">2.5 mm</option>
-                <option value="3">3 mm</option>
-                <option value="3.175">3.175 mm</option>
-                <option value="4">4 mm</option>
-                <option value="5">5 mm</option>
-                <option value="6">6 mm</option>
-                <option value="8">8 mm</option>
-            </select>
-            <label for="toolMaterial">Matériau fraise</label>
-            <select id="toolMaterial" name="toolMaterial">
-                <option value="carbide">Carbure</option>
-                <option value="hss">Acier rapide (HSS)</option>
-                <option value="ti coated">HSS revêtu TiN/TiCN/TiAlN</option>
-                <option value="ceramics">Céramique</option>
-                <option value="Diamant">Diamant</option>
-            </select>
-            <label for="overAllLength">Longueur totale (OAL) mm</label>
-            <input type="number" id="overAllLength" name="overAllLength">
-            <label for="lengthBelow">Longueur sous porte-outil (LB) mm</label>
-            <input type="number" id="lengthBelow" name="lengthBelow">
-            <label for="shoulderLength">Longueur épaulement mm</label>
-            <input type="number" id="shoulderLength" name="shoulderLength">
-            <label for="lengthOfCut">Longueur de coupe (LCF) mm</label>
-            <input type="number" id="lengthOfCut" name="lengthOfCut">
-            <p class="step-label">Coupe au centre (CSP)</p>
-            <div class="pill-group" id="cspGroup">
-                <button class="pill-btn" onclick="selectPill(this, 'cspGroup', 'CSPTrue')">Oui</button>
-                <button class="pill-btn active" onclick="selectPill(this, 'cspGroup', 'CSPFalse')">Non</button>
+            <div class="json-fields">
+                <label for="shaftDiameter">Ø queue (SD) <span class="tip" data-tip="Diamètre de la queue de la fraise (partie encastrée dans le mandrin). Souvent identique au diamètre de coupe.">?</span></label>
+                <select id="shaftDiameter" name="shaftDiameter">
+                    <option value="1">1 mm</option>
+                    <option value="2">2 mm</option>
+                    <option value="2.5">2.5 mm</option>
+                    <option value="3">3 mm</option>
+                    <option value="3.175">3.175 mm</option>
+                    <option value="4">4 mm</option>
+                    <option value="5">5 mm</option>
+                    <option value="6">6 mm</option>
+                    <option value="8">8 mm</option>
+                </select>
+                <label for="toolMaterial">Matériau fraise <span class="tip" data-tip="Matière de l'outil. Le carbure est le plus courant sur machine amateur (dur, résistant à l'usure).">?</span></label>
+                <select id="toolMaterial" name="toolMaterial">
+                    <option value="carbide">Carbure</option>
+                    <option value="hss">Acier rapide (HSS)</option>
+                    <option value="ti coated">HSS revêtu TiN/TiCN/TiAlN</option>
+                    <option value="ceramics">Céramique</option>
+                    <option value="Diamant">Diamant</option>
+                </select>
+                <label for="overAllLength">Longueur totale (OAL) mm <span class="tip" data-tip="Overall Length — longueur totale de la fraise, queue comprise. Mesurée de la pointe au sommet de la queue.">?</span></label>
+                <input type="number" id="overAllLength" name="overAllLength">
+                <label for="lengthBelow">Longueur sous porte-outil (LB) mm <span class="tip" data-tip="Length Below — partie de la fraise dépassant du mandrin. Influe sur la rigidité : plus elle est courte, meilleure est la tenue.">?</span></label>
+                <input type="number" id="lengthBelow" name="lengthBelow">
+                <label for="shoulderLength">Longueur épaulement mm <span class="tip" data-tip="Longueur entre la pointe de l'outil et le début de la queue (zone non coupante). Correspond à la hauteur usinable max sans remonter.">?</span></label>
+                <input type="number" id="shoulderLength" name="shoulderLength">
+                <label for="lengthOfCut">Longueur de coupe (LCF) mm <span class="tip" data-tip="Length of Cut — longueur de la partie active (cannelures). Détermine la profondeur de passe axiale maximale possible.">?</span></label>
+                <input type="number" id="lengthOfCut" name="lengthOfCut">
+                <p class="step-label">Coupe au centre (CSP) <span class="tip" data-tip="Center Cutting — indique si la fraise peut plonger axialement (coupe au centre). Nécessaire pour les plongées directes dans la matière.">?</span></p>
+                <div class="pill-group" id="cspGroup">
+                    <button class="pill-btn active" onclick="selectPill(this, 'cspGroup', 'CSPTrue')">Oui</button>
+                    <button class="pill-btn" onclick="selectPill(this, 'cspGroup', 'CSPFalse')">Non</button>
+                </div>
+                <input type="radio" id="CSPTrue" name="CSP" value="true" checked style="display:none">
+                <input type="radio" id="CSPFalse" name="CSP" value="false" style="display:none">
+                <p class="step-label">Sens de coupe (Hand) <span class="tip" data-tip="Sens d'hélice des cannelures. Droite (standard) pour la quasi-totalité des fraises carbure. Gauche pour cas spécifiques.">?</span></p>
+                <div class="pill-group" id="handGroup">
+                    <button class="pill-btn active" onclick="selectPill(this, 'handGroup', 'HANDTrue')">Droite</button>
+                    <button class="pill-btn" onclick="selectPill(this, 'handGroup', 'HANDFalse')">Gauche</button>
+                </div>
+                <input type="radio" id="HANDTrue" name="HAND" value="true" checked style="display:none">
+                <input type="radio" id="HANDFalse" name="HAND" value="false" style="display:none">
             </div>
-            <input type="radio" id="CSPTrue" name="CSP" value="true" style="display:none">
-            <input type="radio" id="CSPFalse" name="CSP" value="false" checked style="display:none">
-            <p class="step-label">Sens de coupe (Hand)</p>
-            <div class="pill-group" id="handGroup">
-                <button class="pill-btn active" onclick="selectPill(this, 'handGroup', 'HANDTrue')">Droite</button>
-                <button class="pill-btn" onclick="selectPill(this, 'handGroup', 'HANDFalse')">Gauche</button>
+            <div class="tool-schemas">
+                <p class="schema-title">Fraise standard</p>
+                <img src="svg/tool-schema_02.svg" class="tool-schema" alt="Schéma fraise standard">
+                <p class="schema-title">Fraise à col long</p>
+                <img src="svg/tool-schema_01.svg" class="tool-schema" alt="Schéma fraise à col long">
             </div>
-            <input type="radio" id="HANDTrue" name="HAND" value="true" checked style="display:none">
-            <input type="radio" id="HANDFalse" name="HAND" value="false" style="display:none">
-            <div class="text-center" style="margin-top:16px">
+            <div class="json-btn-wrap">
                 <button id="generateJSON">Télécharger le fichier JSON</button>
             </div>
         </div>

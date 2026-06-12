@@ -639,6 +639,17 @@ footer {
     border-top-color: transparent;
     border-bottom-color: var(--clr-dark);
 }
+/* Tooltip carte droite (ap) : aligné à droite pour éviter débordement */
+.result-card:last-child .tip::after {
+    left: auto;
+    right: 0;
+    transform: none;
+}
+.result-card:last-child .tip::before {
+    left: auto;
+    right: 6px;
+    transform: none;
+}
 
 /* === RESULTS === */
 .results-big {
@@ -700,7 +711,41 @@ footer {
 .json-form {
     margin-top: 16px;
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+}
+.json-btn-wrap {
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+}
+.json-fields {
+    flex: 1;
+    display: flex;
     flex-direction: column;
+}
+.tool-schemas {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+}
+.schema-title {
+    margin: 6px 0 2px 0;
+    font-size: 0.78rem;
+    font-weight: bold;
+    color: var(--clr-primary);
+    text-align: center;
+}
+.schema-title:first-child {
+    margin-top: 0;
+}
+.tool-schema {
+    width: 100%;
+    margin-bottom: 30px;
 }
 .json-form label {
     margin-top: 10px;
