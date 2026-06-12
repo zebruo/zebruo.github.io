@@ -2,156 +2,279 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Maîtriser l'Usinage CNC : Calculs Essentiels pour une Fraise</title>
+<title>Calcul Fraisage CNC</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="keywords" content="CNC, Fraisage, Vf, Vc, Fz, Vitesse de coupe, Vitesse d'avance, Fraise carbure, Paramètres d'usinage, Calculs de coupe, Fichier JSON, Profondeur de passe, Diamètre de l'outil, Nombre de dents">
+<meta name="keywords" content="CNC, Fraisage, Vf, Vc, Fz, Vitesse de coupe, Vitesse d'avance, Fraise carbure, Paramètres d'usinage">
 <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 <header>
-    <h1>Maîtriser l'Usinage CNC<br>
-        <span class="legendsize">( pour une petite machine amateur )</span><br>
-        Calculs Essentiels pour une Fraise</h1>
-    <nav> <a href="#">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> <a href="GenFlexboxDyn.html">GenFlexboxDyn</a></nav>
+    <h1>Calcul Fraisage CNC <span class="legendsize">pour une "petite machine"</span></h1>
+    <nav>
+        <a href="#">Calcul fraisage</a>
+        <a href="aide.html">Aide</a>
+        <a href="abaque.html">Abaque</a>
+    </nav>
 </header>
-<div class="container">
-    <div class="column">
-        <form id="toolForm">
-            <fieldset>
-                <legend class="text-bold">&nbsp;Géométrie&nbsp;</legend>
-                <label for="toolDiameter"><span class="text-bold">Ø de coupe</span>, cutting diameter (CD) </label>
-                <select id="toolDiameter" name="toolDiameter">
-                    <option value="1">1 mm</option>
-                    <option value="2">2 mm</option>
-                    <option value="2.5">2.5 mm</option>
-                    <option value="3">3 mm</option>
-                    <option value="3.175">3.175 mm</option>
-                    <option value="4">4 mm</option>
-                    <option value="5">5 mm</option>
-                    <option value="6">6 mm</option>
-                    <option value="8">8 mm</option>
-                </select>
-                <label><span class="text-bold">Nombre de dents</span>, number of flutes (NOF) :</label>
-                <div class="radio-group">
-                    <input type="radio" id="oneFlute" class="radio" name="numberOfFlutes" value="1">
-                    <label for="oneFlute">
-                    <div></div>
-                    </label>
-                    1
-                    <input type="radio" id="twoFlutes" class="radio" name="numberOfFlutes" value="2" checked>
-                    <label for="twoFlutes">
-                    <div></div>
-                    </label>
-                    2
-                    <input type="radio" id="threeFlutes" class="radio" name="numberOfFlutes" value="3">
-                    <label for="threeFlutes">
-                    <div></div>
-                    </label>
-                    3
-                    <input type="radio" id="fourFlutes" class="radio" name="numberOfFlutes" value="4">
-                    <label for="fourFlutes">
-                    <div></div>
-                    </label>
-                    4 </div>
-                <fieldset>
-                    <legend class="legendsize">&nbsp;Facultatif, sert pour la constitution du fichier JSON&nbsp;</legend>
-                    <label for="shaftDiameter">Ø de la partie insérée dans le porte-outil, shaft diameter (SD)</label>
-                    <select id="shaftDiameter" name="shaftDiameter">
-                        <option value="1">1 mm</option>
-                        <option value="2">2 mm</option>
-                        <option value="2.5">2.5 mm</option>
-                        <option value="3">3 mm</option>
-                        <option value="3.175">3.175 mm</option>
-                        <option value="4">4 mm</option>
-                        <option value="5">5 mm</option>
-                        <option value="6">6 mm</option>
-                        <option value="8">8 mm</option>
-                    </select>
-                    <label for="toolMaterial">Fraise au :</label>
-                    <select id="toolMaterial" name="toolMaterial">
-                        <option value="carbide">Carbure (Carbide)</option>
-                        <option value="hss">Acier rapide (HSS - High-Speed Steel)</option>
-                        <option value="ti coated">HSS revêtu de TiN, TiCN, TiAlN</option>
-                        <option value="ceramics">Céramique</option>
-                        <option value="Diamant">Diamant</option>
-                    </select>
-                    <label for="overAllLength">Longueur totale, overall length (OAL)</label>
-                    <input type="number" id="overAllLength" name="overAllLength">
-                    <label for="lengthBelow">Longueur en dessous du porte outil, length below (LB)</label>
-                    <input type="number" id="lengthBelow" name="lengthBelow">
-                    <label for="shoulderLength">Longueur de l'épaulement</label>
-                    <input type="number" id="shoulderLength" name="shoulderLength">
-                    <label for="lengthOfCut">longueur de coupe LU, lendth of cut (LCF)</label>
-                    <input type="number" id="lengthOfCut" name="lengthOfCut">
-                    <label for="CSP">Coupe au centre, center cutting (CSP)</label>
-                    <div class="radio-group">
-                        <input type="radio" id="CSPTrue" class="radio" name="CSP" value="true">
-                        <label for="CSPTrue">
-                        <div></div>
-                        </label>
-                        Oui
-                        <input type="radio" id="CSPFalse" class="radio" name="CSP" value="false" checked>
-                        <label for="CSPFalse">
-                        <div></div>
-                        </label>
-                        Non </div>
-                    <label for="HAND">Droite pour horaire, gauche anti-horaire, hand of cut (Hand)</label>
-                    <div class="radio-group">
-                        <input type="radio" id="HANDTrue" class="radio" name="HAND" value="true" checked>
-                        <label for="HANDTrue">
-                        <div></div>
-                        </label>
-                        Droite
-                        <input type="radio" id="HANDFalse" class="radio" name="HAND" value="false">
-                        <label for="HANDFalse">
-                        <div></div>
-                        </label>
-                        Gauche </div>
-                </fieldset>
-            </fieldset>
-        </form>
-    </div>
-    <div class="column">
-        <form id="presetsForm">
-            <fieldset>
-                <legend class="text-bold">&nbsp;Données de coupe, d'avance&nbsp;</legend>
-                <label for="vc"><span class="text-bold">Vitesse de coupe</span> vc m/min</label>
-                <select id="vc" name="vc">
-                    <option value="200">Bois (massif) → 200</option>
-                    <option value="250">CTP, Bois tendre → 250</option>
-                    <option value="350">MDF, Valcromat → 350</option>
-                    <option value="300">PVC expansé, Forex, Komacel, etc. → 300</option>
-                    <option value="201.01">PMMA, thermeplastiques → 200</option>
-                    <option value="120">Aluminium 2017 A, 5083 → 120</option>
-                    <option value="120.01">Cuivre, Laiton, Bronze → 120</option>
-                </select>
-                <label><span id="fz"></span>&nbsp;&nbsp;Avance par dent</label>
-                <input type="number" id="manualFz" step="0.001" placeholder="Ou saisir fz manuellement">
-                <label><span type="text" id="ap" name="ap"></span>&nbsp;&nbsp;Profondeur de passe</label>
-                <label class="text-bold">Limites machine :</label>
-                <div id="sliderContainer">
-                    <label for="maxFeed">Vitesse d’avance max de votre machine (mm/min)</label>
-                    <input type="range" id="maxFeed" min="500" max="2500" step="100" value="1000" oninput="updateMaxFeed(this.value)" class="slider">
-                    <span id="minMaxFeed" class="unit">500</span><span id="currentMaxFeed">1000</span><span id="maxMaxFeed" class="unit">2500</span>
-                    <label for="rotationSpeedSlider">Vitesse max de votre broche (tr/min)</label>
-                    <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="24000" oninput="updateRotationSpeed(this.value)" class="slider">
-                    <span id="minRotationSpeed" class="unit">5000</span><span id="currentRotationSpeed">24000</span><span id="maxRotationSpeed" class="unit">30000</span></div>
-            </fieldset>
-        </form>
-        <div align="center">
-            <button type="button" onclick="calculate()">Calculer</button>
+
+<div class="wizard">
+
+    <!-- ETAPE 1 : Matériau -->
+    <section class="step">
+        <div class="step-header">
+            <span class="step-num">1</span>
+            <h2 class="step-title">Matériau à usiner <span class="tip" data-tip="vc : vitesse de coupe cible (m/min) — valeur de référence liée au matériau. Rarement atteinte avec de petits diamètres sur machine amateur. Sert à sélectionner le bon Fz et à calculer n.">?</span></h2>
         </div>
-        <div align="center">
-            <button id="generateJSON">Générer le fichier JSON</button>
+        <div class="material-grid">
+            <button class="material-card active" data-vc="200" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#6B3F1E"></span>
+                <span class="mat-name">Bois massif</span>
+                <span class="mat-detail">Chêne, hêtre, noyer, bambou…</span>
+                <span class="mat-vc">vc 200 m/min</span>
+            </button>
+            <button class="material-card" data-vc="150" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#3B1A08"></span>
+                <span class="mat-name">Bois exotique</span>
+                <span class="mat-detail">Teck, iroko, merbau, padouk…</span>
+                <span class="mat-vc">vc 150 m/min</span>
+            </button>
+            <button class="material-card" data-vc="250" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#C4A265"></span>
+                <span class="mat-name">Contreplaqué (CTP)</span>
+                <span class="mat-detail">CTP, pin, sapin, bois tendre…</span>
+                <span class="mat-vc">vc 250 m/min</span>
+            </button>
+            <button class="material-card" data-vc="350" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#9B8B7A"></span>
+                <span class="mat-name">MDF / Valcromat</span>
+                <span class="mat-detail">Panneau de fibres, médium</span>
+                <span class="mat-vc">vc 350 m/min</span>
+            </button>
+            <button class="material-card" data-vc="300" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#E0E0E0;border:1px solid #bbb"></span>
+                <span class="mat-name">PVC / Forex</span>
+                <span class="mat-detail">PVC expansé, Komacel, Forex…</span>
+                <span class="mat-vc">vc 300 m/min</span>
+            </button>
+            <button class="material-card" data-vc="201.01" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#A8D0E8"></span>
+                <span class="mat-name">PMMA / Acrylique</span>
+                <span class="mat-detail">Plexiglas, thermoplastiques</span>
+                <span class="mat-vc">vc 200 m/min</span>
+            </button>
+            <button class="material-card" data-vc="120" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#B0C0D0"></span>
+                <span class="mat-name">Aluminium</span>
+                <span class="mat-detail">2017A, 5083, 6061…</span>
+                <span class="mat-vc">vc 120 m/min</span>
+            </button>
+            <button class="material-card" data-vc="120.01" onclick="selectMaterial(this)">
+                <span class="mat-icon" style="background:#B87333"></span>
+                <span class="mat-name">Cuivre / Laiton</span>
+                <span class="mat-detail">Cuivre, laiton, bronze</span>
+                <span class="mat-vc">vc 120 m/min</span>
+            </button>
+        </div>
+        <!-- Select caché pour compatibilité JS -->
+        <select id="vc" name="vc" style="display:none">
+            <option value="150">Bois exotique</option>
+            <option value="200" selected>Bois massif</option>
+            <option value="250">Contreplaqué</option>
+            <option value="350">MDF</option>
+            <option value="300">PVC</option>
+            <option value="201.01">PMMA</option>
+            <option value="120">Aluminium</option>
+            <option value="120.01">Cuivre/Laiton</option>
+        </select>
+    </section>
+
+    <!-- ETAPE 2 : Fraise -->
+    <section class="step">
+        <div class="step-header">
+            <span class="step-num">2</span>
+            <h2 class="step-title">Fraise</h2>
+        </div>
+
+        <p class="step-label">Diamètre de coupe (mm)</p>
+        <div class="pill-group" id="diameterGroup">
+            <button class="pill-btn" data-val="1" onclick="selectDiameter(this)">1</button>
+            <button class="pill-btn" data-val="2" onclick="selectDiameter(this)">2</button>
+            <button class="pill-btn" data-val="2.5" onclick="selectDiameter(this)">2.5</button>
+            <button class="pill-btn active" data-val="3" onclick="selectDiameter(this)">3</button>
+            <button class="pill-btn" data-val="3.175" onclick="selectDiameter(this)">3.175</button>
+            <button class="pill-btn" data-val="4" onclick="selectDiameter(this)">4</button>
+            <button class="pill-btn" data-val="5" onclick="selectDiameter(this)">5</button>
+            <button class="pill-btn" data-val="6" onclick="selectDiameter(this)">6</button>
+            <button class="pill-btn" data-val="8" onclick="selectDiameter(this)">8</button>
+        </div>
+        <select id="toolDiameter" name="toolDiameter" style="display:none">
+            <option value="1">1 mm</option>
+            <option value="2">2 mm</option>
+            <option value="2.5">2.5 mm</option>
+            <option value="3" selected>3 mm</option>
+            <option value="3.175">3.175 mm</option>
+            <option value="4">4 mm</option>
+            <option value="5">5 mm</option>
+            <option value="6">6 mm</option>
+            <option value="8">8 mm</option>
+        </select>
+
+        <p class="step-label">Nombre de dents</p>
+        <div class="pill-group" id="flutesGroup">
+            <button class="pill-btn" onclick="selectPill(this, 'flutesGroup', 'oneFlute')">1</button>
+            <button class="pill-btn active" onclick="selectPill(this, 'flutesGroup', 'twoFlutes')">2</button>
+            <button class="pill-btn" onclick="selectPill(this, 'flutesGroup', 'threeFlutes')">3</button>
+            <button class="pill-btn" onclick="selectPill(this, 'flutesGroup', 'fourFlutes')">4</button>
+        </div>
+        <input type="radio" id="oneFlute" name="numberOfFlutes" value="1" style="display:none">
+        <input type="radio" id="twoFlutes" name="numberOfFlutes" value="2" checked style="display:none">
+        <input type="radio" id="threeFlutes" name="numberOfFlutes" value="3" style="display:none">
+        <input type="radio" id="fourFlutes" name="numberOfFlutes" value="4" style="display:none">
+
+        <p class="step-label">Avance par dent (fz) — calculée automatiquement <span class="tip" data-tip="fz (mm/dent) — épaisseur de copeau par arête de coupe. Trop faible : frottement et usure. Trop élevé : risque de casse d'outil.">?</span></p>
+        <div class="fz-row">
+            <span id="fz" class="fz-badge"></span>
+            <input type="number" id="manualFz" step="0.001" placeholder="Ou saisir manuellement (mm/dent)" class="fz-manual">
+        </div>
+        <p class="step-label">Profondeur de passe (ap) — calculée automatiquement <span class="tip" data-tip="ap (mm) — épaisseur de matière enlevée à chaque passe axiale. Typiquement 0.2 à 0.5 × diamètre. Saisissable manuellement.">?</span></p>
+        <div class="fz-row">
+            <span id="ap" class="fz-badge"></span>
+            <input type="number" id="manualAp" step="0.01" min="0.01" placeholder="Ou saisir manuellement (mm)" class="fz-manual">
+        </div>
+    </section>
+
+    <!-- ETAPE 3 : Machine -->
+    <section class="step">
+        <div class="step-header">
+            <span class="step-num">3</span>
+            <h2 class="step-title">Limites machine</h2>
+        </div>
+        <div class="slider-group">
+            <label for="maxFeed">Avance max en XY (mm/min) <span class="tip" data-tip="vf (mm/min) — vitesse d'avance de l'outil en XY. Calculée : vf = n × fz × Z. Limitée par la capacité machine.">?</span></label>
+            <input type="range" id="maxFeed" min="500" max="2500" step="100" value="800" oninput="updateSlider('currentMaxFeed', this.value)" class="slider">
+            <div class="slider-labels">
+                <span class="unit">500</span>
+                <span id="currentMaxFeed" class="slider-current">800</span>
+                <span class="unit">2500</span>
+            </div>
+        </div>
+        <div class="slider-group">
+            <label for="zFeedSlider">Avance max en Z (mm/min) <span class="tip" data-tip="vf_z (mm/min) — vitesse de plongée axiale. Limitée par la capacité machine.">?</span></label>
+            <input type="range" id="zFeedSlider" min="50" max="1000" step="50" value="300" oninput="updateSlider('currentZFeed', this.value)" class="slider">
+            <div class="slider-labels">
+                <span class="unit">50</span>
+                <span id="currentZFeed" class="slider-current">300</span>
+                <span class="unit">1 000</span>
+            </div>
+        </div>
+        <div class="slider-group">
+            <label for="rotationSpeedSlider">Broche max (tr/min) <span class="tip" data-tip="n (tr/min) — vitesse de rotation de la broche. Calculée : n = (1000 × vc) / (π × D). Limitée par la capacité machine.">?</span></label>
+            <input type="range" id="rotationSpeedSlider" min="5000" max="30000" step="1000" value="12000" oninput="updateSlider('currentRotationSpeed', this.value)" class="slider">
+            <div class="slider-labels">
+                <span class="unit">5 000</span>
+                <span id="currentRotationSpeed" class="slider-current">12000</span>
+                <span class="unit">30 000</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center calc-btn-wrap">
+        <button class="calc-main-btn" onclick="calculate()">Calculer</button>
+    </div>
+
+    <!-- MODAL RÉSULTATS -->
+    <div id="resultsModal" class="modal-overlay" style="display:none" onclick="closeResultsModal(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">Résultats</h2>
+                <button class="modal-close" onclick="closeResultsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="results-big">
+                    <div class="result-card">
+                        <div class="result-val" id="resN">—</div>
+                        <div class="result-unit">tr/min</div>
+                        <div class="result-name">Broche (n) <span class="tip" data-tip="n = (1000 × vc) / (π × D) — limitée par la broche max machine.">?</span></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-val" id="resVf">—</div>
+                        <div class="result-unit">mm/min</div>
+                        <div class="result-name">Avance XY (vf) <span class="tip" data-tip="vf = n × fz × Z — limitée par l'avance max XY machine.">?</span></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-val" id="resAp">—</div>
+                        <div class="result-unit">mm</div>
+                        <div class="result-name">Profondeur (ap) <span class="tip" data-tip="ap (mm) — profondeur de passe axiale retenue. Calculée ou saisie manuellement.">?</span></div>
+                    </div>
+                </div>
+                <details class="details-table">
+                    <summary>Voir le détail des calculs</summary>
+                    <div id="result"></div>
+                </details>
+            </div>
+            <div class="modal-footer">
+                <p>n, vc, vf, ap et fz retenus sont des paramètres de départ.<br>Vérifiez toujours les spécifications de votre machine et de votre outil avant d'usiner.</p>
+            </div>
         </div>
     </div>
-    <div class="column">
-        <p id="result"></p>
-    </div>
+
+    <!-- JSON (masqué par défaut) -->
+    <details class="json-details">
+        <summary>Générer un fichier JSON pour Fusion 360 / CAM</summary>
+        <div class="json-form">
+            <label for="shaftDiameter">Ø queue (SD)</label>
+            <select id="shaftDiameter" name="shaftDiameter">
+                <option value="1">1 mm</option>
+                <option value="2">2 mm</option>
+                <option value="2.5">2.5 mm</option>
+                <option value="3">3 mm</option>
+                <option value="3.175">3.175 mm</option>
+                <option value="4">4 mm</option>
+                <option value="5">5 mm</option>
+                <option value="6">6 mm</option>
+                <option value="8">8 mm</option>
+            </select>
+            <label for="toolMaterial">Matériau fraise</label>
+            <select id="toolMaterial" name="toolMaterial">
+                <option value="carbide">Carbure</option>
+                <option value="hss">Acier rapide (HSS)</option>
+                <option value="ti coated">HSS revêtu TiN/TiCN/TiAlN</option>
+                <option value="ceramics">Céramique</option>
+                <option value="Diamant">Diamant</option>
+            </select>
+            <label for="overAllLength">Longueur totale (OAL) mm</label>
+            <input type="number" id="overAllLength" name="overAllLength">
+            <label for="lengthBelow">Longueur sous porte-outil (LB) mm</label>
+            <input type="number" id="lengthBelow" name="lengthBelow">
+            <label for="shoulderLength">Longueur épaulement mm</label>
+            <input type="number" id="shoulderLength" name="shoulderLength">
+            <label for="lengthOfCut">Longueur de coupe (LCF) mm</label>
+            <input type="number" id="lengthOfCut" name="lengthOfCut">
+            <p class="step-label">Coupe au centre (CSP)</p>
+            <div class="pill-group" id="cspGroup">
+                <button class="pill-btn" onclick="selectPill(this, 'cspGroup', 'CSPTrue')">Oui</button>
+                <button class="pill-btn active" onclick="selectPill(this, 'cspGroup', 'CSPFalse')">Non</button>
+            </div>
+            <input type="radio" id="CSPTrue" name="CSP" value="true" style="display:none">
+            <input type="radio" id="CSPFalse" name="CSP" value="false" checked style="display:none">
+            <p class="step-label">Sens de coupe (Hand)</p>
+            <div class="pill-group" id="handGroup">
+                <button class="pill-btn active" onclick="selectPill(this, 'handGroup', 'HANDTrue')">Droite</button>
+                <button class="pill-btn" onclick="selectPill(this, 'handGroup', 'HANDFalse')">Gauche</button>
+            </div>
+            <input type="radio" id="HANDTrue" name="HAND" value="true" checked style="display:none">
+            <input type="radio" id="HANDFalse" name="HAND" value="false" style="display:none">
+            <div class="text-center" style="margin-top:16px">
+                <button id="generateJSON">Télécharger le fichier JSON</button>
+            </div>
+        </div>
+    </details>
+
 </div>
+
 <footer>
     <p class="inline">&copy; 2023 edurel - Tous droits réservés.<br>
-        Calculs Essentiels pour une Fraise - Version <span id="version"></span>&nbsp;-</p>
+        Calcul Fraisage CNC - Version <span id="version"></span>&nbsp;-</p>
     <p id="date" class="inline"></p>
 </footer>
 <script src="script/paramGnral.js"></script>

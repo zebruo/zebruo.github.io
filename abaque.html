@@ -1,65 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="styles/styles.css">
-<style>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-family: Arial, sans-serif;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-th {
-    background-color: #405B75;
-    color: white;
-    text-align: center;
-}
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-tr:hover {
-    background-color: #ddd;
-}
-blockquote {
-    margin: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-left: 10px solid #ccc;
-}
-blockquote a {
-    color: #3498db; /* Couleur du texte */
-    text-decoration: none; /* Supprime le soulignement */
-}
-blockquote a:hover {
-    color: #90C7EC; /* Couleur d'arrière-plan lors du survol */
-}
-
-@media screen and (max-width: 768px) {
-/* On force le tableau à ne pas dépasser la largeur de l'écran */
-table {
-    width: 100%;
-    overflow-x: auto;
-    display: block;
-    font-size: 0.8em;
-}
-/* On ajoute des bordures pour distinguer les cellules */
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-/* On met en évidence les en-têtes de tableau */
-th {
-    background-color: #405B75;
-}
-}
-</style>
 <title>Abaque d'usinage pour une CNC type amateur</title>
 </head>
 <body>
@@ -67,11 +11,11 @@ th {
     <h1>Maîtriser l'Usinage CNC<br>
         <span class="legendsize">( pour une petite machine amateur )</span><br>
         Calculs Essentiels pour une Fraise</h1>
-    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="abaque.html">Abaque</a> <a href="contact.html">Contact</a> <a href="GenFlexboxDyn.html">GenFlexboxDyn</a></nav>
+    <nav> <a href="index.html">Calcul fraisage</a> <a href="aide.html">Aide</a> <a href="#">Abaque</a></nav>
 </header>
 <div class="container">
     <div class="column">
-        <h1>Avance par dent - fz</h1>
+        <h2>Avance par dent - fz</h2>
         <table>
             <thead>
                 <tr>
@@ -79,6 +23,7 @@ th {
                     <th>vc m/min</th>
                     <th colspan="6">Diamètre de coupe de l'outil (d en mm)</th>
                 </tr>
+
                 <tr>
                     <th></th>
                     <th></th>
@@ -96,6 +41,16 @@ th {
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>Bois exotique</td>
+                    <td>150</td>
+                    <td>0.003</td>
+                    <td>0.010</td>
+                    <td>0.013</td>
+                    <td>0.015</td>
+                    <td>0.018</td>
+                    <td>0.025</td>
+                </tr>
                 <tr>
                     <td>Bois (Massif)</td>
                     <td>200</td>
@@ -139,12 +94,12 @@ th {
                 <tr>
                     <td>PMMA, thermoplastiques</td>
                     <td>200</td>
-                    <td>0.008</td>
+                    <td>0.006</td>
+                    <td>0.020</td>
                     <td>0.028</td>
-                    <td>0.038</td>
-                    <td>0.048</td>
-                    <td>0.078</td>
-                    <td>0.088</td>
+                    <td>0.035</td>
+                    <td>0.055</td>
+                    <td>0.065</td>
                 </tr>
                 <tr>
                     <td>Aluminium (2017A, 5083)</td>
@@ -168,16 +123,17 @@ th {
                 </tr>
             </tbody>
         </table>
-        <blockquote cite="https://www.example.com">
-            <p>Ces informations proviennent de la base de données paramCoupe du site <a href="https://www.cncfraises.fr/" target="_blank">www.cncfraises.fr</a>. Elles sont basées sur une vitesse de coupe (VC) et une avance par dent réduites, pour une approche plus prudente.</p>
+        <blockquote>
+            <p>Ces informations sont issues de la base de données paramCoupe du site <a href="https://www.cncfraises.fr/" target="_blank">www.cncfraises.fr</a>, et ont été adaptées pour une approche prudente sur machine amateur : vitesses de coupe et avances par dent réduites, profondeurs de passe (ap) corrigées pour rester cohérentes entre diamètres, et valeurs PMMA ajustées pour tenir compte de la sensibilité à la chaleur de l'acrylique.</p>
         </blockquote>
     </div>
     <div class="column">
-        <h1>Coefficients k → ap = k x D</h1>
+        <h2>Coefficients k → ap = k x D</h2>
         <table>
             <thead>
                 <tr>
                     <th>Ø en mm</th>
+                    <th>Bois exotique</th>
                     <th>Bois (Massif)</th>
                     <th>CTP, bois tendres</th>
                     <th>MDF, Valcromat</th>
@@ -191,6 +147,7 @@ th {
                 <tr>
                     <td>1</td>
                     <td>0.2</td>
+                    <td>0.2</td>
                     <td>0.5</td>
                     <td>0.5</td>
                     <td>0.5</td>
@@ -200,6 +157,7 @@ th {
                 </tr>
                 <tr>
                     <td>2</td>
+                    <td>0.2</td>
                     <td>0.2</td>
                     <td>0.5</td>
                     <td>0.5</td>
@@ -211,6 +169,7 @@ th {
                 <tr>
                     <td>2.5</td>
                     <td>0.2</td>
+                    <td>0.2</td>
                     <td>0.5</td>
                     <td>0.5</td>
                     <td>0.5</td>
@@ -220,6 +179,7 @@ th {
                 </tr>
                 <tr>
                     <td>3</td>
+                    <td>0.3</td>
                     <td>0.4</td>
                     <td>0.5</td>
                     <td>0.5</td>
@@ -230,6 +190,7 @@ th {
                 </tr>
                 <tr>
                     <td>3.175</td>
+                    <td>0.3</td>
                     <td>0.4</td>
                     <td>0.5</td>
                     <td>0.5</td>
@@ -240,43 +201,47 @@ th {
                 </tr>
                 <tr>
                     <td>4</td>
+                    <td>0.4</td>
                     <td>0.5</td>
-                    <td>0.8</td>
-                    <td>0.8</td>
-                    <td>0.8</td>
-                    <td>0.8</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
                     <td>0.5</td>
                     <td>0.2</td>
                 </tr>
                 <tr>
                     <td>5</td>
+                    <td>0.4</td>
                     <td>0.5</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
                     <td>0.5</td>
                     <td>0.25</td>
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>0.35</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.3</td>
                 </tr>
                 <tr>
                     <td>8</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>0.35</td>
+                    <td>0.4</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>0.3</td>
                 </tr>
             </tbody>
         </table>

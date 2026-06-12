@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         day: 'numeric'
     };
     const formattedDate = currentDate.toLocaleDateString('fr-FR', options);
-    dateElement.textContent = `${formattedDate}`;
+    dateElement.textContent = formattedDate;
 
     // Liste des champs à réinitialiser
     const fieldsToReset = ['shaftDiameter', 'toolMaterial'];
