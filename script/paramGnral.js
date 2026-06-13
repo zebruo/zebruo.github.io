@@ -1,5 +1,5 @@
 // Version actuelle du script
-const version = "10.0.0"; 
+const version = "1.0.1"; 
 
 // Attend que tout le contenu de la page soit chargé
 document.addEventListener('DOMContentLoaded', function () { 
@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Récupère l'élément de sélection par son identifiant
         const selectElement = document.getElementById(field);
         // Réinitialise la sélection du champ à aucune option choisie
-        selectElement.selectedIndex = -1;
+        if (selectElement) selectElement.selectedIndex = -1;
     });
 });

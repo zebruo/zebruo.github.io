@@ -9,6 +9,7 @@
     --clr-primary-hover:  #5A7FA3;
     --clr-dark:           #243342;
     --clr-nav:            #2c3e50;
+    --clr-tip:            #C07800;
 
     /* Fonds */
     --clr-bg-page:        #f0f0f0;
@@ -205,6 +206,29 @@ footer {
 .unit {
     font-size: 0.9em;
 }
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 18px 0;
+    font-size: 0.88rem;
+}
+.summary-table th, .summary-table td {
+    padding: 7px 10px;
+    border: 1px solid var(--clr-border);
+    text-align: left;
+}
+.summary-table thead th {
+    background-color: var(--clr-primary);
+    color: #D3D3D3;
+    font-weight: bold;
+}
+.summary-table tbody tr:nth-child(odd) {
+    background-color: var(--clr-bg-active);
+}
+.summary-table td:first-child {
+    font-weight: bold;
+    color: var(--clr-dark);
+}
 #resultTable {
     width: 100%;
     table-layout: fixed;
@@ -212,10 +236,10 @@ footer {
     border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    font-size: 0.82rem;
+    font-size: 0.77rem;
 }
 #resultTable th, #resultTable td {
-    padding: 8px;
+    padding: 6px;
     border-bottom: 1px solid #EBEBEB;
     overflow-wrap: break-word;
     word-break: break-word;
@@ -406,7 +430,7 @@ footer {
 .pill-btn {
     padding: 8px 22px;
     border: 2px solid var(--clr-primary);
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-lg);
     background: #fff;
     color: var(--clr-primary);
     font-size: 0.9rem;
@@ -570,7 +594,7 @@ footer {
     justify-content: center;
     width: 15px;
     height: 15px;
-    background: var(--clr-primary);
+    background: var(--clr-tip);
     color: #fff;
     border-radius: 50%;
     font-size: 0.63rem;

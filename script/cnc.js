@@ -4,6 +4,15 @@ function selectMaterial(btn) {
     var sel = document.getElementById('vc');
     sel.value = btn.getAttribute('data-vc');
     sel.dispatchEvent(new Event('change'));
+    var matVcVal = parseInt(btn.querySelector('.mat-vc').textContent.match(/\d+/)[0]);
+    document.getElementById('vcDisplay').textContent = 'vc: ' + matVcVal + ' m/min';
+    document.getElementById('manualVc').value = '';
+}
+
+function getVc() {
+    var manual = parseFloat(document.getElementById('manualVc').value);
+    if (!isNaN(manual) && manual > 0) return manual;
+    return parseFloat(document.getElementById('vc').value);
 }
 
 function selectDiameter(btn) {
@@ -221,6 +230,10 @@ const materialCoefficients = {
 
 let fz = null;
 
+function parseDecimal(val) {
+    return parseFloat(String(val).replace(',', '.'));
+}
+
 function getElementValueById(elementId) {
     return parseFloat(document.getElementById(elementId).value);
 }
@@ -229,8 +242,8 @@ function updatefz() {
     const selectedDiameter = getElementValueById("toolDiameter");
     const selectedVc = getElementValueById("vc");
 
-    if (!isNaN(parseFloat(document.getElementById("manualFz").value))) {
-        fz = parseFloat(document.getElementById("manualFz").value);
+    if (!isNaN(parseDecimal(document.getElementById("manualFz").value))) {
+        fz = parseDecimal(document.getElementById("manualFz").value);
     } else if (FzValues[selectedDiameter] && FzValues[selectedDiameter][selectedVc] !== undefined) {
         fz = FzValues[selectedDiameter][selectedVc];
     }
@@ -247,16 +260,15 @@ elementsToWatch.forEach(elementId => {
 });
 
 document.getElementById("manualFz").addEventListener("input", function () {
-    const inputValue = parseFloat(this.value);
+    const inputValue = parseDecimal(this.value);
 
-    if (!isNaN(inputValue) && inputValue >= 0) {
+    if (!isNaN(inputValue) && inputValue > 0) {
         fz = inputValue;
-    } else {
+        updatefz();
+    } else if (this.value === '') {
         fz = null;
-        this.value = "";
+        updatefz();
     }
-
-    updatefz();
 });
 
 // Déclarer la variable ap avec une portée globale
@@ -265,7 +277,7 @@ let ap;
 function updateAp() {
     const selectedDiameter = document.getElementById("toolDiameter").value;
     const selectedVc = document.getElementById("vc").value;
-    const manualApValue = parseFloat(document.getElementById("manualAp").value);
+    const manualApValue = parseDecimal(document.getElementById("manualAp").value);
 
     if (!isNaN(manualApValue) && manualApValue > 0) {
         ap = manualApValue.toFixed(2);
@@ -285,14 +297,26 @@ document.getElementById("toolDiameter").addEventListener("change", updateAp);
 document.getElementById("vc").addEventListener("change", updateAp);
 
 document.getElementById("manualAp").addEventListener("input", function () {
-    const inputValue = parseFloat(this.value);
+    const inputValue = parseDecimal(this.value);
     if (!isNaN(inputValue) && inputValue > 0) {
         ap = inputValue.toFixed(2);
-    } else {
+        updateAp();
+    } else if (this.value === '') {
         ap = undefined;
-        this.value = "";
+        updateAp();
     }
-    updateAp();
+    // état transitoire (ex: "0" en cours de saisie "0.5") : ne pas effacer
+});
+
+document.getElementById('manualVc').addEventListener('input', function () {
+    const val = parseFloat(this.value);
+    if (!isNaN(val) && val > 0) {
+        document.getElementById('vcDisplay').textContent = 'vc: ' + val + ' m/min';
+    } else if (this.value === '') {
+        const matVcVal = parseInt(document.querySelector('.material-card.active .mat-vc').textContent.match(/\d+/)[0]);
+        document.getElementById('vcDisplay').textContent = 'vc: ' + matVcVal + ' m/min';
+    }
+    // état transitoire : ne pas effacer
 });
 
 // Ajoute un écouteur d'événements sur le clic du bouton "generateJSON"
@@ -304,7 +328,7 @@ document.getElementById('generateJSON').addEventListener('click', function () {
     const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
     const shaftDiameter = parseFloat(document.getElementById('shaftDiameter').value);
     const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
-    const vc = parseFloat(document.getElementById('vc').value);
+    const vc = getVc();
     const currentRotationSpeed = parseInt(document.getElementById('currentRotationSpeed').textContent);
     const currentMaxFeed = parseInt(document.getElementById('currentMaxFeed').textContent);
     const currentZFeed = parseInt(document.getElementById('currentZFeed').textContent);
@@ -405,7 +429,7 @@ document.getElementById('generateJSON').addEventListener('click', function () {
 });
 
 function calculate() {
-    const vc = parseFloat(document.getElementById('vc').value);
+    const vc = getVc();
     const toolDiameter = parseFloat(document.getElementById('toolDiameter').value);
     const numberOfFlutes = parseInt(document.querySelector('input[name="numberOfFlutes"]:checked').value);
     const currentMaxFeed = parseInt(document.getElementById('currentMaxFeed').textContent);

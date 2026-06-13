@@ -45,8 +45,8 @@
             <li>Vc est la vitesse de coupe en mètres par minute (m/min)</li>
             <li>D est le diamètre de l’outil en millimètres (mm)</li>
         </ul>
-        <p><span class="text-bold">Vc (Vitesse de coupe)</span> : La vitesse de coupe est une valeur donnée en fonction du matériau à usiner et du type d’outil utilisé. Elle est généralement fournie par le fabricant de l’outil ou déterminée par des tests. C’est généralement exprimé en mètres par minute (m/min).</p>
-        <p>La formule montre deux relations directes : si n augmente (D constant), Vc augmente proportionnellement ; si D augmente (n constant), Vc augmente proportionnellement. C’est pourquoi les petits diamètres posent problème : pour atteindre une Vc cible de 350 m/min avec une fraise Ø3 mm, il faudrait une broche à 37 000 tr/min — hors de portée d’une machine amateur limitée à 12 000 tr/min. La Vc effective reste donc bien en dessous de la cible, ce qui peut dégrader la qualité de coupe.</p>
+        <p><span class="text-bold">Vc (Vitesse de coupe)</span> : La vitesse de coupe est une valeur cible fournie par le fabricant de la fraise pour un matériau donné — par exemple 120 m/min pour l’aluminium, 350 m/min pour le MDF. Elle s’exprime en mètres par minute (m/min). C’est à partir d’elle que l’on calcule la vitesse de rotation à régler sur la machine.</p>
+        <p>La formule montre deux relations directes : si n augmente (D constant), Vc augmente proportionnellement ; si D augmente (n constant), Vc augmente proportionnellement. L’objectif est donc d’approcher le plus possible la Vc recommandée en choisissant le bon n. Sur une petite machine, c’est souvent impossible pour les petits diamètres : atteindre 350 m/min avec une fraise Ø3 mm nécessiterait 37 000 tr/min, hors de portée d’une broche limitée à 12 000 tr/min. La Vc effective reste alors bien en dessous de la cible — c’est ce que traduit la colonne "Effectif (machine réelle)" de la feuille de calcul.</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <semantics>
                 <mrow>
@@ -98,6 +98,7 @@
     <div class="column aideSize">
         <h2>Exemples : D = 3mm, Z = 2, Fz = 0.05 mm/dent, MDF 350 m/min <br>
             Max machine : n = 12000 tr/min et Vf = 800 mm/min</h2>
+        <p>Ces exemples illustrent la distinction entre valeurs <span class="text-bold">cibles</span> — calculées à partir de Vc sans tenir compte des limites machine — et valeurs <span class="text-bold">effectives</span> — après plafonnement par n max et Vf max. C'est exactement ce qu'affiche la feuille de calcul dans ses deux colonnes de résultats.</p>
         <p><span class="text-bold">Ex 1 -</span> Avec une fraise tournant à une vitesse de 12000 tr/min (n) et un diamètre d’outil (D) de 3 mm. Vous pouvez utiliser la formule suivante pour calculer la vitesse de coupe (Vc) : </p>
         <p>En insérant vos valeurs dans cette formule, nous obtenons :</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -173,8 +174,7 @@
             </semantics>
         </math>
         <p> Cela signifie que pour une vitesse de rotation de 12000 tr/min, une avance par dent de 0.05 mm/dent et un nombre de dents de 2, la vitesse d’avance serait de 1200 mm/min. C’est la vitesse à laquelle l’outil se déplace le long de la pièce à usiner. Cependant, si la vitesse d’avance calculée dépasse la vitesse d’avance maximale de votre machine (800 mm/min dans votre cas), vous devrez utiliser cette vitesse maximale pour vos calculs. Donc, dans votre cas, la vitesse d’avance devrait être limitée à 800 mm/min.</p>
-        <p><span class="text-bold">Ex 4 -</span> Pour déterminer la vitesse de rotation (n) nécessaire pour obtenir une vitesse d’avance (Vf) de 800 mm/min avec une avance par dent (Fz) de 0.05 mm/dent et un nombre de dents (Z) de 2, vous pouvez réarranger la formule de Vf comme suit : </p>
-        <p>En insérant vos valeurs dans cette formule, nous obtenons : </p>
+        <p><span class="text-bold">Ex 4 -</span> On pourrait être tenté d’abaisser n à 8 000 tr/min pour rester dans la limite Vf = 800 mm/min tout en maintenant Fz = 0.05 mm/dent. Le calcul donne :</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <semantics>
                 <mrow>
@@ -195,8 +195,7 @@
                 <annotation encoding="application/x-tex">n = \frac{{800}}{{0.05 \times 2}} = 8000 \text{ tr/min} </annotation>
             </semantics>
         </math>
-        <p>Cela signifie que pour obtenir une vitesse d’avance de 800 mm/min avec une avance par dent de 0.05 mm/dent et un (Z) de 2, vous devriez régler la vitesse de rotation de votre machine à 8000 tr/min. Cependant, veuillez noter que ces calculs sont basés sur des valeurs idéales et que les conditions réelles d’usinage peuvent nécessiter des ajustements. </p>
-        <p>La nouvelle vitesse de coupe Vc sera donc réduite d'autant :</p>
+        <p>Mais la Vc résultante serait :</p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <semantics>
                 <mrow>
@@ -219,6 +218,40 @@
                 <annotation encoding="application/x-tex">Vc = \frac{{1000 \pi \times 3 \times 8000}}{{1000}} \approx 75.4 \, \text{m/min} </annotation>
             </semantics>
         </math>
+        <p>75.4 m/min est inférieur à la Vc recommandée de tous les matériaux du calculateur, y compris l'aluminium (120 m/min). Ce réglage ne correspond à aucun cas d'usinage raisonnable : abaisser n n'est pas une solution, on dégrade Vc sans rien résoudre. La véritable conclusion est que la combinaison Ø3 mm + MDF dépasse les capacités d'une petite machine limitée à 12 000 tr/min. Il n'existe pas de réglage satisfaisant : il faut accepter des conditions dégradées, augmenter le diamètre de fraise, ou changer de machine.</p>
+        <p>Le tableau suivant résume les deux situations pour cet exemple :</p>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Cible (sans limite)</th>
+                    <th>Effectif (machine réelle)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>n (tr/min)</td>
+                    <td>37 249</td>
+                    <td>12 000 — broche max</td>
+                </tr>
+                <tr>
+                    <td>Vf (mm/min)</td>
+                    <td>3 725</td>
+                    <td>800 — avance XY max</td>
+                </tr>
+                <tr>
+                    <td>Vc (m/min)</td>
+                    <td>350</td>
+                    <td>113</td>
+                </tr>
+                <tr>
+                    <td>Fz réelle (mm/dent)</td>
+                    <td>0.050</td>
+                    <td>0.033 — dégradée</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Cet exemple est un cas de <span class="text-bold">double limitation</span> : la broche est plafonnée (37 249 → 12 000 tr/min) et l'avance XY l'est aussi (1 200 → 800 mm/min). La Fz réelle tombe à 0.033 mm/dent au lieu de 0.050 : l'outil frotte davantage qu'il ne coupe, ce qui dégrade la qualité de surface et use prématurément la fraise. La feuille de calcul signale ce cas par une alerte.</p>
     </div>
 </div>
 <footer>

@@ -86,6 +86,11 @@
             <option value="120">Aluminium</option>
             <option value="120.01">Cuivre/Laiton</option>
         </select>
+        <p class="step-label">Vitesse de coupe (Vc) <span class="tip" data-tip="Vc (m/min) — valeur cible issue du matériau sélectionné. Modifiable si le constructeur de votre fraise indique une valeur différente.">?</span></p>
+        <div class="fz-row">
+            <span id="vcDisplay" class="fz-badge">vc: 200 m/min</span>
+            <input type="number" id="manualVc" step="1" min="1" placeholder="Ou saisir manuellement (m/min)" class="fz-manual">
+        </div>
     </section>
 
     <!-- ETAPE 2 : Fraise -->
@@ -134,12 +139,12 @@
         <p class="step-label">Avance par dent (fz) — calculée automatiquement <span class="tip" data-tip="fz (mm/dent) — épaisseur de copeau par arête de coupe. Trop faible : frottement et usure. Trop élevé : risque de casse d'outil.">?</span></p>
         <div class="fz-row">
             <span id="fz" class="fz-badge"></span>
-            <input type="number" id="manualFz" step="0.001" placeholder="Ou saisir manuellement (mm/dent)" class="fz-manual">
+            <input type="text" inputmode="decimal" id="manualFz" placeholder="Ou saisir manuellement (mm/dent)" class="fz-manual">
         </div>
         <p class="step-label">Profondeur de passe (ap) — calculée automatiquement <span class="tip" data-tip="ap (mm) — épaisseur de matière enlevée à chaque passe axiale. Typiquement 0.2 à 0.5 × diamètre. Saisissable manuellement.">?</span></p>
         <div class="fz-row">
             <span id="ap" class="fz-badge"></span>
-            <input type="number" id="manualAp" step="0.01" min="0.01" placeholder="Ou saisir manuellement (mm)" class="fz-manual">
+            <input type="text" inputmode="decimal" id="manualAp" placeholder="Ou saisir manuellement (mm)" class="fz-manual">
         </div>
     </section>
 
